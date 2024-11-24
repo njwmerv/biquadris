@@ -7,6 +7,8 @@ class Text : public View{
   std::ostream& out = std::cout;
 
   public:
+    Text(Controller* controller);
+
     ~Text() override;
 
     void notify() override;
