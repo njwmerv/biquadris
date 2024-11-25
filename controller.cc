@@ -1,5 +1,7 @@
 #include "controller.h"
 #include <sstream>
+#include <utility>
+#include <fstream>
 #include "board.h"
 
 // Big 5
@@ -18,7 +20,7 @@ const Board* Controller::getBoard() const {return boards.at(currentPlayer);}
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
 // Mutators
-void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers;}
+void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers; in = std::cin;}
 
 // Display-related
 void Controller::notifyObservers() const {
@@ -64,19 +66,81 @@ void Controller::resetGame(){
 }
 
 // I/O-related
-Controller::Command Controller::interpretInput(const std::string input) const {
+std::pair<int, Controller::Command> Controller::interpretInput(const std::string input) const {
+  int repetitions = 1;
+
+  std::istringstream iss{input};
+  if(!(iss >> repetitions)){
+    repetitions = 1;
+    iss.clear();
+  }
+  string remainingInput;
+  iss >> remainingInput;
+
   // Check if this is a known command
   for(auto stringCommand : commands){
-    if(stringCommand.first == input) return stringCommand.second;
+    if(stringCommand.first == remainingInput) return {repetitions, stringCommand.second};
   }
 
   // Check if enough of a string was given to distinguish it from other commands
   Command match = Command::INVALID;
   for(auto stringCommand : commands){
-    if(!(stringCommand.first.startsWith(input))) continue; // input isn't a prefix of command, so can't be that
+    if(!(stringCommand.first.starts_with(remainingInput))) continue; // input isn't a prefix of command, so can't be that
     else if(match == Command::INVALID) match = stringCommand.second; // found it as a prefix for a known command
-    else return Command::INVALID; // found it as a prefix for another command, so input is ambiguous
+    else return {0, Command::INVALID}; // found it as a prefix for another command, so input is ambiguous
   }
 
-  return match;
+  return {match == Command::INVALID ? 0 : repetitions, match};
+}
+
+void Controller::performCommand(const int repetitions, const Command command){
+  const Board* board = getBoard();
+  for(int i = 0; i < repetitions; i++){
+    if(command == Command::LEFT) board->left();
+    else if(command == Command::RIGHT) board->right();
+    else if(command == Command::DOWN) board->down();
+    else if(command == Command::CLOCKWISE) board->clockwise();
+    else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
+    else if(command == Command::DROP) board->drop();
+    else if(command == Command::LEVEL_UP) board->levelup();
+    else if(command == Command::LEVEL_DOWN) board->leveldown();
+    else if(command == Command::NO_RANDOM){
+      std::string filePath;
+      in.get() >> filePath;
+      std::ifstream file{filePath};
+    }
+    else if(command == Command::RANDOM) board->random();
+    else if(command == Command::SEQUENCE){
+      std::string filePath;
+      in.get() >> filePath;
+      std::ifstream file{filePath};
+      in = file; // may cause seg fault when this goes out of scope
+    }
+    else if(command == Command::I) board;
+    else if(command == Command::J) board;
+    else if(command == Command::L) board;
+    else if(command == Command::O) board;
+    else if(command == Command::S) board;
+    else if(command == Command::Z) board;
+    else if(command == Command::T) board;
+    else if(command == Controller::Command::RESTART) board->restart();
+  }
+}
+
+void Controller::runGame(){
+  std::string input;
+  bool turnDone = false;
+  while(true){ // Game loop
+    notifyObservers(); // update graphics
+
+    // Read input and get it interpreted by controller
+    if(in.get().eof() && &(in.get()) == &std::cin) break;
+    else if(in.get().eof()) in = std::cin;
+
+    in.get() >> input;
+    auto interpretedInput = interpretInput(input);
+    performCommand(interpretedInput.first, interpretedInput.second);
+
+    if(turnDone) nextPlayer(); // TODO MARI: when is turnDone?
+  }
 }

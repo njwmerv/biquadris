@@ -1,8 +1,11 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
+#include <iostream>
 #include <vector>
 #include <string>
 #include <map>
+#include <utility>
+#include <functional>
 #include "board.h"
 
 class View; // forward declaration
@@ -13,6 +16,7 @@ class Controller{
   const std::string scriptFile1;
   const std::string scriptFile2;
   const int numberOfPlayers = 2;
+  std::reference_wrapper<std::istream> in = std::cin;
   std::vector<Board*> boards;
   std::vector<View*> observers;
   int currentPlayer = 0;
@@ -66,7 +70,11 @@ class Controller{
       BLIND, HEAVY, FORCE // special actions
     };
 
-    Controller::Command interpretInput(const std::string) const;
+    std::pair<int, Controller::Command> interpretInput(const std::string) const;
+
+    void performCommand(const int, const Command);
+
+    void runGame();
 };
 
 #endif //CONTROLLER_H
