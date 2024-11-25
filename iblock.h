@@ -9,7 +9,7 @@ using namespace std;
 class IBlock : public Block {
     public: 
         // constructor
-        IBlock();
+        IBlock(int l);
 
         // destructor
         ~IBlock() override;
@@ -23,6 +23,6 @@ class IBlock : public Block {
         // rotate the block counterclockwise
         void counterclockwise () override;
 
-}
+};
 
 #endif
