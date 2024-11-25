@@ -13,7 +13,7 @@ Controller::Controller(int seed, int startingLevel, std::string scriptFile1, std
 // Accessors
 const std::vector<Board*>& Controller::getBoards() const {return boards;}
 
-Board* Controller::getBoard() const {return boards.at(currentPlayer);}
+const Board* Controller::getBoard() const {return boards.at(currentPlayer);}
 
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
