@@ -20,12 +20,10 @@ char IBlock :: getType() const {
     return 'I';
 }
 
-void IBlock :: clockwise() {
-    // if can rotate
-    numRotations = (numRotations + 1) % 4;
+vector<pair<int, int>> IBlock :: clockwise() {
+    return rotations[(numRotations+1)%4];
 }
 
-void IBlock :: counterclockwise() {
-    // if can rotate
-    numRotations = (numRotations - 1) % 4;
+vector<pair<int, int>> IBlock :: counterclockwise() {
+    return rotations[(numRotations-1)%4];
 }
