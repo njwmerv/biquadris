@@ -23,6 +23,14 @@ void printBoardBorder(Controller* controller, std::ostream& out){
 }
 
 void Text::notify(){
+  // Print level
+  for(Board* board : controller->getBoards()){
+    out << "Level: " << std::setw(BOARD_WIDTH + BOARD_GAP - 7) << std::left << std::setfill(' ')
+        <<  board->getLevel();
+    out << resetiosflags(std::ios::showbase);
+  }
+  out << std::endl;
+
   // Print score
   for(Board* board : controller->getBoards()){
     out << "Score: " << std::setw(BOARD_WIDTH + BOARD_GAP - 7) << std::left << std::setfill(' ')
@@ -38,8 +46,10 @@ void Text::notify(){
   for(int i = 0; i < BOARD_HEIGHT; i++){
     for(Board* board : controller->getBoards()){
       const Board* board = board->getBoard();
+      out << "|";
       for(int j = 0; j < BOARD_WIDTH; j++) out << board[i][j]->getChar();
-      for(int j = 0; j < BOARD_GAP; j++) out << ' ';
+      out << "|";
+      for(int j = 0; j < BOARD_GAP - 2; j++) out << ' ';
     }
   }
 
@@ -54,10 +64,11 @@ void Text::notify(){
   }
   out << std::endl;
   // Printing the block itself
-  for(int i = 0; i < 4; i++){
-    for(Board* board : controller->getBoards()){
-      // TODO
-    }
-    out << std::endl;
+  for(Board* board : controller->getBoards()){
+    out << std::setw(BOARD_WIDTH + BOARD_GAP) << std::left << std::setfill(' ')
+        << board->getNextBlock()->getType();
+    out << resetiosflags(std::ios::showbase);
+  }
+  out << std::endl;
   }
 }
