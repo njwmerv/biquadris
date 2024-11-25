@@ -4,7 +4,7 @@
 using namespace std;
 
 IBlock :: IBlock() {
-    
+    coordinates = {{0, 0}, {}}
 }
 
 IBlock :: ~IBlock() {

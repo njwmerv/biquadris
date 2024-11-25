@@ -5,13 +5,15 @@
 
 using namespace std;
 
-const int numRotations = 4;
+const int maxRotations = 3;
 
 class Block {
     protected:
-        vector <pair <int, int>> coordinates;
-        vector <pair <int, int>> rotations [numRotations];
+        vector <pair <int, int>> rotations [maxRotations];
         int level;
+        int numRotations;
+        int x;
+        int y;
     public:
 
         // destructor
