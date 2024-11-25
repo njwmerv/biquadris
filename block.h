@@ -5,7 +5,12 @@
 
 using namespace std;
 
+const int numRotations = 4;
+
 class Block {
+    protected:
+        vector <pair <int, int>> coordinates;
+        vector <pair <int, int>> rotations [numRotations];
     public:
 
         // destructor

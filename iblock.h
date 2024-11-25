@@ -8,7 +8,7 @@ using namespace std;
 
 class IBlock : public Block {
     public: 
-        // creator
+        // constructor
         IBlock();
 
         // destructor
