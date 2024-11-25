@@ -34,6 +34,8 @@ class Controller{
 
     const Board* getBoard() const;
 
+    int getCurrentPlayer() const;
+
     // Mutators
     void nextPlayer();
 

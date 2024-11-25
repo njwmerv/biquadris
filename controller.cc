@@ -13,10 +13,12 @@ Controller::Controller(int seed, int startingLevel, std::string scriptFile1, std
 // Accessors
 const std::vector<Board*>& Controller::getBoards() const {return boards;}
 
-Board* Controller::getBoard() const {return boards.at(currentPlayer % boards.size());}
+Board* Controller::getBoard() const {return boards.at(currentPlayer);}
+
+int Controller::getCurrentPlayer() const {return currentPlayer;}
 
 // Mutators
-void Controller::nextPlayer(){currentPlayer++;}
+void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers;}
 
 // Display-related
 void Controller::notifyObservers() const {
