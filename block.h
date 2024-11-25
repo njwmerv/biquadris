@@ -28,10 +28,10 @@ class Block {
         virtual char getType() const = 0;
 
         // rotate the block clockwise
-        virtual vector<pair<int, int>> clockwise () = 0;
+        virtual void clockwise () = 0;
 
         // rotate the block counterclockwise
-        virtual vector<pair<int, int>> counterclockwise () = 0;
+        virtual void counterclockwise () = 0;
 
 };
 

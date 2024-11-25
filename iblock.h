@@ -18,10 +18,10 @@ class IBlock : public Block {
         char getType() const override;
 
         // rotate the block clockwise
-        vector<pair<int, int>> clockwise () override;
+        void clockwise () override;
 
         // rotate the block counterclockwise
-        vector<pair<int, int>> counterclockwise () override;
+        void counterclockwise () override;
 
 };
 
