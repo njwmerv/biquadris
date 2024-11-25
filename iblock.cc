@@ -4,7 +4,7 @@
 using namespace std;
 
 IBlock :: IBlock() {
-
+    
 }
 
 IBlock :: ~IBlock() {
@@ -20,5 +20,5 @@ void IBlock :: clockwise() {
 }
 
 void IBlock :: counterclockwise() {
-    
+
 }

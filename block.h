@@ -11,6 +11,7 @@ class Block {
     protected:
         vector <pair <int, int>> coordinates;
         vector <pair <int, int>> rotations [numRotations];
+        int level;
     public:
 
         // destructor
