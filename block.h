@@ -37,10 +37,10 @@ class Block {
 
         // accessors
         vector <pair <int, int>> getRotation(int i);
-        int getNumRotations();
-        int getX();
-        int getY();
-        bool isHeavy();
+        int getNumRotations() const;
+        int getX() const;
+        int getY() const;
+        bool isHeavy() const;
 
         // mutators
         void setX(int newX);

@@ -15,11 +15,13 @@ void Block::counterclockwise(){numRotations = (numRotations - 1) % maxRotations;
 
 vector <pair <int, int>> Block::getRotation(int i) {return rotations[i];}
 
-int Block::getX() {return x;}
+int Block::getNumRotations() const {return numRotations;}
 
-int Block::getY() {return y;}
+int Block::getX() const {return x;}
 
-bool Block::isHeavy() {return heavy;}
+int Block::getY() const {return y;}
+
+bool Block::isHeavy() const {return heavy;}
 
 void Block::setX(int newX) {x = newX;}
 
