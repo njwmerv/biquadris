@@ -36,7 +36,7 @@ Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0
 	// adding current to theBoard
   auto cellsOfBlock = current->getRotation(current->getNumRotations());
   for(auto cell : cellsOfBlock){
-    board[cell.first][cell.second] = shared_ptr<Block>(current);
+    board[cell.first][cell.second] = shared_ptr<Block>(current.get());
   }
 }
 
@@ -83,22 +83,33 @@ void Board::clearBoard(){
   }
 }
 
-Block* Board::forceBlock(const string type){
-  if(type == "I") return new IBlock(1);
-  else if(type == "J") return new JBlock(1);
-  else if(type == "L") return new LBlock(1);
-  else if(type == "O") return new OBlock(1);
-  else if(type == "S") return new SBlock(1);
-  else if(type == "Z") return new ZBlock(1);
-  else return new TBlock(1);
+void Board::forceBlock(const string type){
+  auto cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(auto cell : cellsOfBlock){ // this should delete the current block completely
+    board[cell.first][cell.second].reset();
+    board[cell.first][cell.second] = nullptr;
+  }
+  if(type == "I") current = shared_ptr<Block>(new IBlock(currentLevel));
+  else if(type == "J") current = shared_ptr<Block>(new JBlock(currentLevel));
+  else if(type == "L") current = shared_ptr<Block>(new LBlock(currentLevel));
+  else if(type == "O") current = shared_ptr<Block>(new OBlock(currentLevel));
+  else if(type == "S") current = shared_ptr<Block>(new SBlock(currentLevel));
+  else if(type == "Z") current = shared_ptr<Block>(new ZBlock(currentLevel));
+  else current = shared_ptr<Block>(new TBlock(currentLevel));
+  cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(auto cell : cellsOfBlock){
+    board[cell.first][cell.second] = shared_ptr<Block>(current.get());
+  }
 }
 
-Level* Board::forceLevel(const int newLevel){
-  if(newLevel == 0) return new Level0(level0File);
-  else if(newLevel == 1) return new Level1;
-  else if(newLevel == 2) return new Level2;
-  else if(newLevel == 3) return new Level3;
-  else return new Level4;
+void Board::forceLevel(const int newLevel){
+  if(newLevel == currentLevel) return;
+  delete level;
+  if(newLevel == 0) level = new Level0(level0File);
+  else if(newLevel == 1) level = new Level1;
+  else if(newLevel == 2) level = new Level2;
+  else if(newLevel == 3) level = new Level3;
+  else level = new Level4;
 }
 
 void Board :: down () {
