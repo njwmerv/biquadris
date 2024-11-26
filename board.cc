@@ -160,11 +160,13 @@ void Board :: right() {
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = nullptr;
   }
+  /*
   current->setX(curX+1);
   curX = curX + 1;
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = current;
   }
+  */
   if(willDrop) drop();
 }
 
