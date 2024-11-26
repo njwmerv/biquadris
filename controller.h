@@ -16,7 +16,7 @@ class Controller{
   const std::string scriptFile1;
   const std::string scriptFile2;
   const int numberOfPlayers = 2;
-  std::reference_wrapper<std::istream> in = std::cin;
+  std::istream in = std::cin;
   std::vector<Board*> boards;
   std::vector<View*> observers;
   int currentPlayer = 0;

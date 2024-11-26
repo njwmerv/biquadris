@@ -47,8 +47,13 @@ void Controller::detachView(View* viewer){
 }
 
 // For the game TODO: MARI
-void Controller::sequence(std::string){
-
+void Controller::sequence(std::string file){
+  ifstream ifs{file};
+  std::string line;
+  while(ifs >> line){
+    auto interpreted = interpretInput(line);
+    performCommand(interpreted.first, interpreted.second);
+  }
 }
 
 void Controller::noRandom(std::string){
@@ -66,7 +71,6 @@ void Controller::resetGame(){
     board->setScore(0);
   }
   currentPlayer = 0;
-  in = std::cin;
 }
 
 // I/O-related
@@ -110,15 +114,14 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::LEVEL_DOWN) board->leveldown();
     else if(command == Command::NO_RANDOM){
       std::string filePath;
-      in.get() >> filePath;
+      in >> filePath;
       std::ifstream file{filePath};
     }
     else if(command == Command::RANDOM) board->random();
     else if(command == Command::SEQUENCE){
       std::string filePath;
-      in.get() >> filePath;
-      std::ifstream file{filePath};
-      in = file; // may cause seg fault when this goes out of scope
+      in >> filePath;
+      sequence(filePath);
     }
     else if(command == Command::I) board;
     else if(command == Command::J) board;
@@ -142,10 +145,7 @@ void Controller::runGame(){
     notifyObservers(); // update graphics
 
     // Read input and get it interpreted by controller
-    if(in.get().eof() && &(in.get()) == &std::cin) break;
-    else if(in.get().eof()) in = std::cin;
-
-    in.get() >> input;
+    in >> input;
     auto interpretedInput = interpretInput(input);
     performCommand(interpretedInput.first, interpretedInput.second);
 
