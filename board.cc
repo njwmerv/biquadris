@@ -140,5 +140,19 @@ void Board :: drop() {
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
-  
+  int smallestDistance = INT_MAX;
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    int curLoopX = cell.first + curX;
+    int count = 0;
+    for(int i = cell.second+curY - 1; i >= 0; i--) {
+      if(board[curLoopX][i] != nullptr) {
+        break;
+      }
+      count++;
+    }
+    if(count < smallestDistance) {
+      smallestDistance = count;
+    }
+  }
+  current->setY(curY-smallestDistance);
 }
