@@ -16,11 +16,14 @@
 #include "tblock.h"
 using namespace std;
 
+const int boardWidth = 11; // max, not reached (start at index 0)
+const int boardHeight = 18;
+
 // Big 5
 Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0File}, currentLevel{startingLevel} {
-  for(int i = 0; i < 18; i++){
+  for(int i = 0; i < boardHeight; i++){
     vector<shared_ptr<Block>> row;
-    for(int j = 0; j < 11; j++) row.emplace_back(nullptr);
+    for(int j = 0; j < boardWidth; j++) row.emplace_back(nullptr);
     board.emplace_back(row);
   }
   if(startingLevel == 0) level = new Level0{level0File};
@@ -98,6 +101,7 @@ void Board :: down () {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(cell.second + curY - 1 <= 0) continue;
     if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
       return;
     }
@@ -110,6 +114,7 @@ void Board :: right() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(cell.first + curX + 1 >= boardWidth) continue;
     if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
       return;
     }
@@ -126,6 +131,7 @@ void Board :: left() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(cell.first + curX - 1 <= 0) continue;
     if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
       return;
     }
