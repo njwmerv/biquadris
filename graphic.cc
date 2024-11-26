@@ -79,9 +79,6 @@ void Graphic::notify(){
   // Printing the block itself
   window.fillRectangle(offset + 5, 70 + (BOARD_HEIGHT * SCALE_FACTOR), 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
   const char nextType = board->getNextBlock()->getType();
-	for(int i = 0; i < 9; i++){
-		window.fillRectangle(offset + 5 + (i * 2 * SCALE_FACTOR), 70 + (BOARD_HEIGHT * SCALE_FACTOR), 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, i);
-	}
   if(nextType == 'I'){
     window.fillRectangle(offset + 5, 70 + (BOARD_HEIGHT * SCALE_FACTOR), 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
