@@ -7,29 +7,19 @@
 #include "zblock.h"
 #include "tblock.h"
 #include <cstdlib>
+#include <string>
+using namespace std;
 
+Block *Level2::generateBlock(){
+    const string blockTypes[] = {"I", "J", "I", "L", "O", "S", "Z", "T"};
+    const string blockGenerated = blockTypes[rand() % 7];
 
-Block *Level2::generateBlock() {
-    string blockTypes[] = {"I", "J", "I", "L", "O", "S", "Z", "T"};
-    int randomNum = rand() % 7;
-    string blockGenerated = blockTypes[randomNum];
-
-    if (blockGenerated == "I") {
-        return new IBlock();
-    } else if (blockGenerated == "J") {
-        return new JBlock();
-    } else if (blockGenerated == "L") {
-        return new LBlock();
-    } else if (blockGenerated == "O") {
-        return new OBlock();
-    } else if (blockGenerated == "S") {
-        return new SBlock();
-    } else if (blockGenerated == "Z") {
-        return new ZBlock();
-    } else if (blockGenerated == "T") {
-        return new TBlock();
-    }
-
-
+    if(blockGenerated == "I") return new IBlock(1);
+    else if(blockGenerated == "J") return new JBlock(1);
+    else if(blockGenerated == "L") return new LBlock(1);
+    else if(blockGenerated == "O") return new OBlock(1);
+    else if(blockGenerated == "S") return new SBlock(1);
+    else if(blockGenerated == "Z") return new ZBlock(1);
+    else return new TBlock(1);
 }
 
