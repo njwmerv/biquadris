@@ -45,7 +45,7 @@ int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
 vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 Block* Board::getNextBlock() const {return next;}
-Block* Board::getCurrentBlock() const {return current;}
+Block* Board::getCurrentBlock() const {return current.get();}
 bool Board::isBlind() const {return blind;}
 
 // Mutators
