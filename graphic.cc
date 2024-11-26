@@ -8,7 +8,7 @@ using namespace std;
 // Constants
 const int BOARD_GAP = 9;
 const int BOARD_WIDTH = 11;
-const int BOARD_HEIGHT = 15;
+const int BOARD_HEIGHT = 18;
 const int BORDER_WIDTH = 1;
 const int SCALE_FACTOR = 10;
 const int NUMBER_OF_PLAYERS = 2;

@@ -18,7 +18,7 @@ using namespace std;
 
 // Big 5
 Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0File}, currentLevel{startingLevel} {
-  for(int i = 0; i < 15; i++){
+  for(int i = 0; i < 18; i++){
     vector<shared_ptr<Block>> row;
     for(int j = 0; j < 11; j++) row.emplace_back(nullptr);
     board.emplace_back(row);

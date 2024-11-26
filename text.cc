@@ -7,7 +7,7 @@
 // Constants
 const int BOARD_GAP = 9;
 const int BOARD_WIDTH = 11;
-const int BOARD_HEIGHT = 15;
+const int BOARD_HEIGHT = 18;
 
 Text::Text(Controller* controller) : controller{controller} {controller->attachView(this);}
 
