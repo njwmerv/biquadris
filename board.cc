@@ -22,11 +22,7 @@ const int boardHeight = 18;
 // Big 5
 Board::Board(int startingLevel, string level0File):
   score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false} {
-  for(int i = 0; i < boardHeight; i++){
-    vector<shared_ptr<Block>> row;
-    for(int j = 0; j < boardWidth; j++) row.emplace_back(nullptr);
-    board.emplace_back(row);
-  }
+  for(int i = 0; i < boardHeight; i++) board.emplace_back(vector<shared_ptr<Block>>(boardWidth, nullptr));
   if(startingLevel == 0) level = new Level0{level0File};
   else if(startingLevel == 1) level = new Level1;
   else if(startingLevel == 2) level = new Level2;
@@ -226,8 +222,8 @@ void Board :: drop() {
 }
 
 void Board::addCurrentToBoard(){
-  auto cellsOfBlock = current->getRotation(current->getNumRotations());
-  for(auto cell : cellsOfBlock){
+  vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(pair<int, int> cell : cellsOfBlock){
     board[cell.first][cell.second] = current;
   }
 }
