@@ -28,6 +28,8 @@ class Board{
 
     vector<vector<shared_ptr<Block>>> getTheBoard() const;
 
+    Block* getNextBlock() const;
+
     // Mutators
     void setScore(int);
 
