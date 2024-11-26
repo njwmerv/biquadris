@@ -22,7 +22,15 @@ class Controller{
   vector<View*> observers;
   int currentPlayer = 0;
 
-  map<string, Controller::Command> commands{
+  enum class Command{
+    LEFT, RIGHT, DOWN, CLOCKWISE, COUNTER_CLOCKWISE, DROP, // block movement
+    LEVEL_UP, LEVEL_DOWN, NO_RANDOM, RANDOM, SEQUENCE, // specify block generation
+    I, J, L, O, S, Z, T, // specify next block
+    RESTART, INVALID, // other
+    BLIND, HEAVY, FORCE // special actions
+  };
+
+  map<string, Command> commands{
     {"left", Command::LEFT}, {"right", Command::RIGHT}, {"down", Command::DOWN}, {"clockwise", Command::CLOCKWISE},
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
     {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J}, {"L", Command::L}, {"O", Command::O},
@@ -63,13 +71,6 @@ class Controller{
     void resetGame();
 
     // I/O-related
-    enum class Command{
-      LEFT, RIGHT, DOWN, CLOCKWISE, COUNTER_CLOCKWISE, DROP, // block movement
-      LEVEL_UP, LEVEL_DOWN, NO_RANDOM, RANDOM, SEQUENCE, // specify block generation
-      I, J, L, O, S, Z, T, // specify next block
-      RESTART, INVALID, // other
-      BLIND, HEAVY, FORCE // special actions
-    };
 
     pair<int, Controller::Command> interpretInput(const string) const;
 
