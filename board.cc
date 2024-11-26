@@ -75,3 +75,30 @@ void Board :: down () {
     }
     current->setY(curY-1);
 }
+
+
+void Board :: right() {
+    int curX = current->getX();
+    int curY = current->getY();
+    int curNumRot  = current->getNumRotations();
+    for(pair<int, int> cell : current->getRotation(curNumRot)) {
+        if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
+            // call something that runs when a block has been placed
+            return;
+        }
+    }
+    current->setX(curX+1);
+}
+
+void Board :: left() {
+    int curX = current->getX();
+    int curY = current->getY();
+    int curNumRot  = current->getNumRotations();
+    for(pair<int, int> cell : current->getRotation(curNumRot)) {
+        if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
+            // call something that runs when a block has been placed
+            return;
+        }
+    }
+    current->setX(curX-1);
+}

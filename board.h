@@ -34,6 +34,8 @@ class Board{
     Level* forceLevel(const int);
 
     void down();
+    void right();
+    void left();
 };
 
 #endif
