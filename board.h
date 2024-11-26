@@ -37,7 +37,7 @@ class Board{
     void levelup();
     void leveldown();
     void clearBoard();
-    Block* forceBlock(const char);
+    Block* forceBlock(const string);
     Level* forceLevel(const int);
 
     void left();

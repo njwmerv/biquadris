@@ -7,6 +7,13 @@
 #include "level2.h"
 #include "level3.h"
 #include "level4.h"
+#include "iblock.h"
+#include "jblock.h"
+#include "lblock.h"
+#include "oblock.h"
+#include "sblock.h"
+#include "zblock.h"
+#include "tblock.h"
 using namespace std;
 
 // Big 5
@@ -65,6 +72,24 @@ void Board::clearBoard(){
       cell.reset();
     }
   }
+}
+
+Block* Board::forceBlock(const string type){
+  if(type == "I") return new IBlock(1);
+  else if(type == "J") return new JBlock(1);
+  else if(type == "L") return new LBlock(1);
+  else if(type == "O") return new OBlock(1);
+  else if(type == "S") return new SBlock(1);
+  else if(type == "Z") return new ZBlock(1);
+  else return new TBlock(1);
+}
+
+Level* Board::forceLevel(const int newLevel){
+  if(newLevel == 0) return new Level0(level0File);
+  else if(newLevel == 1) return new Level1;
+  else if(newLevel == 2) return new Level2;
+  else if(newLevel == 3) return new Level3;
+  else return new Level4;
 }
 
 void Board :: down () {
