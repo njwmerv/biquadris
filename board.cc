@@ -101,7 +101,7 @@ void Board :: down () {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    if(cell.second + curY - 1 <= 0) continue;
+    if(cell.second + curY - 1 < 0) continue;
     if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
       return;
     }
@@ -131,7 +131,7 @@ void Board :: left() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    if(cell.first + curX - 1 <= 0) continue;
+    if(cell.first + curX - 1 < 0) continue;
     if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
       return;
     }
