@@ -34,7 +34,7 @@ Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0
   current = level->generateBlock();
   next = level->generateBlock();
 	// adding current to theBoard
-  auto cellsOfBlock = current->getRotation(current->getNumRotations());
+  auto cellsOfBlock = current->getRotation(current->getNumRotations());shared_ptr<Block>
   for(auto cell : cellsOfBlock){
     board[cell.first][cell.second] = shared_ptr<Block>(current);
   }
@@ -52,7 +52,6 @@ vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 Block* Board::getNextBlock() const {return next;}
 Block* Board::getCurrentBlock() const {return current;}
 bool Board::isBlind() const {return blind;}
-
 // Mutators
 void Board::setScore(int newScore){score = newScore;}
 
