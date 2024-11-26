@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "block.h"
+#include "level.h"
 #include <vector>
 using namespace std;
 
