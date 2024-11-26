@@ -11,8 +11,6 @@ public:
   // constructor
   ZBlock(int l);
 
-  // destructor
-  ~ZBlock() override;
 
   // getter
   char getType() const override;
