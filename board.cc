@@ -232,10 +232,16 @@ void Board::clearRows() {
     if (fullRow) {
       cleared++;
       board.erase(board.begin() + row);
+      for(auto cell : board[row]){
+        if(cell.use_count() == 1) score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
+        cell.reset();
+      }
       board.insert(board.begin(), vector<shared_ptr<Block>>(11, nullptr));
       row--;
     }
   }
+  score += (cleared + currentLevel) * (cleared + currentLevel);
+  if(score > highScore) highScore = score;
 }
 
 

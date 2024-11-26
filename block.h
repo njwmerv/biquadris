@@ -52,6 +52,7 @@ class Block {
         int getX() const;
         int getY() const;
         bool isHeavy() const;
+        int getLevel() const;
 
         // mutators
         void setX(int newX);
