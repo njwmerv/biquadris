@@ -17,8 +17,8 @@ Text::~Text(){
 
 void printBoardBorder(Controller* controller, std::ostream& out){
   for(Board* board : controller->getBoards()){
-    for(int i = 0; i < BOARD_WIDTH; i++) out << '=';
-    for(int i = 0; i < BOARD_GAP; i++) out << ' ';
+    for(int i = 0; i < BOARD_WIDTH + 2; i++) out << '=';
+    for(int i = 0; i < BOARD_GAP - 2; i++) out << ' ';
   }
   out << std::endl;
 }
@@ -55,6 +55,7 @@ void Text::notify(){
       out << "|";
       for(int j = 0; j < BOARD_GAP - 2; j++) out << ' ';
     }
+    out << endl;
   }
 
   // Print bottom border
