@@ -17,7 +17,7 @@ class Controller{
   const string scriptFile1;
   const string scriptFile2;
   const int numberOfPlayers = 2;
-  istream in = cin;
+  istream& in = cin;
   vector<Board*> boards;
   vector<View*> observers;
   int currentPlayer = 0;
