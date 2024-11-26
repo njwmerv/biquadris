@@ -193,3 +193,41 @@ void Board::clearRows() {
     }
   }
 }
+
+
+/*void Board::clockwise() {
+  int oldX = current->getX();
+  int oldY = current->getY();
+  int oldRotation = current->getNumRotations();
+  
+
+  for(pair<int, int> cell : current->getRotation(current->oldRotation)) {
+    int x = cell.first + oldX;
+    int y = cell.second + oldY;
+    board[y][x] = nullptr;
+  }
+
+  current->clockwise();
+
+  for(pair<int, int> cell : current->getRotation(current->getNumRotations())) {
+    int newX = cell.first + oldX;
+    int newY = cell.second + oldY;
+
+    if (newX < 0 || newX >= 11 || newY < 0 || newY >= 18) {
+      current->counterclockwise();
+      for (pair<int, int> cell : current->getRotation(current->oldRotation)) {
+        int x = cell.first + oldX;
+        int y = cell.second + oldY;
+        board[y][x] = current;
+      }
+    }
+    if (board[newY][newX]) {
+      current->counterclockwise();
+      for (pair<int, int> cell : current->getRotation(current->oldRotation)) {
+        int x = cell.first + oldX;
+        int y = cell.second + oldY;
+        board[y][x] = current;
+      }
+    }
+  } 
+}*/
