@@ -1,7 +1,7 @@
 #ifndef JBLOCK_H
 #define JBLOCK_H
 
-#include "block.h"
+#include "BLOCK_H"
 
 
 using namespace std;

@@ -1,7 +1,7 @@
 #ifndef OBLOCK_H
 #define OBLOCK_H
 
-#include "block.h"
+#include "BLOCK_H"
 
 
 using namespace std;

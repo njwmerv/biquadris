@@ -1,6 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "block.h"
+#include "BLOCK_H"
 #include "level.h"
 #include <vector>
 #include <memory>

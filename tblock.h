@@ -1,7 +1,7 @@
 #ifndef TBLOCK_H
 #define TBLOCK_H
 
-#include "block.h"
+#include "BLOCK_H"
 
 
 using namespace std;

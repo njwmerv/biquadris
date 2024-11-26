@@ -1,5 +1,4 @@
-#include "block.h"
-
+#include "BLOCK_H"
 using namespace std;
 
 void Block::clockwise(){numRotations = (numRotations + 1) % maxRotations;}

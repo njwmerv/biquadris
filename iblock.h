@@ -1,7 +1,7 @@
 #ifndef IBLOCK_H
 #define IBLOCK_H
 
-#include "block.h"
+#include "BLOCK_H"
 
 
 using namespace std;

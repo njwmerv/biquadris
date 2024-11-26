@@ -6,7 +6,7 @@
 #include "controller.h"
 #include "text.h"
 #include "graphic.h"
-#include "block.h"
+#include "BLOCK_H"
 
 int main(int argc, char* argv[]){
   // Game setup
