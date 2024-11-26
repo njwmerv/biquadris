@@ -3,9 +3,7 @@
 
 using namespace std;
 
-using namespace std;
-
-TBlock::TBlock(int l) : level{l} {
+TBlock::TBlock(int l){
     rotations[0] = {{0, 1}, {1, 1}, {1, 2}, {2, 1}};
     rotations[1] = {{1, 2}, {1, 1}, {1, 0}, {2, 1}};
     rotations[2] = {{0, 1}, {1, 0}, {1, 1}, {2, 1}};
@@ -14,31 +12,4 @@ TBlock::TBlock(int l) : level{l} {
 
 char TBlock::getType() const {
     return 'T';
-}
-
-void TBlock::clockwise() {
-    numRotations = (numRotations + 1) % 4;
-}
-
-void TBlock::counterclockwise() {
-    numRotations = (numRotations - 1) % 4;
-}
-
-TBlock::TBlock(int l) : level{l} {
-    rotations[0] = {{0, 1}, {1, 1}, {1, 2}, {2, 1}};
-    rotations[1] = {{1, 2}, {1, 1}, {1, 0}, {2, 1}};
-    rotations[2] = {{0, 1}, {1, 0}, {1, 1}, {2, 1}};
-    rotations[3] = {{0, 1}, {1, 0}, {1, 1}, {2, 0}};
-}
-
-char TBlock::getType() const {
-    return 'T';
-}
-
-void TBlock::clockwise() {
-    numRotations = (numRotations + 1) % 4;
-}
-
-void TBlock::counterclockwise() {
-    numRotations = (numRotations - 1) % 4;
 }

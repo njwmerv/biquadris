@@ -14,12 +14,6 @@ class TBlock : public Block {
         // getter
         char getType() const override;
 
-        // rotate the block clockwise
-        void clockwise () override;
-
-        // rotate the block counterclockwise
-        void counterclockwise () override;
-
 };
 
 #endif

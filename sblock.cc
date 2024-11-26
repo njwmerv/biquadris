@@ -14,11 +14,3 @@ SBlock::SBlock(int l){
 char SBlock::getType() const {
     return 'S';
 }
-
-void SBlock::clockwise() {
-    numRotations = (numRotations + 1) % 4;
-}
-
-void SBlock::counterclockwise() {
-    numRotations = (numRotations - 1) % 4;
-}

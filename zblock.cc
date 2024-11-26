@@ -13,11 +13,3 @@ ZBlock::ZBlock(int l){
 char ZBlock::getType() const {
   return 'Z';
 }
-
-void ZBlock::clockwise() {
-  numRotations = (numRotations + 1) % 4;
-}
-
-void ZBlock::counterclockwise() {
-  numRotations = (numRotations - 1) % 4;
-}
