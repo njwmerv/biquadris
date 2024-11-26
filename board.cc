@@ -31,7 +31,7 @@ Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0
   else if(startingLevel == 2) level = new Level2;
   else if(startingLevel == 3) level = new Level3;
   else if(startingLevel == 4) level = new Level4;
-  current = level->generateBlock();
+  current = shared_ptr<Block>(level->generateBlock());
   next = level->generateBlock();
 }
 
