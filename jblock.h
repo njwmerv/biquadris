@@ -11,9 +11,6 @@ class JBlock : public Block {
         // constructor
         JBlock(int l);
 
-        // destructor
-        ~JBlock() override;
-
         // getter
         char getType() const override;
 

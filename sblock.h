@@ -11,8 +11,6 @@ class SBlock : public Block {
         // constructor
         SBlock(int l);
 
-        // destructor
-        ~SBlock() override;
 
         // getter
         char getType() const override;
