@@ -109,7 +109,7 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::DOWN) board->down();
     //else if(command == Command::CLOCKWISE) board->clockwise();
     //else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
-    //else if(command == Command::DROP) board->drop();
+    else if(command == Command::DROP) board->drop();
     else if(command == Command::LEVEL_UP) board->levelup();
     else if(command == Command::LEVEL_DOWN) board->leveldown();
     else if(command == Command::NO_RANDOM){
@@ -123,13 +123,13 @@ void Controller::performCommand(const int repetitions, const Command command){
       in >> filePath;
       sequence(filePath);
     }
-    //else if(command == Command::I) board;
-    //else if(command == Command::J) board;
-    //else if(command == Command::L) board;
-    //else if(command == Command::O) board;
-    //else if(command == Command::S) board;
-    //else if(command == Command::Z) board;
-    //else if(command == Command::T) board;
+    else if(command == Command::I) board->forceBlock("I");
+    else if(command == Command::J) board->forceBlock("J");
+    else if(command == Command::L) board->forceBlock("L");
+    else if(command == Command::O) board->forceBlock("O");
+    else if(command == Command::S) board->forceBlock("S");
+    else if(command == Command::Z) board->forceBlock("Z");
+    else if(command == Command::T) board->forceBlock("T");
     else if(command == Controller::Command::RESTART){
       board->clearBoard();
       board->forceLevel(startingLevel);
