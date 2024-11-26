@@ -56,3 +56,7 @@ void Board::clearBoard(){
     }
   }
 }
+
+void Board :: down () {
+    int curX = current->x;
+}
