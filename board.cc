@@ -68,54 +68,54 @@ void Board::clearBoard(){
 }
 
 void Board :: down () {
-    int curX = current->getX();
-    int curY = current->getY();
-    int curNumRot  = current->getNumRotations();
-    for(pair<int, int> cell : current->getRotation(curNumRot)) {
-        if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
-            // call something that runs when a block has been placed
-            return;
-        }
+  int curX = current->getX();
+  int curY = current->getY();
+  int curNumRot = current->getNumRotations();
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
+      // call something that runs when a block has been placed
+      return;
     }
-    current->setY(curY-1);
+  }
+  current->setY(curY-1);
 }
 
 void Board :: right() {
-    int curX = current->getX();
-    int curY = current->getY();
-    int curNumRot  = current->getNumRotations();
-    for(pair<int, int> cell : current->getRotation(curNumRot)) {
-        if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
-            // call something that runs when a block has been placed
-            return;
-        }
-        if(!current->isHeavy()) continue;
-        if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr || board[cell.first + curX + 1][cell.second + curY - 2] != nullptr) {
-            // call something that runs when a block has been placed
-            return;
-        }
+  int curX = current->getX();
+  int curY = current->getY();
+  int curNumRot  = current->getNumRotations();
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
+      // call something that runs when a block has been placed
+      return;
     }
-    current->setX(curX+1);
+    if(!current->isHeavy()) continue;
+    if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr || board[cell.first + curX + 1][cell.second + curY - 2] != nullptr) {
+      // call something that runs when a block has been placed
+      return;
+    }
+  }
+  current->setX(curX+1);
 }
 
 void Board :: left() {
-    int curX = current->getX();
-    int curY = current->getY();
-    int curNumRot  = current->getNumRotations();
-    for(pair<int, int> cell : current->getRotation(curNumRot)) {
-        if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
-            // call something that runs when a block has been placed
-            return;
-        }
-        if(!current->isHeavy()) continue;
-        if(board[cell.first + curX - 1][cell.second + curY - 1] != nullptr || board[cell.first + curX - 1][cell.second + curY - 2] != nullptr) {
-            // call something that runs when a block has been placed
-            return;
-        }
+  int curX = current->getX();
+  int curY = current->getY();
+  int curNumRot  = current->getNumRotations();
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
+      // call something that runs when a block has been placed
+      return;
     }
-    current->setX(curX-1);
+    if(!current->isHeavy()) continue;
+    if(board[cell.first + curX - 1][cell.second + curY - 1] != nullptr || board[cell.first + curX - 1][cell.second + curY - 2] != nullptr) {
+      // call something that runs when a block has been placed
+      return;
+    }
+  }
+  current->setX(curX-1);
 }
 
 void Board::placedProcedure() {
-  
+
 }
