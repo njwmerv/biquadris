@@ -43,6 +43,8 @@ class Board{
     void down();
     void right();
     void left();
+
+    void placedProcedure(); // ran when it is possible for a block to have been placed
 };
 
 #endif
