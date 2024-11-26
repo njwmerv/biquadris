@@ -11,6 +11,7 @@ class Board{
   Block* current;
   Block* next;
   string level0File;
+  int currentLevel;
 
   public:
     // Big 5

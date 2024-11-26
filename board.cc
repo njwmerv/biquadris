@@ -9,7 +9,7 @@
 
 // Big 5
 Board::Board(int startingLevel, std::string level0File) :
-  score{0}, level0File{level0File} {
+  score{0}, level0File{level0File}, currentLevel{startingLevel} {
   for(int i = 0; i < 15; i++){
     board.emplace_back(vector<shared_ptr<Block>> {nullptr});
   }
@@ -33,7 +33,6 @@ Board::~Board(){
 void Board::setScore(int newScore){score = newScore;}
 
 void Board::levelup(){
-  int currentLevel = level->getLevel();
   if(currentLevel == 4) return;
   delete level;
   currentLevel++;
@@ -44,7 +43,6 @@ void Board::levelup(){
 }
 
 void Board::leveldown(){
-  int currentLevel = level->getLevel();
   if(currentLevel == 0) return;
   delete level;
   currentLevel--;
