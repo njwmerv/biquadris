@@ -8,6 +8,6 @@ class Level {
         int currentLevel = 0;
         virtual Block *generateBlock() = 0;
         virtual ~Level() {};
-}
+};
 
 #endif
