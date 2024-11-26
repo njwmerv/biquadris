@@ -30,7 +30,7 @@ class Block {
         int numRotations = 0; // number of times the block has been rotated % 4
         int numCleared = 0; // number of cells that have been cleared
         int x = 0; // only matters when dropping
-        int y = 0;
+        int y = 15;
         bool heavy = false;
     public:
 

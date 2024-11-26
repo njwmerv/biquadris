@@ -156,4 +156,10 @@ void Board :: drop() {
     }
   }
   current->setY(curY-smallestDistance);
+  /* things that need to be implemented
+
+  - has a line been cleared? -> score, 
+  - set next as current, and create a new next using level (or file!)
+  - 
+  */
 }
