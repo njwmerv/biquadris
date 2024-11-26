@@ -2,26 +2,28 @@
 #define CONTROLLER_H
 #include <iostream>
 #include <vector>
+#include <memory>
 #include <string>
 #include <map>
 #include <utility>
 #include <functional>
 #include "board.h"
+using namespace std;
 
 class View; // forward declaration
 
 class Controller{
   const int seed;
   const int startingLevel;
-  const std::string scriptFile1;
-  const std::string scriptFile2;
+  const string scriptFile1;
+  const string scriptFile2;
   const int numberOfPlayers = 2;
-  std::istream in = std::cin;
-  std::vector<Board*> boards;
-  std::vector<View*> observers;
+  istream in = cin;
+  vector<Board*> boards;
+  vector<View*> observers;
   int currentPlayer = 0;
 
-  std::map<std::string, Command> commands{
+  map<string, Command> commands{
     {"left", Command::LEFT}, {"right", Command::RIGHT}, {"down", Command::DOWN}, {"clockwise", Command::CLOCKWISE},
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
     {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J}, {"L", Command::L}, {"O", Command::O},
@@ -31,12 +33,12 @@ class Controller{
 
   public:
     // Big 5
-    Controller(int, int, std::string, std::string);
+    Controller(int, int, string, string);
 
     ~Controller();
 
     // Accessors
-    const std::vector<Board*>& getBoards() const;
+    const vector<Board*>& getBoards() const;
 
     Board* getBoard() const;
 
@@ -53,9 +55,9 @@ class Controller{
     void detachView(View*);
 
     // For the game TODO
-    void sequence(std::string);
+    void sequence(string);
 
-    void noRandom(std::string);
+    void noRandom(string);
 
     void random();
 
@@ -72,7 +74,7 @@ class Controller{
       BLIND, HEAVY, FORCE // special actions
     };
 
-    std::pair<int, Controller::Command> interpretInput(const std::string) const;
+    pair<int, Controller::Command> interpretInput(const string) const;
 
     void performCommand(const int, const Command);
 

@@ -1,11 +1,13 @@
 #include "controller.h"
 #include <sstream>
+#include <memory>
 #include <utility>
 #include <fstream>
 #include "board.h"
+using namespace std;
 
 // Big 5
-Controller::Controller(int seed, int startingLevel, std::string scriptFile1, std::string scriptFile2) :
+Controller::Controller(int seed, int startingLevel, string scriptFile1, string scriptFile2) :
   seed{seed}, startingLevel{startingLevel}, scriptFile1{scriptFile1}, scriptFile2{scriptFile2} {
   boards.emplace_back(new Board(startingLevel, scriptFile1));
   boards.emplace_back(new Board(startingLevel, scriptFile2));
@@ -16,14 +18,14 @@ Controller::~Controller(){
 }
 
 // Accessors
-const std::vector<Board*>& Controller::getBoards() const {return boards;}
+const vector<Board*>& Controller::getBoards() const {return boards;}
 
 Board* Controller::getBoard() const {return boards.at(currentPlayer);}
 
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
 // Mutators
-void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers; in = std::cin;}
+void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers; in = cin;}
 
 // Display-related
 void Controller::notifyObservers() const {
@@ -47,16 +49,16 @@ void Controller::detachView(View* viewer){
 }
 
 // For the game TODO: MARI
-void Controller::sequence(std::string file){
+void Controller::sequence(string file){
   ifstream ifs{file};
-  std::string line;
+  string line;
   while(ifs >> line){
     auto interpreted = interpretInput(line);
     performCommand(interpreted.first, interpreted.second);
   }
 }
 
-void Controller::noRandom(std::string){
+void Controller::noRandom(string){
 
 }
 
@@ -74,10 +76,10 @@ void Controller::resetGame(){
 }
 
 // I/O-related
-std::pair<int, Controller::Command> Controller::interpretInput(const std::string input) const {
+pair<int, Controller::Command> Controller::interpretInput(const string input) const {
   int repetitions = 1;
 
-  std::istringstream iss{input};
+  istringstream iss{input};
   if(!(iss >> repetitions)){
     repetitions = 1;
     iss.clear();
@@ -113,13 +115,13 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::LEVEL_UP) board->levelup();
     else if(command == Command::LEVEL_DOWN) board->leveldown();
     else if(command == Command::NO_RANDOM){
-      std::string filePath;
+      string filePath;
       in >> filePath;
-      std::ifstream file{filePath};
+      ifstream file{filePath};
     }
     else if(command == Command::RANDOM) board->random();
     else if(command == Command::SEQUENCE){
-      std::string filePath;
+      string filePath;
       in >> filePath;
       sequence(filePath);
     }
@@ -139,7 +141,7 @@ void Controller::performCommand(const int repetitions, const Command command){
 }
 
 void Controller::runGame(){
-  std::string input;
+  string input;
   bool turnDone = false;
   while(true){ // Game loop
     notifyObservers(); // update graphics
