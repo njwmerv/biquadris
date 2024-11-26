@@ -10,6 +10,7 @@ class Board{
   vector<vector<shared_ptr<Block>>> board;
   Level* level;
   int score;
+  int highScore;
   shared_ptr<Block> current;
   Block* next;
   string level0File;

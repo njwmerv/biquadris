@@ -20,7 +20,8 @@ const int boardWidth = 11; // max, not reached (start at index 0)
 const int boardHeight = 18;
 
 // Big 5
-Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false} {
+Board::Board(int startingLevel, string level0File):
+  score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false} {
   for(int i = 0; i < boardHeight; i++){
     vector<shared_ptr<Block>> row;
     for(int j = 0; j < boardWidth; j++) row.emplace_back(nullptr);
