@@ -5,7 +5,7 @@
 
 using namespace std;
 
-const int maxRotations = 3;
+const int maxRotations = 4;
 int startRotations = 0;
 int startCleared = 0;
 int startX = 0;

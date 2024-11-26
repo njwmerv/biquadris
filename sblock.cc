@@ -3,23 +3,21 @@
 
 using namespace std;
 
-SBlock :: SBlock(int l) {
+SBlock::SBlock(int l) : level{l} {
     rotations[0] = {{0, 1}, {1, 1}, {1, 2}, {2, 2}};
     rotations[1] = {{1, 2}, {1, 1}, {2, 1}, {2, 0}};
     rotations[2] = rotations[0];
     rotations[3] = rotations[1];
-
-    level = l;
 }
 
-char SBlock :: getType() const {
+char SBlock::getType() const {
     return 'S';
 }
 
-void IBlock :: clockwise() {
-    numRotations = (numRotations+1)%4;
+void SBlock::clockwise() {
+    numRotations = (numRotations + 1) % 4;
 }
 
-void IBlock :: counterclockwise() {
-    numRotations = (numRotations-1)%4;
+void SBlock::counterclockwise() {
+    numRotations = (numRotations - 1) % 4;
 }

@@ -9,10 +9,10 @@ using namespace std;
 class SBlock : public Block {
     public: 
         // constructor
-        IBlock(int l);
+        SBlock(int l);
 
         // destructor
-        ~IBlock() override;
+        ~SBlock() override;
 
         // getter
         char getType() const override;
