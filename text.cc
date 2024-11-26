@@ -49,7 +49,8 @@ void Text::notify(){
       auto theBoard = board->getTheBoard();
       out << "|";
       for(int j = 0; j < BOARD_WIDTH; j++){
-        if(theBoard[i][j] != nullptr) out << theBoard[i][j]->getType();
+				if(board->isBlind() && i >= 2 && i < 12 && j >= 2 && j < 9) out << '?';
+        else if(theBoard[i][j] != nullptr) out << theBoard[i][j]->getType();
         else out << ' ';
       }
       out << "|";
