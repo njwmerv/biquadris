@@ -156,3 +156,25 @@ void Board :: drop() {
   }
   current->setY(curY-smallestDistance);
 }
+
+
+void Board::clearRows() {
+  int cleared = 0;
+  for (int row = 0; row < 18; i++) {
+    bool fullRow = true;
+
+    for (int col = 0; col < 11; ++ col) {
+      if (!board[row][col]) {
+        fullRow = false;
+        break;
+      }
+    }
+
+    if (fullRow) {
+      cleared++;
+      board.erase(board.begin() + i);
+      board.insert(board.begin(), vector<shared_ptr<Block>>(11, nullptr)); 
+      i--;
+    }
+  }
+}
