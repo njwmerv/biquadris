@@ -6,11 +6,11 @@
 using namespace std;
 
 const int maxRotations = 4;
-int startRotations = 0;
-int startCleared = 0;
-int startX = 0;
-int startY = 0;
-int startHeavy = false;
+const int startRotations = 0;
+const int startCleared = 0;
+const int startX = 0;
+const int startY = 0;
+const int startHeavy = false;
 
 class Block {
     protected:
