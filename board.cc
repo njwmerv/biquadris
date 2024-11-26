@@ -60,8 +60,7 @@ void Board::leveldown(){
 void Board::clearBoard(){
   for(auto row : board){
     for(auto cell : row){
-      if(cell != nullptr) delete cell;
-      cell = nullptr;
+      cell.reset();
     }
   }
 }
