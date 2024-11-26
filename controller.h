@@ -33,10 +33,12 @@ class Controller{
     // Big 5
     Controller(int, int, std::string, std::string);
 
+    ~Controller();
+
     // Accessors
     const std::vector<Board*>& getBoards() const;
 
-    const Board* getBoard() const;
+    Board* getBoard() const;
 
     int getCurrentPlayer() const;
 
@@ -50,7 +52,7 @@ class Controller{
 
     void detachView(View*);
 
-    // For the game
+    // For the game TODO
     void sequence(std::string);
 
     void noRandom(std::string);

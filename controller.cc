@@ -11,10 +11,14 @@ Controller::Controller(int seed, int startingLevel, std::string scriptFile1, std
   boards.emplace_back(new Board(startingLevel, scriptFile2));
 }
 
+Controller::~Controller(){
+  for(auto board : boards) delete board;
+}
+
 // Accessors
 const std::vector<Board*>& Controller::getBoards() const {return boards;}
 
-const Board* Controller::getBoard() const {return boards.at(currentPlayer);}
+Board* Controller::getBoard() const {return boards.at(currentPlayer);}
 
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
@@ -62,6 +66,7 @@ void Controller::resetGame(){
     board->setScore(0);
   }
   currentPlayer = 0;
+  in = std::cin;
 }
 
 // I/O-related
@@ -93,7 +98,7 @@ std::pair<int, Controller::Command> Controller::interpretInput(const std::string
 }
 
 void Controller::performCommand(const int repetitions, const Command command){
-  const Board* board = getBoard();
+  Board* board = getBoard();
   for(int i = 0; i < repetitions; i++){
     if(command == Command::LEFT) board->left();
     else if(command == Command::RIGHT) board->right();
@@ -122,7 +127,11 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::S) board;
     else if(command == Command::Z) board;
     else if(command == Command::T) board;
-    else if(command == Controller::Command::RESTART) board->restart();
+    else if(command == Controller::Command::RESTART){
+      board->clearBoard();
+      board->forceLevel(startingLevel);
+      board->setScore(0);
+    }
   }
 }
 
@@ -140,6 +149,6 @@ void Controller::runGame(){
     auto interpretedInput = interpretInput(input);
     performCommand(interpretedInput.first, interpretedInput.second);
 
-    if(turnDone) nextPlayer(); // TODO MARI: when is turnDone?
+    if(turnDone){notifyObservers(); nextPlayer();} // TODO MARI: when is turnDone?
   }
 }

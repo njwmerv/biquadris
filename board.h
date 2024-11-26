@@ -24,6 +24,7 @@ class Board{
     int getLevel();
 
     // Mutators
+    void setScore(int);
 
     // Game state
     void levelup();
