@@ -160,6 +160,7 @@ void Board :: drop() {
 
   - has a line been cleared? -> score, 
   - set next as current, and create a new next using level (or file!)
-  - 
+  - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
+  - if blind -> remove blindness
   */
 }
