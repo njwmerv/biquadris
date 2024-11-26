@@ -3,7 +3,6 @@
 #include "controller.h"
 #include "window.h"
 using namespace std;
-#include <iostream>
 
 // Constants
 const int BOARD_GAP = 9;
@@ -27,6 +26,8 @@ Graphic::Graphic(Controller* controller) :
     // Draw Header (score + level)
     window.drawString(offset + 5, 35, "Level: ");
     window.drawString(offset + 5, 45, "Score: ");
+    window.drawString(offset + 5 + 38, 35, to_string(board->getLevel()));
+    window.drawString(offset + 5 + 38, 45, to_string(board->getScore()));
 
     // Draw board outline
     window.fillRectangle(offset + 5, 50, BOARD_WIDTH * SCALE_FACTOR + 1, 1, 1);
