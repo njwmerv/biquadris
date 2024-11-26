@@ -6,33 +6,20 @@
 #include "sblock.h"
 #include "zblock.h"
 #include "tblock.h"
+using namespace std;
 
+Block* Level1::generateBlock(){
+  const int maxWeight = 12;
+  const string blockTypes[maxWeight] = {"I", "I", "J", "J", "L", "L", "O", "O", "S", "Z", "T", "T"};
+  const string blockGenerated = blockTypes[rand() % maxWeight];
 
-Block *Level1::generateBlock() {
-    string blockTypes[] = {"I", "I", "J", "J", "L", "L", "O", "O", "S", "Z", "T", "T"};
-
-    const int weightTotal = 12;
-
-    int random = rand() % weightTotal;
-
-    string blockGenerated = blockTypes[random];
-
-    if (currentBlock == "I") {
-        return new IBlock();
-    } else if (currentBlock == "J") {
-        return new JBlock();
-    } else if (currentBlock == "L") {
-        return new LBlock();
-    } else if (currentBlock == "O") {
-        return new OBlock();
-    } else if (currentBlock == "S") {
-        return new SBlock();
-    } else if (currentBlck == "Z") {
-        return new ZBlock();
-    } else if (currentBlock == "T") {
-        return new TBlock();
-    }
-
-
+  if(blockGenerated == "I") return new IBlock(1);
+  else if(blockGenerated == "J") return new JBlock(1);
+  else if(blockGenerated == "L") return new LBlock(1);
+  else if(blockGenerated == "O") return new OBlock(1);
+  else if(blockGenerated == "S") return new SBlock(1);
+  else if(blockGenerated == "Z") return new ZBlock(1);
+  else if(blockGenerated == "T") return new TBlock(1);
+  return new IBlock(1);
 }
 
