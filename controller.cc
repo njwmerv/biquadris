@@ -7,9 +7,8 @@
 // Big 5
 Controller::Controller(int seed, int startingLevel, std::string scriptFile1, std::string scriptFile2) :
   seed{seed}, startingLevel{startingLevel}, scriptFile1{scriptFile1}, scriptFile2{scriptFile2} {
-  for(int i = 0; i < numberOfPlayers; i++){
-    // TODO MARI: Create boards
-  }
+  boards.emplace_back(new Board(startingLevel, scriptFile1));
+  boards.emplace_back(new Board(startingLevel, scriptFile2));
 }
 
 // Accessors

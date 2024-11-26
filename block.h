@@ -33,6 +33,12 @@ class Block {
         // rotate the block counterclockwise
         void counterclockwise();
 
+        // set x to a new value
+        void setX(int newX);
+
+        // set y to a new value
+        void setY(int newY);
+
 };
 
 #endif
