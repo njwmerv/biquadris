@@ -16,19 +16,19 @@ Block *Level3::generateBlock() {
     string blockGenerated = blockTypes[random];
 
     if (blockGenerated == "I") {
-        return new IBlock();
+        return new IBlock(1);
     } else if (blockGenerated == "J") {
-        return new JBlock();
+        return new JBlock(1);
     } else if (blockGenerated == "L") {
-        return new LBlock();
+        return new LBlock(1);
     } else if (blockGenerated == "O") {
-        return new OBlock();
+        return new OBlock(1);
     } else if (blockGenerated == "S") {
-        return new SBlock();
+        return new SBlock(1);
     } else if (blockGenerated == "Z") {
-        return new ZBlock();
+        return new ZBlock(1);
     } else if (blockGenerated == "T") {
-        return new TBlock();
+        return new TBlock(1);
     }
 
 
