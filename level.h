@@ -1,5 +1,5 @@
 #ifndef LEVEL_H
-#include LEVEL_H
+#define LEVEL_H
 
 #include "block.h"
 
