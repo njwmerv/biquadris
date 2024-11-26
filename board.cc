@@ -7,6 +7,7 @@
 #include "level3.h"
 #include "level4.h"
 
+// Big 5
 Board::Board(int startingLevel, std::string level0File) :
   score{0}, level0File{level0File} {
   for(int i = 0; i < 15; i++){
@@ -25,6 +26,11 @@ Board::~Board(){
   clearBoard();
   delete level;
 }
+
+// Accessors
+
+// Mutators
+void Board::setScore(int newScore){score = newScore;}
 
 void Board::levelup(){
   int currentLevel = level->getLevel();

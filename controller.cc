@@ -11,10 +11,14 @@ Controller::Controller(int seed, int startingLevel, std::string scriptFile1, std
   boards.emplace_back(new Board(startingLevel, scriptFile2));
 }
 
+Controller::~Controller(){
+  for(auto board : boards) delete board;
+}
+
 // Accessors
 const std::vector<Board*>& Controller::getBoards() const {return boards;}
 
-const Board* Controller::getBoard() const {return boards.at(currentPlayer);}
+Board* Controller::getBoard() const {return boards.at(currentPlayer);}
 
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
@@ -43,8 +47,13 @@ void Controller::detachView(View* viewer){
 }
 
 // For the game TODO: MARI
-void Controller::sequence(std::string){
-
+void Controller::sequence(std::string file){
+  ifstream ifs{file};
+  std::string line;
+  while(ifs >> line){
+    auto interpreted = interpretInput(line);
+    performCommand(interpreted.first, interpreted.second);
+  }
 }
 
 void Controller::noRandom(std::string){
@@ -93,7 +102,7 @@ std::pair<int, Controller::Command> Controller::interpretInput(const std::string
 }
 
 void Controller::performCommand(const int repetitions, const Command command){
-  const Board* board = getBoard();
+  Board* board = getBoard();
   for(int i = 0; i < repetitions; i++){
     if(command == Command::LEFT) board->left();
     else if(command == Command::RIGHT) board->right();
@@ -105,15 +114,14 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::LEVEL_DOWN) board->leveldown();
     else if(command == Command::NO_RANDOM){
       std::string filePath;
-      in.get() >> filePath;
+      in >> filePath;
       std::ifstream file{filePath};
     }
     else if(command == Command::RANDOM) board->random();
     else if(command == Command::SEQUENCE){
       std::string filePath;
-      in.get() >> filePath;
-      std::ifstream file{filePath};
-      in = file; // may cause seg fault when this goes out of scope
+      in >> filePath;
+      sequence(filePath);
     }
     else if(command == Command::I) board;
     else if(command == Command::J) board;
@@ -122,7 +130,11 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::S) board;
     else if(command == Command::Z) board;
     else if(command == Command::T) board;
-    else if(command == Controller::Command::RESTART) board->restart();
+    else if(command == Controller::Command::RESTART){
+      board->clearBoard();
+      board->forceLevel(startingLevel);
+      board->setScore(0);
+    }
   }
 }
 
@@ -133,13 +145,10 @@ void Controller::runGame(){
     notifyObservers(); // update graphics
 
     // Read input and get it interpreted by controller
-    if(in.get().eof() && &(in.get()) == &std::cin) break;
-    else if(in.get().eof()) in = std::cin;
-
-    in.get() >> input;
+    in >> input;
     auto interpretedInput = interpretInput(input);
     performCommand(interpretedInput.first, interpretedInput.second);
 
-    if(turnDone) nextPlayer(); // TODO MARI: when is turnDone?
+    if(turnDone){notifyObservers(); nextPlayer();} // TODO MARI: when is turnDone?
   }
 }
