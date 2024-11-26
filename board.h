@@ -9,11 +9,14 @@ class Board{
   Level* level;
   int score;
   Block* current;
-  Block* next; //
+  Block* next;
+  string level0File;
 
   public:
     // Big 5
-    Board(int, )
+    Board(int, string);
+
+    ~Board();
 
     // Accessors
     int getScore();
