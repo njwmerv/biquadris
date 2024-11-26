@@ -10,6 +10,7 @@ int startRotations = 0;
 int startCleared = 0;
 int startX = 0;
 int startY = 0;
+int startHeavy = false;
 
 class Block {
     protected:
@@ -19,6 +20,7 @@ class Block {
         int numCleared = startCleared; // number of cells that have been cleared
         int x = startX; // only matters when dropping
         int y = startY;
+        bool heavy = startHeavy;
     public:
 
         // destructor
@@ -38,10 +40,12 @@ class Block {
         int getNumRotations();
         int getX();
         int getY();
+        bool isHeavy();
 
         // mutators
         void setX(int newX);
         void setY(int newY);
+        void makeHeavy();
 
 };
 
