@@ -45,15 +45,15 @@ Graphic::~Graphic(){
 }
 
 int getColour(const char c){
-  if(c == ' ') return 0;
-  else if(c == 'I') return 2;
-  else if(c == 'J') return 3;
-  else if(c == 'L') return 4;
-  else if(c == 'O') return 5;
-  else if(c == 'S') return 6;
-  else if(c == 'T') return 7;
-  else if(c == 'Z') return 8;
-  return 1;
+  if(c == ' ') return Xwindow::White;
+  else if(c == 'I') return Xwindow::Cyan;
+  else if(c == 'J') return Xwindow::Blue;
+  else if(c == 'L') return Xwindow::Orange;
+  else if(c == 'O') return Xwindow::Yellow;
+  else if(c == 'S') return Xwindow::Green;
+  else if(c == 'T') return Xwindow::Purple;
+  else if(c == 'Z') return Xwindow::Red;
+  return Xwindow::Black;
 }
 
 void Graphic::notify(){
