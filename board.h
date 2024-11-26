@@ -30,6 +30,8 @@ class Board{
 
     Block* getNextBlock() const;
 
+    Block* getCurrentBlock() const;
+
     // Mutators
     void setScore(int);
 

@@ -16,11 +16,14 @@
 #include "tblock.h"
 using namespace std;
 
+const int boardWidth = 11; // max, not reached (start at index 0)
+const int boardHeight = 18;
+
 // Big 5
 Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0File}, currentLevel{startingLevel} {
-  for(int i = 0; i < 18; i++){
+  for(int i = 0; i < boardHeight; i++){
     vector<shared_ptr<Block>> row;
-    for(int j = 0; j < 11; j++) row.emplace_back(nullptr);
+    for(int j = 0; j < boardWidth; j++) row.emplace_back(nullptr);
     board.emplace_back(row);
   }
   if(startingLevel == 0) level = new Level0{level0File};
@@ -42,6 +45,7 @@ int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
 vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 Block* Board::getNextBlock() const {return next;}
+Block* Board::getCurrentBlock() const {return current;}
 
 // Mutators
 void Board::setScore(int newScore){score = newScore;}
@@ -97,6 +101,7 @@ void Board :: down () {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(cell.second + curY - 1 < 0) continue;
     if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
       return;
     }
@@ -109,6 +114,7 @@ void Board :: right() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(cell.first + curX + 1 >= boardWidth) continue;
     if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
       return;
     }
@@ -125,6 +131,7 @@ void Board :: left() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    if(cell.first + curX - 1 < 0) continue;
     if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
       return;
     }
@@ -155,6 +162,13 @@ void Board :: drop() {
     }
   }
   current->setY(curY-smallestDistance);
+  /* things that need to be implemented
+
+  - has a line been cleared? -> score, 
+  - set next as current, and create a new next using level (or file!)
+  - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
+  - if blind -> remove blindness
+  */
 }
 
 
