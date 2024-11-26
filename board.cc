@@ -30,6 +30,8 @@ Board::~Board(){
 }
 
 // Accessors
+int Board::getScore() const {return score;}
+int Board::getLevel() const {return currentLevel;}
 
 // Mutators
 void Board::setScore(int newScore){score = newScore;}

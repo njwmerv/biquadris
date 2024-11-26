@@ -20,9 +20,9 @@ class Board{
     ~Board();
 
     // Accessors
-    int getScore();
+    int getScore() const;
 
-    int getLevel();
+    int getLevel() const;
 
     // Mutators
     void setScore(int);
