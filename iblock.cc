@@ -12,10 +12,6 @@ IBlock :: IBlock(int l) {
     level = l;
 }
 
-IBlock :: ~IBlock() {
-
-}
-
 char IBlock :: getType() const {
     return 'I';
 }

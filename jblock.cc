@@ -12,9 +12,6 @@ JBlock :: JBlock(int l) {
     level = l;
 }
 
-JBlock :: ~JBlock() {
-
-}
 
 char JBlock :: getType() const {
     return 'J';
