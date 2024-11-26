@@ -34,11 +34,7 @@ Board::Board(int startingLevel, string level0File):
   else if(startingLevel == 4) level = new Level4;
   current = shared_ptr<Block>(level->generateBlock());
   next = level->generateBlock();
-	// adding current to theBoard
-  auto cellsOfBlock = current->getRotation(current->getNumRotations());
-  for(auto& cell : cellsOfBlock){
-    board[cell.first][cell.second] = current;
-  }
+  addCurrentToBoard();
 }
 
 Board::~Board(){
@@ -97,10 +93,7 @@ void Board::forceBlock(const string type){
   else if(type == "S") current = shared_ptr<Block>(new SBlock(currentLevel));
   else if(type == "Z") current = shared_ptr<Block>(new ZBlock(currentLevel));
   else current = shared_ptr<Block>(new TBlock(currentLevel));
-  cellsOfBlock = current->getRotation(current->getNumRotations());
-  for(auto cell : cellsOfBlock){
-    board[cell.first][cell.second] = current;
-  }
+  addCurrentToBoard();
 }
 
 void Board::forceLevel(const int newLevel){
@@ -219,15 +212,21 @@ void Board :: drop() {
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = current;
   }
+  clearRows(); // clears full rows and then increments score accordingly
+  current.reset(next); // if you want to specify next, do it when it's generated or just above this line
+  addCurrentToBoard();
   /* things that need to be implemented
-
-  - has a line been cleared? -> score, 
-  - set next as current, and create a new next using level (or file!)
   - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
   */
   if(blind) blind = false;
 }
 
+void Board::addCurrentToBoard(){
+  auto cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(auto cell : cellsOfBlock){
+    board[cell.first][cell.second] = current;
+  }
+}
 
 void Board::clearRows() {
   int cleared = 0;

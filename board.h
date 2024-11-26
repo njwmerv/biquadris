@@ -19,6 +19,8 @@ class Board{
 
   void clearRows();
 
+  void addCurrentToBoard();
+
   public:
     // Big 5
     Board(int, string);
