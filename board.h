@@ -26,6 +26,8 @@ class Board{
 
     int getLevel() const;
 
+    vector<vector<shared_ptr<Block>>> getTheBoard() const;
+
     // Mutators
     void setScore(int);
 

@@ -33,6 +33,7 @@ Board::~Board(){
 // Accessors
 int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
+vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 
 // Mutators
 void Board::setScore(int newScore){score = newScore;}
