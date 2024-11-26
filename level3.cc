@@ -9,27 +9,14 @@
 #include <cstdlib>
 
 Block *Level3::generateBlock() {
-    string BlockTypes[] = {"I", "J", "L", "O", "S", "S", "Z", "Z", "T"};
-    const int weightTotal = 9;
-    int random = rand() % weightTotal;
+    const string blockTypes[] = {"I", "J", "L", "O", "S", "S", "Z", "Z", "T"};
+    const string blockGenerated = blockTypes[rand() % 9];
 
-    string blockGenerated = blockTypes[random];
-
-    if (blockGenerated == "I") {
-        return new IBlock(1);
-    } else if (blockGenerated == "J") {
-        return new JBlock(1);
-    } else if (blockGenerated == "L") {
-        return new LBlock(1);
-    } else if (blockGenerated == "O") {
-        return new OBlock(1);
-    } else if (blockGenerated == "S") {
-        return new SBlock(1);
-    } else if (blockGenerated == "Z") {
-        return new ZBlock(1);
-    } else if (blockGenerated == "T") {
-        return new TBlock(1);
-    }
-
-
+    if(blockGenerated == "I") return new IBlock(3);
+    else if(blockGenerated == "J") return new JBlock(3);
+    else if(blockGenerated == "L") return new LBlock(3);
+    else if(blockGenerated == "O") return new OBlock(3);
+    else if(blockGenerated == "S") return new SBlock(3);
+    else if(blockGenerated == "Z") return new ZBlock(3);
+    else return new TBlock(3);
 }
