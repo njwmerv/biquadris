@@ -80,7 +80,6 @@ void Board :: down () {
     current->setY(curY-1);
 }
 
-
 void Board :: right() {
     int curX = current->getX();
     int curY = current->getY();
@@ -115,4 +114,8 @@ void Board :: left() {
         }
     }
     current->setX(curX-1);
+}
+
+void Board::placedProcedure() {
+  
 }
