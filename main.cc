@@ -26,21 +26,25 @@ int main(int argc, char* argv[]){
       std::string str = argv[i + 1];
       std::istringstream seedInput{str};
       seedInput >> seed;
+      i++;
     }
     else if(arg == "-startlevel" && i + 1 < argc){
       std::string str = argv[i + 1];
       std::istringstream startLevelInput{str};
       startLevelInput >> startingLevel;
+      i++;
     }
     else if(arg == "-scriptfile1" && i + 1 < argc){
       std::string str = argv[i + 1];
       std::istringstream scriptFileInput{str};
       scriptFileInput >> scriptFile1;
+      i++;
     }
     else if(arg == "-scriptfile2" && i + 1 < argc){
       std::string str = argv[i + 1];
       std::istringstream scriptFileInput{str};
       scriptFileInput >> scriptFile2;
+      i++;
     }
     else{std::cerr << arg << " is not a valid command line argument" << std::endl;}
   }
