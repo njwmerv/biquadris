@@ -7,7 +7,7 @@
 class Level3 : public Level {
     public:
         Block *generateBlock() override;
-}
+};
 
 
 

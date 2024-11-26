@@ -14,6 +14,6 @@ class Level0 : public Level {
         Level0(const string& filename);
         Block* generateBlock() override;
     
-}
+};
 
 #endif

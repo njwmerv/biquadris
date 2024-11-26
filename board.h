@@ -3,6 +3,7 @@
 #include "block.h"
 #include "level.h"
 #include <vector>
+#include <memory>
 using namespace std;
 
 class Board{
