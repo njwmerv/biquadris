@@ -127,10 +127,14 @@ void Board :: down () {
 }
 
 void Board :: right() {
+  // accessing the properties of the current block
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
-  bool willDrop = false;
+
+  bool willDrop = false; // only used if the block is heavy
+
+  // determining if we are able to move the block to the right
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.first + curX + 1 >= boardWidth) continue;
     if(board[cell.first + curX + 1][cell.second + curY] != nullptr && 
@@ -149,17 +153,17 @@ void Board :: right() {
       willDrop = true;
       continue;
     }
+    // still need to implement heavy if it doesn't drop
+
   }
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = nullptr;
   }
-  /*
   current->setX(curX+1);
   curX = curX + 1;
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = current;
   }
-  */
   if(willDrop) drop();
 }
 
