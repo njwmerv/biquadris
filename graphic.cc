@@ -2,6 +2,7 @@
 #include "board.h"
 #include "controller.h"
 #include "window.h"
+using namespace std;
 
 // Constants
 const int BOARD_GAP = 9;
@@ -55,18 +56,19 @@ int getColour(const char c){
 
 void Graphic::notify(){
   const Board* board = controller->getBoard();
+  auto theBoard = board->getTheBoard();
   const int offset = controller->getCurrentPlayer() * SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP);
 
   // Print score
   window.fillRectangle(offset + 5 + 36, 25, 80, 10, 0);
   window.fillRectangle(offset + 5 + 36, 35, 80, 10, 0);
-  window.drawString(offset + 5 + 38, 35, board->getLevel());
-  window.drawString(offset + 5 + 38, 45, board->getScore());
+  window.drawString(offset + 5 + 38, 35, to_string(board->getLevel()));
+  window.drawString(offset + 5 + 38, 45, to_string(board->getScore()));
 
   // Print board itself but only of current player (that's the only one that will change)
   for(int i = 0; i < BOARD_HEIGHT; i++){
     for(int j = 0; j < BOARD_WIDTH; j++){
-      const int cellColour = getColour(board[i][j]->getType());
+      const int cellColour = getColour(theBoard[i][j]->getType());
       window.fillRectangle(offset + i * SCALE_FACTOR, j * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
     }
   }
