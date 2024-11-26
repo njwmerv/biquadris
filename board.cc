@@ -115,3 +115,14 @@ void Board :: left() {
   }
   current->setX(curX-1);
 }
+
+/*void drop(shared_ptr<Block> block) {
+    auto &placements = block->rotations[numRotations];
+
+    while(true) {
+        bool correctPlacement = true;
+        for (auto &place : placements) {
+            int x = 
+        }
+    }
+}*/
