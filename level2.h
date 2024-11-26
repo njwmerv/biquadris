@@ -5,7 +5,7 @@
 class Level2 : public Level{
     public:
         Block *generateBlock() override;
-}
+};
 
 #endif
 

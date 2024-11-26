@@ -9,7 +9,7 @@ class Level4 : public Level {
         int blockCount;
     public:
         Block *generateBlock() override;
-}
+};
 
 
 
