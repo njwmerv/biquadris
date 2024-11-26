@@ -35,8 +35,8 @@ Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0
   next = level->generateBlock();
 	// adding current to theBoard
   auto cellsOfBlock = current->getRotation(current->getNumRotations());
-  for(auto cell : cellsOfBlock){
-    board[cell.first][cell.second] = shared_ptr<Block>(current.get());
+  for(auto& cell : cellsOfBlock){
+    board[cell.first][cell.second] = current;
   }
 }
 
@@ -85,7 +85,7 @@ void Board::clearBoard(){
 
 void Board::forceBlock(const string type){
   auto cellsOfBlock = current->getRotation(current->getNumRotations());
-  for(auto cell : cellsOfBlock){ // this should delete the current block completely
+  for(auto& cell : cellsOfBlock){ // this should delete the current block completely
     board[cell.first][cell.second].reset();
     board[cell.first][cell.second] = nullptr;
   }
@@ -98,7 +98,7 @@ void Board::forceBlock(const string type){
   else current = shared_ptr<Block>(new TBlock(currentLevel));
   cellsOfBlock = current->getRotation(current->getNumRotations());
   for(auto cell : cellsOfBlock){
-    board[cell.first][cell.second] = shared_ptr<Block>(current.get());
+    board[cell.first][cell.second] = current;
   }
 }
 
