@@ -34,7 +34,7 @@ Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0
   current = shared_ptr<Block>(level->generateBlock());
   next = level->generateBlock();
 	// adding current to theBoard
-  auto cellsOfBlock = current->getRotation(current->getNumRotations());shared_ptr<Block>
+  auto cellsOfBlock = current->getRotation(current->getNumRotations());
   for(auto cell : cellsOfBlock){
     board[cell.first][cell.second] = shared_ptr<Block>(current);
   }
