@@ -33,6 +33,11 @@ Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0
   else if(startingLevel == 4) level = new Level4;
   current = shared_ptr<Block>(level->generateBlock());
   next = level->generateBlock();
+	// adding current to theBoard
+  auto cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(auto& cell : cellsOfBlock){
+    board[cell.first][cell.second] = current;
+  }
 }
 
 Board::~Board(){
@@ -47,7 +52,6 @@ vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 Block* Board::getNextBlock() const {return next;}
 Block* Board::getCurrentBlock() const {return current.get();}
 bool Board::isBlind() const {return blind;}
-
 // Mutators
 void Board::setScore(int newScore){score = newScore;}
 
@@ -79,22 +83,33 @@ void Board::clearBoard(){
   }
 }
 
-Block* Board::forceBlock(const string type){
-  if(type == "I") return new IBlock(1);
-  else if(type == "J") return new JBlock(1);
-  else if(type == "L") return new LBlock(1);
-  else if(type == "O") return new OBlock(1);
-  else if(type == "S") return new SBlock(1);
-  else if(type == "Z") return new ZBlock(1);
-  else return new TBlock(1);
+void Board::forceBlock(const string type){
+  auto cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(auto& cell : cellsOfBlock){ // this should delete the current block completely
+    board[cell.first][cell.second].reset();
+    board[cell.first][cell.second] = nullptr;
+  }
+  if(type == "I") current = shared_ptr<Block>(new IBlock(currentLevel));
+  else if(type == "J") current = shared_ptr<Block>(new JBlock(currentLevel));
+  else if(type == "L") current = shared_ptr<Block>(new LBlock(currentLevel));
+  else if(type == "O") current = shared_ptr<Block>(new OBlock(currentLevel));
+  else if(type == "S") current = shared_ptr<Block>(new SBlock(currentLevel));
+  else if(type == "Z") current = shared_ptr<Block>(new ZBlock(currentLevel));
+  else current = shared_ptr<Block>(new TBlock(currentLevel));
+  cellsOfBlock = current->getRotation(current->getNumRotations());
+  for(auto cell : cellsOfBlock){
+    board[cell.first][cell.second] = current;
+  }
 }
 
-Level* Board::forceLevel(const int newLevel){
-  if(newLevel == 0) return new Level0(level0File);
-  else if(newLevel == 1) return new Level1;
-  else if(newLevel == 2) return new Level2;
-  else if(newLevel == 3) return new Level3;
-  else return new Level4;
+void Board::forceLevel(const int newLevel){
+  if(newLevel == currentLevel) return;
+  delete level;
+  if(newLevel == 0) level = new Level0(level0File);
+  else if(newLevel == 1) level = new Level1;
+  else if(newLevel == 2) level = new Level2;
+  else if(newLevel == 3) level = new Level3;
+  else level = new Level4;
 }
 
 void Board :: down () {
@@ -103,11 +118,18 @@ void Board :: down () {
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.second + curY - 1 < 0) continue;
-    if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
+    if(board[cell.first + curX][cell.second + curY - 1] != nullptr && 
+       board[cell.first + curX][cell.second + curY - 1] != current) {
       return;
     }
   }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
+  }
   current->setY(curY-1);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
 }
 
 void Board :: right() {
@@ -116,15 +138,23 @@ void Board :: right() {
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.first + curX + 1 >= boardWidth) continue;
-    if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
+    if(board[cell.first + curX + 1][cell.second + curY] != nullptr && 
+       board[cell.first + curX + 1][cell.second + curY] != current) {
       return;
     }
     if(!current->isHeavy()) continue;
+    // TODO: add border checkers for heavy blocks, AND fix it because it will detect itself (add != current)
     if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr || board[cell.first + curX + 1][cell.second + curY - 2] != nullptr) {
       return;
     }
   }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
+  }
   current->setX(curX+1);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
 }
 
 void Board :: left() {
@@ -133,7 +163,8 @@ void Board :: left() {
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.first + curX - 1 < 0) continue;
-    if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
+    if(board[cell.first + curX - 1][cell.second + curY] != nullptr && 
+       board[cell.first + curX - 1][cell.second + curY] != current) {
       return;
     }
     if(!current->isHeavy()) continue;
@@ -141,7 +172,13 @@ void Board :: left() {
       return;
     }
   }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
+  }
   current->setX(curX-1);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
 }
 
 void Board :: drop() {
@@ -162,7 +199,13 @@ void Board :: drop() {
       smallestDistance = count;
     }
   }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
+  }
   current->setY(curY-smallestDistance);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
   /* things that need to be implemented
 
   - has a line been cleared? -> score, 
