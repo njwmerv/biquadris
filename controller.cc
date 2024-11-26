@@ -25,13 +25,11 @@ Board* Controller::getBoard() const {return boards.at(currentPlayer);}
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
 // Mutators
-void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers; in = cin;}
+void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlayers;}
 
 // Display-related
 void Controller::notifyObservers() const {
-  for(View* view : observers){
-     view->notify();
-  }
+  for(auto view : observers) view->notify();
 }
 
 void Controller::attachView(View* viewer){

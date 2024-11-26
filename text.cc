@@ -2,13 +2,14 @@
 #include <iostream>
 #include <iomanip>
 #include "board.h"
+#include "controller.h"
 
 // Constants
 const int BOARD_GAP = 9;
 const int BOARD_WIDTH = 11;
 const int BOARD_HEIGHT = 15;
 
-Text::Text(Controller* controller) : View{controller} {}
+Text::Text(Controller* controller) : controller{controller} {controller->attachView(this);}
 
 Text::~Text(){
   controller->detachView(this);
@@ -45,9 +46,9 @@ void Text::notify(){
   // Print board itself
   for(int i = 0; i < BOARD_HEIGHT; i++){
     for(Board* board : controller->getBoards()){
-      const Board* board = board->getBoard();
+      auto theBoard = board->getTheBoard();
       out << "|";
-      for(int j = 0; j < BOARD_WIDTH; j++) out << board[i][j]->getChar();
+      for(int j = 0; j < BOARD_WIDTH; j++) out << theBoard[i][j]->getChar();
       out << "|";
       for(int j = 0; j < BOARD_GAP - 2; j++) out << ' ';
     }
@@ -70,5 +71,4 @@ void Text::notify(){
     out << resetiosflags(std::ios::showbase);
   }
   out << std::endl;
-  }
 }

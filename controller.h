@@ -7,10 +7,9 @@
 #include <map>
 #include <utility>
 #include <functional>
+#include "view.h"
 #include "board.h"
 using namespace std;
-
-class View; // forward declaration
 
 class Controller{
   const int seed;
@@ -23,7 +22,7 @@ class Controller{
   vector<View*> observers;
   int currentPlayer = 0;
 
-  map<string, Command> commands{
+  map<string, Controller::Command> commands{
     {"left", Command::LEFT}, {"right", Command::RIGHT}, {"down", Command::DOWN}, {"clockwise", Command::CLOCKWISE},
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
     {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J}, {"L", Command::L}, {"O", Command::O},
@@ -62,8 +61,6 @@ class Controller{
     void random();
 
     void resetGame();
-
-    void nextPlayer();
 
     // I/O-related
     enum class Command{

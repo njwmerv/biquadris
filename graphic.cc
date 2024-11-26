@@ -1,5 +1,7 @@
 #include "graphic.h"
 #include "board.h"
+#include "controller.h"
+#include "window.h"
 
 // Constants
 const int BOARD_GAP = 9;
@@ -10,7 +12,7 @@ const int SCALE_FACTOR = 10;
 const int NUMBER_OF_PLAYERS = 2;
 
 Graphic::Graphic(Controller* controller) :
-  View{controller},
+  controller{controller},
   window{(SCALE_FACTOR * NUMBER_OF_PLAYERS * (BOARD_GAP + BOARD_WIDTH)), (SCALE_FACTOR * (BOARD_HEIGHT + 10))}{
   // Draw the basic shape of the boards, fill them in with notify() later
   // draw static stuff here
