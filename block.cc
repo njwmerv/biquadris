@@ -8,8 +8,6 @@ void Block::counterclockwise(){numRotations = (numRotations - 1) % maxRotations;
 
 vector <pair <int, int>> Block::getRotation(int i) {return rotations[i];}
 
-
-
 int Block::getX() {return x;}
 
 int Block::getY() {return y;}

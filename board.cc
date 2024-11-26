@@ -60,8 +60,12 @@ void Board::clearBoard(){
 void Board :: down () {
     int curX = current->getX();
     int curY = current->getY();
-    for(pair<int, int> i : current->getRotations())
-    if(board[curX][curY-1] == nullptr) {
-        current->setY(curY-1);
+    int curNumRot  = current->getNumRotations();
+    for(pair<int, int> cell : current->getRotation(curNumRot)) {
+        if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
+            // call something that runs when a block has been placed
+            return;
+        }
     }
+    current->setY(curY-1);
 }
