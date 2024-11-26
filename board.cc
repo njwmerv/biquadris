@@ -103,11 +103,16 @@ void Board :: down () {
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.second + curY - 1 < 0) continue;
-    if(board[cell.first + curX][cell.second + curY-1] != nullptr) {
+    if(board[cell.first + curX][cell.second + curY - 1] != nullptr && 
+       board[cell.first + curX][cell.second + curY - 1] != current) {
       return;
     }
   }
   current->setY(curY-1);
+  // TODO: erase cells before (do this before you add the current cells)
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
 }
 
 void Board :: right() {
@@ -116,15 +121,20 @@ void Board :: right() {
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.first + curX + 1 >= boardWidth) continue;
-    if(board[cell.first + curX + 1][cell.second + curY] != nullptr) {
+    if(board[cell.first + curX + 1][cell.second + curY] != nullptr && 
+       board[cell.first + curX + 1][cell.second + curY] != current) {
       return;
     }
     if(!current->isHeavy()) continue;
+    // TODO: add border checkers for heavy blocks, AND fix it because it will detect itself (add != current)
     if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr || board[cell.first + curX + 1][cell.second + curY - 2] != nullptr) {
       return;
     }
   }
   current->setX(curX+1);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
 }
 
 void Board :: left() {
@@ -133,7 +143,8 @@ void Board :: left() {
   int curNumRot = current->getNumRotations();
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.first + curX - 1 < 0) continue;
-    if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
+    if(board[cell.first + curX - 1][cell.second + curY] != nullptr && 
+       board[cell.first + curX - 1][cell.second + curY] != current) {
       return;
     }
     if(!current->isHeavy()) continue;
@@ -142,6 +153,9 @@ void Board :: left() {
     }
   }
   current->setX(curX-1);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
 }
 
 void Board :: drop() {
@@ -163,6 +177,9 @@ void Board :: drop() {
     }
   }
   current->setY(curY-smallestDistance);
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = current;
+  }
   /* things that need to be implemented
 
   - has a line been cleared? -> score, 
