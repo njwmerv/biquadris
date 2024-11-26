@@ -14,6 +14,7 @@ class Board{
   Block* next;
   string level0File;
   int currentLevel;
+  bool blind;
 
   public:
     // Big 5
@@ -31,6 +32,8 @@ class Board{
     Block* getNextBlock() const;
 
     Block* getCurrentBlock() const;
+
+    bool isBlind() const;
 
     // Mutators
     void setScore(int);

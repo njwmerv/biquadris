@@ -17,7 +17,7 @@
 using namespace std;
 
 // Big 5
-Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0File}, currentLevel{startingLevel} {
+Board::Board(int startingLevel, string level0File) : score{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false} {
   for(int i = 0; i < 18; i++){
     vector<shared_ptr<Block>> row;
     for(int j = 0; j < 11; j++) row.emplace_back(nullptr);
@@ -43,6 +43,7 @@ int Board::getLevel() const {return currentLevel;}
 vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 Block* Board::getNextBlock() const {return next;}
 Block* Board::getCurrentBlock() const {return current;}
+bool Board::isBlind() const {return blind;}
 
 // Mutators
 void Board::setScore(int newScore){score = newScore;}

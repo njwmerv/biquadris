@@ -70,8 +70,9 @@ void Graphic::notify(){
   // Print board itself but only of current player (that's the only one that will change)
   for(int i = 0; i < BOARD_HEIGHT; i++){
     for(int j = 0; j < BOARD_WIDTH; j++){
-      const int cellColour = 0;
-      if(theBoard[i][j] != nullptr) getColour(theBoard[i][j]->getType());
+      int cellColour = Xwindow::White;
+      if(board->isBlind() && i >= 5 && i < 15 && j >= 5 && j < 12) cellColour = Xwindow::Black; // blind
+      else if(theBoard[i][j] != nullptr) cellColour = getColour(theBoard[i][j]->getType());
       window.fillRectangle(offset + j * SCALE_FACTOR, 51 + i * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
     }
   }
