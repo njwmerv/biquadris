@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include "controller.h"
 #include "text.h"
-#include "display.h"
+#include "graphic.h"
 #include "block.h"
 
 int main(int argc, char* argv[]){

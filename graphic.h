@@ -1,5 +1,5 @@
-#ifndef TEXT_H
-#define TEXT_H
+#ifndef GRAPHIC_H
+#define GRAPHIC_H
 #include "view.h"
 #include "controller.h"
 #include <iostream>
