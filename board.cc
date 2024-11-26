@@ -115,7 +115,3 @@ void Board :: left() {
   }
   current->setX(curX-1);
 }
-
-void Board::placedProcedure() {
-
-}
