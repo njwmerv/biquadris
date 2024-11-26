@@ -22,19 +22,19 @@ Block *Level0::generateBlock() {
 
     }
     if (currentBlock == "I") {
-        return new IBlock();
+        return new IBlock(0);
     } else if (currentBlock == "J") {
-        return new JBlock();
+        return new JBlock(0);
     } else if (currentBlock == "L") {
-        return new LBlock();
+        return new LBlock(0);
     } else if (currentBlock == "O") {
-        return new OBlock();
+        return new OBlock(0);
     } else if (currentBlock == "S") {
-        return new SBlock();
-    } else if (currentBlck == "Z") {
-        return new ZBlock();
+        return new SBlock(0);
+    } else if (currentBlock == "Z") {
+        return new ZBlock(0);
     } else if (currentBlock == "T") {
-        return new TBlock();
+        return new TBlock(0);
     }
 }
 
