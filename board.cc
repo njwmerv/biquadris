@@ -116,7 +116,7 @@ void Board :: left() {
   current->setX(curX-1);
 }
 
-/*void drop(shared_ptr<Block> block) {
+void drop(shared_ptr<Block> block) {
     auto &placements = block->rotations[numRotations];
 
     while(true) {
@@ -125,4 +125,4 @@ void Board :: left() {
             int x = 
         }
     }
-}*/
+}

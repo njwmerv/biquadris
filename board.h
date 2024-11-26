@@ -40,9 +40,10 @@ class Board{
     Block* forceBlock(const char);
     Level* forceLevel(const int);
 
-    void down();
-    void right();
     void left();
+    void right();
+    void down();
+    void drop();
 };
 
 #endif
