@@ -16,6 +16,8 @@ class Board{
   int currentLevel;
   bool blind;
 
+  void clearRows();
+
   public:
     // Big 5
     Board(int, string);
