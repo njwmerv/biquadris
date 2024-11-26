@@ -28,10 +28,10 @@ class Block {
         virtual char getType() const = 0;
 
         // rotate the block clockwise
-        virtual void clockwise () = 0;
+        void clockwise();
 
         // rotate the block counterclockwise
-        virtual void counterclockwise () = 0;
+        void counterclockwise();
 
 };
 

@@ -1,5 +1,5 @@
-#ifndef TBLOCK_H
-#definetBLOCK_H
+#ifndef OBLOCK_H
+#define OBLOCK_H
 
 #include "block.h"
 
@@ -13,12 +13,6 @@ class OBlock : public Block {
 
         // getter
         char getType() const override;
-
-        // rotate the block clockwise
-        void clockwise () override;
-
-        // rotate the block counterclockwise
-        void counterclockwise () override;
 
 };
 

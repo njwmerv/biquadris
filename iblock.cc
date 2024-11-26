@@ -19,11 +19,3 @@ IBlock :: ~IBlock() {
 char IBlock :: getType() const {
     return 'I';
 }
-
-void IBlock :: clockwise() {
-    numRotations = (numRotations+1)%4;
-}
-
-void IBlock :: counterclockwise() {
-    numRotations = (numRotations-1)%4;
-}
