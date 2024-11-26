@@ -89,6 +89,11 @@ void Board :: right() {
             // call something that runs when a block has been placed
             return;
         }
+        if(!current->isHeavy()) continue;
+        if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr || board[cell.first + curX + 1][cell.second + curY - 2] != nullptr) {
+            // call something that runs when a block has been placed
+            return;
+        }
     }
     current->setX(curX+1);
 }
@@ -99,6 +104,11 @@ void Board :: left() {
     int curNumRot  = current->getNumRotations();
     for(pair<int, int> cell : current->getRotation(curNumRot)) {
         if(board[cell.first + curX - 1][cell.second + curY] != nullptr) {
+            // call something that runs when a block has been placed
+            return;
+        }
+        if(!current->isHeavy()) continue;
+        if(board[cell.first + curX - 1][cell.second + curY - 1] != nullptr || board[cell.first + curX - 1][cell.second + curY - 2] != nullptr) {
             // call something that runs when a block has been placed
             return;
         }
