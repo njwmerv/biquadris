@@ -1,7 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "BLOCK_H"
+#include "block.h"
 
 class Level {
     public:

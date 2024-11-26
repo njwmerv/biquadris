@@ -1,7 +1,7 @@
 #ifndef ZBLOCK_H
 #define ZBLOCK_H
 
-#include "BLOCK_H"
+#include "block.h"
 
 
 using namespace std;
