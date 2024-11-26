@@ -1,17 +1,10 @@
 #include "block.h"
 
-extern const int maxRotations;
-extern int startRotations;
-extern int startCleared;
-extern int startX;
-extern int startY;
-extern int startHeavy;
-
 using namespace std;
 
-void Block::clockwise(){numRotations = (numRotations + 1) % maxRotations;}
+void Block::clockwise(){numRotations = (numRotations + 1) % 4;}
 
-void Block::counterclockwise(){numRotations = (numRotations - 1) % maxRotations;}
+void Block::counterclockwise(){numRotations = (numRotations - 1) % 4;}
 
 vector <pair <int, int>> Block::getRotation(int i) {return rotations[i];}
 
