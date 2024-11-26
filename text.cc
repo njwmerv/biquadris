@@ -48,7 +48,7 @@ void Text::notify(){
     for(Board* board : controller->getBoards()){
       auto theBoard = board->getTheBoard();
       out << "|";
-      for(int j = 0; j < BOARD_WIDTH; j++) out << theBoard[i][j]->getType();
+      for(int j = 0; j < BOARD_WIDTH; j++) if(theBoard[i][j] != nullptr) out << theBoard[i][j]->getType();
       out << "|";
       for(int j = 0; j < BOARD_GAP - 2; j++) out << ' ';
     }
