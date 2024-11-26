@@ -58,5 +58,10 @@ void Board::clearBoard(){
 }
 
 void Board :: down () {
-    int curX = current->x;
+    int curX = current->getX();
+    int curY = current->getY();
+    for(pair<int, int> i : current->getRotations())
+    if(board[curX][curY-1] == nullptr) {
+        current->setY(curY-1);
+    }
 }
