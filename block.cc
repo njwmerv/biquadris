@@ -6,7 +6,7 @@ void Block::clockwise(){numRotations = (numRotations + 1) % maxRotations;}
 
 void Block::counterclockwise(){numRotations = (numRotations - 1) % maxRotations;}
 
-vector <pair <int, int>> Block::getRotations() {return rotations;}
+vector <pair <int, int>> Block::getRotation(int i) {return rotations[i];}
 
 
 

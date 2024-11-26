@@ -34,7 +34,7 @@ class Block {
         void counterclockwise();
 
         // accessors
-        vector <pair <int, int>> getRotations();
+        vector <pair <int, int>> getRotation(int i);
         int getNumRotations();
         int getX();
         int getY();
