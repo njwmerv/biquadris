@@ -123,8 +123,10 @@ void Board :: down () {
       return;
     }
   }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
+  }
   current->setY(curY-1);
-  // TODO: erase cells before (do this before you add the current cells)
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = current;
   }
@@ -146,6 +148,9 @@ void Board :: right() {
       return;
     }
   }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
+  }
   current->setX(curX+1);
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = current;
@@ -166,6 +171,9 @@ void Board :: left() {
     if(board[cell.first + curX - 1][cell.second + curY - 1] != nullptr || board[cell.first + curX - 1][cell.second + curY - 2] != nullptr) {
       return;
     }
+  }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
   }
   current->setX(curX-1);
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
@@ -190,6 +198,9 @@ void Board :: drop() {
     if(count < smallestDistance) {
       smallestDistance = count;
     }
+  }
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[cell.first + curX][cell.second + curY] = nullptr;
   }
   current->setY(curY-smallestDistance);
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
