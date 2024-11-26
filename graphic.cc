@@ -18,7 +18,7 @@ Graphic::Graphic(Controller* controller) :
   // Draw the basic shape of the boards, fill them in with notify() later
   // draw static stuff here
   window.drawString(5, 15, "Biquadris");
-  window.fillRectangle(0, 20, window.getWidth(), 1, 1);
+  window.fillRectangle(0, 20, window.getWidth(), 1, 1); // TODO draw current when initializing, by including in theBoard
 
   int offset = 0;
   for(Board* board : controller->getBoards()){
