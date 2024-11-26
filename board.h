@@ -2,6 +2,7 @@
 #define BOARD_H
 #include "block.h"
 #include <vector>
+#include <memory>
 using namespace std;
 
 class Board{
