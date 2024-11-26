@@ -137,6 +137,7 @@ void Board :: right() {
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
+  bool willDrop = false;
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.first + curX + 1 >= boardWidth) continue;
     if(board[cell.first + curX + 1][cell.second + curY] != nullptr && 
@@ -144,9 +145,16 @@ void Board :: right() {
       return;
     }
     if(!current->isHeavy()) continue;
-    // TODO: add border checkers for heavy blocks, AND fix it because it will detect itself (add != current)
-    if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr || board[cell.first + curX + 1][cell.second + curY - 2] != nullptr) {
-      return;
+    if(cell.second + curY - 2 < 0) {
+      willDrop = true;
+      continue;
+    }
+    if(board[cell.first + curX + 1][cell.second + curY - 1] != nullptr &&
+       board[cell.first + curX + 1][cell.second + curY - 1] != current &&
+       board[cell.first + curX + 1][cell.second + curY - 2] != nullptr &&
+       board[cell.first + curX + 1][cell.second + curY - 2] != current) {
+      willDrop = true;
+      continue;
     }
   }
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
@@ -156,6 +164,7 @@ void Board :: right() {
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.first + curX][cell.second + curY] = current;
   }
+  if(willDrop) drop();
 }
 
 void Board :: left() {
