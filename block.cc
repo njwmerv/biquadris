@@ -1,5 +1,12 @@
 #include "block.h"
 
+extern const int maxRotations;
+extern int startRotations;
+extern int startCleared;
+extern int startX;
+extern int startY;
+extern int startHeavy;
+
 using namespace std;
 
 void Block::clockwise(){numRotations = (numRotations + 1) % maxRotations;}
