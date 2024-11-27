@@ -303,8 +303,8 @@ void Board::clockwise() {
   int newNumRot = (curNumRot + 1) % 4;
 
   for(pair<int, int> cell : current->getRotation(newNumRot)) {
-    int newX = cell.first + oldX;
-    int newY = cell.second + oldY;
+    int newX = cell.first + curX;
+    int newY = cell.second + curY;
 
     if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight) {
       return;
