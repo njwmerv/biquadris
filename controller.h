@@ -35,6 +35,7 @@ class Controller{
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
     {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J}, {"L", Command::L}, {"O", Command::O},
     {"S", Command::S}, {"Z", Command::Z}, {"T", Command::T}, {"restart", Command::RESTART},
+    {"levelup", Command::LEVEL_UP}, {"leveldown", Command::LEVEL_DOWN},
     {"blind", Command::BLIND}, {"heavy", Command::HEAVY}, {"force", Command::FORCE}
   };
 
