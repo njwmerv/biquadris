@@ -295,39 +295,30 @@ void Board::clearRows() {
 }
 
 
-/*void Board::clockwise() {
-  int oldX = current->getX();
-  int oldY = current->getY();
-  int oldRotation = current->getNumRotations();
+void Board::clockwise() {
+  int curX = current->getX();
+  int curY = current->getY();
+  int curNumRot = current->getNumRotations();
   
+  int newNumRot = (curNumRot + 1) % 4;
 
   for(pair<int, int> cell : current->getRotation(current->oldRotation)) {
-    int x = cell.first + oldX;
-    int y = cell.second + oldY;
-    board[y][x] = nullptr;
-  }
-
-  current->clockwise();
-
-  for(pair<int, int> cell : current->getRotation(current->getNumRotations())) {
     int newX = cell.first + oldX;
     int newY = cell.second + oldY;
 
-    if (newX < 0 || newX >= 11 || newY < 0 || newY >= 18) {
-      current->counterclockwise();
-      for (pair<int, int> cell : current->getRotation(current->oldRotation)) {
-        int x = cell.first + oldX;
-        int y = cell.second + oldY;
-        board[y][x] = current;
-      }
+    if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight) {
+      return;
     }
-    if (board[newY][newX]) {
-      current->counterclockwise();
-      for (pair<int, int> cell : current->getRotation(current->oldRotation)) {
-        int x = cell.first + oldX;
-        int y = cell.second + oldY;
-        board[y][x] = current;
-      }
+    if (board[newY][newX] != nullptr && board[newY][newX] != current) {
+      return;
     }
+  }
+
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[curY + cell.second][curX + cell.first] = nullptr;
   } 
-}*/
+
+  current->clockwise();
+
+  addCurrentToBoard();
+}
