@@ -230,7 +230,7 @@ void Board :: left() {
   if(willDrop) drop();
 }
 
-void Board :: drop() {
+/*void Board :: drop() {
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
@@ -262,8 +262,42 @@ void Board :: drop() {
   addCurrentToBoard();]
   /* things that need to be implemented
   - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
-  */
+  
   if(blind) blind = false;
+}*/
+
+void Board::drop() {
+  int curX = current->getX();
+  int curY = current->getY();
+  int curNumRot = current->getNumRotations();
+
+  while(true) {
+    bool canMove = true;
+
+    for (pair<int, int> cell : current->getRotation(curNumRot)) {
+      int newX = curX + cell.first;
+      int newY = curY + cell.second - 1;
+
+      if (newY < 0) {
+        canMove = false;
+        break;
+      }
+
+      if (board[newY][newX] != nullptr && board[newY][newX] != current) {
+        canMove = false;
+        break;
+      }
+    }
+    if (!canMove) {
+      break;
+    }
+    curY--;
+    current->setY(curY);
+  }
+  addCurrentToBoard();
+  clearRows();
+  current = next;
+  next = level->generateBlock();
 }
 
 void Board::addCurrentToBoard(){
