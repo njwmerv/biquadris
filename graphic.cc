@@ -39,8 +39,8 @@ Graphic::Graphic(Controller* controller) :
     // Draw Header (score + level)
     window.drawString(offset + 5, 35, "Level: ");
     window.drawString(offset + 5, 45, "Score: ");
-    window.drawString(offset + 5 + 38, 35, to_string(board->getLevel()));
-    window.drawString(offset + 5 + 38, 45, to_string(board->getScore()));
+    window.drawString(offset + 5 + 38 + 6, 35, to_string(board->getLevel()));
+    window.drawString(offset + 5 + 38 + 6, 45, to_string(board->getScore()));
 
     // Drawing the board and it's starting block
     const vector<vector<shared_ptr<Block>>> theBoard = board->getTheBoard();
