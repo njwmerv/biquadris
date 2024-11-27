@@ -42,6 +42,7 @@ Board::~Board(){
 // Accessors
 int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
+int Board::getHighScore() const {return highScore;}
 int Board::getLinesJustCleared() const {return linesJustCleared;}
 bool Board::isBlind() const {return blind;}
 Block* Board::getNextBlock() const {return next.get();}
