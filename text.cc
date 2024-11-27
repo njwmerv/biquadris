@@ -3,8 +3,10 @@
 #include <iomanip>
 #include "board.h"
 #include "controller.h"
+using namespace std;
 
 // Constants
+const int NUMBER_PLAYERS = 2;
 const int BOARD_GAP = 9;
 const int BOARD_WIDTH = 11;
 const int BOARD_HEIGHT = 15;
@@ -15,30 +17,41 @@ Text::~Text(){
   controller->detachView(this);
 }
 
-void printBoardBorder(Controller* controller, std::ostream& out){
+void printBoardBorder(Controller* controller, ostream& out){
   for(Board* board : controller->getBoards()){
     for(int i = 0; i < BOARD_WIDTH + 2; i++) out << '=';
     for(int i = 0; i < BOARD_GAP - 2; i++) out << ' ';
   }
-  out << std::endl;
+  out << endl;
 }
 
 void Text::notify(){
+	// Print frame border
+	for(int i = 0; i < NUMBER_PLAYERS * (BOARD_WIDTH + BOARD_GAP); i++) out << "-";
+	out << endl;
   // Print level
   for(Board* board : controller->getBoards()){
-    out << "Level: " << std::setw(BOARD_WIDTH + BOARD_GAP - 7) << std::left << std::setfill(' ')
-        <<  board->getLevel();
-    out << resetiosflags(std::ios::showbase);
+    out << "Level: " << setw(BOARD_WIDTH + BOARD_GAP - 7) << left << setfill(' ')
+        << board->getLevel();
+    out << resetiosflags(ios::showbase);
   }
-  out << std::endl;
+  out << endl;
 
   // Print score
   for(Board* board : controller->getBoards()){
-    out << "Score: " << std::setw(BOARD_WIDTH + BOARD_GAP - 7) << std::left << std::setfill(' ')
+    out << "Score: " << setw(BOARD_WIDTH + BOARD_GAP - 7) << left << setfill(' ')
         <<  board->getScore();
-    out << resetiosflags(std::ios::showbase);
+    out << resetiosflags(ios::showbase);
   }
-  out << std::endl;
+  out << endl;
+
+	// Print high score
+	for(Board* board : controller->getBoards()){
+		out << "HiScore: " << setw(BOARD_WIDTH + BOARD_GAP - 9) << left << setfill(' ')
+				<< board->getHighScore();
+		out << resetiosflags(ios::showbase);
+	}
+	out << endl;
 
   // Print top border
   printBoardBorder(controller, out);
@@ -64,16 +77,16 @@ void Text::notify(){
 
   // Print next block for each board
   for(Board* board : controller->getBoards()){
-    out << std::setw(BOARD_WIDTH + BOARD_GAP) << std::left << std::setfill(' ')
+    out << setw(BOARD_WIDTH + BOARD_GAP) << left << setfill(' ')
         << "Next Block:";
-    out << resetiosflags(std::ios::showbase);
+    out << resetiosflags(ios::showbase);
   }
   out << std::endl;
   // Printing the block itself
   for(Board* board : controller->getBoards()){
-    out << std::setw(BOARD_WIDTH + BOARD_GAP) << std::left << std::setfill(' ')
+    out << setw(BOARD_WIDTH + BOARD_GAP) << left << setfill(' ')
         << board->getNextBlock()->getType();
-    out << resetiosflags(std::ios::showbase);
+    out << resetiosflags(ios::showbase);
   }
-  out << std::endl;
+  out << endl;
 }
