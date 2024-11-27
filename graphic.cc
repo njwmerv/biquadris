@@ -13,6 +13,18 @@ const int BORDER_WIDTH = 1;
 const int SCALE_FACTOR = 10;
 const int NUMBER_OF_PLAYERS = 2;
 
+int getColour(const char c){
+  if(c == ' ') return Xwindow::White;
+  else if(c == 'I') return Xwindow::Cyan;
+  else if(c == 'J') return Xwindow::Blue;
+  else if(c == 'L') return Xwindow::Orange;
+  else if(c == 'O') return Xwindow::Yellow;
+  else if(c == 'S') return Xwindow::Green;
+  else if(c == 'T') return Xwindow::Purple;
+  else if(c == 'Z') return Xwindow::Red;
+  return Xwindow::Black;
+}
+
 Graphic::Graphic(Controller* controller) :
   controller{controller},
   window{(SCALE_FACTOR * NUMBER_OF_PLAYERS * (BOARD_GAP + BOARD_WIDTH)), (SCALE_FACTOR * (BOARD_HEIGHT + BOARD_BUFFER + 10))}{
@@ -30,6 +42,14 @@ Graphic::Graphic(Controller* controller) :
     window.drawString(offset + 5 + 38, 35, to_string(board->getLevel()));
     window.drawString(offset + 5 + 38, 45, to_string(board->getScore()));
 
+    // Drawing the board and it's starting block
+    const vector<vector<shared_ptr<Block>>> theBoard = board->getTheBoard();
+    for(int j = 0; j < BOARD_WIDTH; j++){
+        int cellColour = Xwindow::White;
+        if(theBoard[BOARD_HEIGHT - 1][j] != nullptr) cellColour = getColour(theBoard[BOARD_HEIGHT - 1][j]->getType());
+	    window.fillRectangle(offset + j * SCALE_FACTOR, 51 + SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
+      }
+
     // Draw board outline
     window.fillRectangle(offset + 5, 50, BOARD_WIDTH * SCALE_FACTOR + 1, 1, 1);
     window.fillRectangle(offset + 5, 50, 1, BOARD_HEIGHT * SCALE_FACTOR + 1, 1);
@@ -44,18 +64,6 @@ Graphic::Graphic(Controller* controller) :
 
 Graphic::~Graphic(){
   controller->detachView(this);
-}
-
-int getColour(const char c){
-  if(c == ' ') return Xwindow::White;
-  else if(c == 'I') return Xwindow::Cyan;
-  else if(c == 'J') return Xwindow::Blue;
-  else if(c == 'L') return Xwindow::Orange;
-  else if(c == 'O') return Xwindow::Yellow;
-  else if(c == 'S') return Xwindow::Green;
-  else if(c == 'T') return Xwindow::Purple;
-  else if(c == 'Z') return Xwindow::Red;
-  return Xwindow::Black;
 }
 
 void Graphic::notify(){
