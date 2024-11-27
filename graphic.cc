@@ -47,7 +47,7 @@ Graphic::Graphic(Controller* controller) :
     for(int j = 0; j < BOARD_WIDTH; j++){
         int cellColour = Xwindow::White;
         if(theBoard[BOARD_HEIGHT - 1][j] != nullptr) cellColour = getColour(theBoard[BOARD_HEIGHT - 1][j]->getType());
-	    window.fillRectangle(offset + j * SCALE_FACTOR, 51 + SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
+	    window.fillRectangle(offset + j * SCALE_FACTOR, 51, SCALE_FACTOR, SCALE_FACTOR, cellColour);
       }
 
     // Draw board outline
