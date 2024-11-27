@@ -239,7 +239,7 @@ void Board :: drop() {
     int curLoopX = cell.first + curX;
     int count = 0;
     for(int i = cell.second+curY - 1; i >= 0; i--) {
-      if(board[curLoopX][i] != nullptr) {
+      if(board[i][curLoopX] != nullptr) {
         break;
       }
       count++;
@@ -249,11 +249,12 @@ void Board :: drop() {
     }
   }
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.first + curX][cell.second + curY] = nullptr;
+    board[cell.second + curY][cell.first + curX] = nullptr;
   }
   current->setY(curY-smallestDistance);
+  curY = curY - smallestDistance;
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.first + curX][cell.second + curY] = current;
+    board[cell.second + curY][cell.first + curX] = current;
   }
   clearRows(); // clears full rows and then increments score accordingly
   current.reset(next); // if you want to specify next, do it when it's generated or just above this line
