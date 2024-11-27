@@ -118,11 +118,15 @@ void Controller::performCommand(const Command command){
   else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
   else if(command == Command::DROP){
     board->drop();
+    cout << "drop" << endl;
+    notifyObservers();
+    cout << "displayed" << endl;
     const int linesJustCleared = board->getLinesJustCleared();
     board->setLinesJustCleared(0);
     if(linesJustCleared <= 1) {nextPlayer(); return;}
       // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
       // try using try-catch if sequence is a problem
+    cout << "special" << endl;
     string specialAction;
     Command attackCommand = Command::INVALID;
     while(attackCommand == Command::INVALID){
@@ -163,18 +167,24 @@ void Controller::performCommand(const Command command){
     board->forceLevel(startingLevel);
     board->setScore(0);
   }
+  else{
+    cerr << "Invalid command" << endl;
+  }
 }
 
 void Controller::runGame(){
   string input;
   while(true){ // Game loop
     queue<Command>& commandQueue = commandsToExecute.at(currentPlayer);
+    cout << "Player: " << currentPlayer << endl;
     notifyObservers(); // update graphics
 	while(commandQueue.empty()){
+      cout << "it's empty" << endl;
   	  cin >> input;
 	  pair<int, Command> interpretation = interpretInput(input);
       for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second);
 	}
+    cout << "performing command" << endl;
     performCommand(commandQueue.front());
     commandQueue.pop();
   }
