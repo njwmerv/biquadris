@@ -233,9 +233,11 @@ void Board :: drop() {
 }
 
 void Board::addCurrentToBoard(){
+  const int curX = current->getX();
+  const int curY = current->getY();
   vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
   for(pair<int, int> cell : cellsOfBlock){
-    board[cell.first][cell.second] = current;
+    board[cell.second + curY][cell.first + curX] = current;
   }
 }
 
