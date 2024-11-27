@@ -139,7 +139,7 @@ void Controller::performCommand(const Command command){
         string type;
 				while(cin >> type){
 					if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
-					else getBoard()->forceBlock(type);
+					else {getBoard()->forceBlock(type); break;}
 				}
       }
       else{
