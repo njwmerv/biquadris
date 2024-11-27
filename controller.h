@@ -1,14 +1,15 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-#include <iostream>
 #include <vector>
-#include <memory>
 #include <string>
 #include <map>
-#include <utility>
-#include <functional>
+#include <queue>
 #include "view.h"
 #include "board.h"
+//#include <iostream>
+//#include <memory>
+//#include <utility>
+//#include <functional>
 using namespace std;
 
 class Controller{
@@ -17,10 +18,10 @@ class Controller{
   const string scriptFile1;
   const string scriptFile2;
   const int numberOfPlayers = 2;
-  istream& in = cin;
+  int currentPlayer = 0;
   vector<Board*> boards;
   vector<View*> observers;
-  int currentPlayer = 0;
+  vector<queue<Command>> commandsToExecute;
 
   enum class Command{
     LEFT, RIGHT, DOWN, CLOCKWISE, COUNTER_CLOCKWISE, DROP, // block movement
@@ -39,44 +40,35 @@ class Controller{
     {"blind", Command::BLIND}, {"heavy", Command::HEAVY}, {"force", Command::FORCE}
   };
 
+  // For the game
+  void nextPlayer();
+
+  // I/O-related
+  void performCommand(const Command);
+  pair<int, Controller::Command> interpretInput(const string) const;
+
   public:
     // Big 5
     Controller(int, int, string, string);
-
     ~Controller();
 
     // Accessors
     const vector<Board*>& getBoards() const;
-
     Board* getBoard() const;
-
     int getCurrentPlayer() const;
-
-    // Mutators
-    void nextPlayer();
 
     // Display-related
     void notifyObservers() const;
-
     void attachView(View*);
-
     void detachView(View*);
 
-    // For the game TODO
+    // For the game
     void sequence(string);
-
-    void noRandom(string);
-
-    void random();
-
+    void noRandom(string); // TODO
+    void random(); // TODO
     void resetGame();
 
     // I/O-related
-
-    pair<int, Controller::Command> interpretInput(const string) const;
-
-    void performCommand(const int, const Command);
-
     void runGame();
 };
 
