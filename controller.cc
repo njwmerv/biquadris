@@ -86,26 +86,27 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
   }
   string remainingInput;
   iss >> remainingInput;
-  transform(remainingInput.begin(), remainingInput.end(), remainingInput.begin(),
-  	[](unsigned char c) {return tolower(c);});
+  //transform(remainingInput.begin(), remainingInput.end(), remainingInput.begin(), [](unsigned char c) {return tolower(c);});
 
   // Check if this is a known command
   for(pair<string, Command> stringCommand : commands){
-    if(stringCommand.first == remainingInput) return {repetitions, command};
+    if(stringCommand.first == remainingInput) command = stringCommand.second;
   }
 
   // Check if enough of a string was given to distinguish it from other commands
-  for(pair<string, Command> stringCommand : commands){
-    if(!(stringCommand.first.starts_with(remainingInput))) continue; // input isn't a prefix of command, so can't be that
-    else if(command == Command::INVALID) command = stringCommand.second; // found it as a prefix for a known command
-    else return {0, Command::INVALID};
-  }
+	if(command == Command::INVALID){
+  	for(pair<string, Command> stringCommand : commands){
+    	if(!(stringCommand.first.starts_with(remainingInput))) continue; // input isn't a prefix of command, so can't be that
+    	else if(command == Command::INVALID) command = stringCommand.second; // found it as a prefix for a known command
+    	else return {0, Command::INVALID};
+  	}
+	}
 
   // don't add these to the queue
   if(command == Command::INVALID || command == Command::BLIND || command == Command::HEAVY || command == Command::FORCE) repetitions = 0;
   // these can't be repeated
   else if(command == Command::RESTART || command == Command::NO_RANDOM || command == Command::RANDOM) repetitions = 1;
-
+	
   return {repetitions, command};
 }
 
@@ -118,9 +119,7 @@ void Controller::performCommand(const Command command){
   else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
   else if(command == Command::DROP){
     board->drop();
-    cout << "drop" << endl;
     notifyObservers();
-    cout << "displayed" << endl;
     const int linesJustCleared = board->getLinesJustCleared();
     board->setLinesJustCleared(0);
     nextPlayer();
@@ -128,7 +127,7 @@ void Controller::performCommand(const Command command){
     if(linesJustCleared <= 1) return;
       // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
       // try using try-catch if sequence is a problem
-    cout << "special" << endl;
+    cout << "You just cleared 2 or more lines! Enter your special action below:" << endl;
     string specialAction;
     Command attackCommand = Command::INVALID;
     while(attackCommand == Command::INVALID){
@@ -138,10 +137,15 @@ void Controller::performCommand(const Command command){
       else if(attackCommand == Command::HEAVY) getBoard(); // idk what to do here
       else if(attackCommand == Command::FORCE){
         string type;
-        cin >> type;
-        getBoard()->forceBlock(type);
+				while(cin >> type){
+					if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
+					else getBoard()->forceBlock(type);
+				}
       }
-      else attackCommand = Command::INVALID;
+      else{
+				attackCommand = Command::INVALID;
+				cerr << "Invalid special action" << endl;
+			}
     }
   }
   else if(command == Command::LEVEL_UP) board->levelup();
@@ -178,15 +182,14 @@ void Controller::runGame(){
   string input;
   while(true){ // Game loop
     queue<Command>& commandQueue = commandsToExecute.at(currentPlayer);
-    cout << "Player: " << currentPlayer << endl;
+    cout << "Current Player: " << currentPlayer << endl;
     notifyObservers(); // update graphics
-	while(commandQueue.empty()){
-      cout << "it's empty" << endl;
+		cout << "Command: " << endl;
+		while(commandQueue.empty()){
   	  cin >> input;
-	  pair<int, Command> interpretation = interpretInput(input);
+			pair<int, Command> interpretation = interpretInput(input);
       for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second);
-	}
-    cout << "performing command" << endl;
+		}
     performCommand(commandQueue.front());
     commandQueue.pop();
   }
