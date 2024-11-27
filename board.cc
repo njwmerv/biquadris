@@ -29,7 +29,7 @@ Board::Board(int startingLevel, string level0File):
   else if(startingLevel == 3) level = new Level3;
   else if(startingLevel == 4) level = new Level4;
   current = shared_ptr<Block>(level->generateBlock());
-  next = level->generateBlock();
+  next = shared_ptr<Block>(level->generateBlock());
   addCurrentToBoard();
 }
 
@@ -42,7 +42,7 @@ Board::~Board(){
 int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
 vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
-Block* Board::getNextBlock() const {return next;}
+Block* Board::getNextBlock() const {return next.get();}
 Block* Board::getCurrentBlock() const {return current.get();}
 bool Board::isBlind() const {return blind;}
 // Mutators
@@ -257,9 +257,9 @@ void Board :: drop() {
     board[cell.second + curY][cell.first + curX] = current;
   }
   clearRows(); // clears full rows and then increments score accordingly
-  current = next; // if you want to specify next, do it when it's generated or just above this line
-  next = level->generateBlock();
-  addCurrentToBoard();]
+  current = next;
+  addCurrentToBoard();
+  next = shared_ptr<Block>(level->generateBlock());
   /* things that need to be implemented
   - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
   */
