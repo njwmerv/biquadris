@@ -4,7 +4,7 @@ using namespace std;
 
 void Block::clockwise(){numRotations = (numRotations + 1) % 4;}
 
-void Block::counterclockwise(){numRotations = (numRotations - 1) % 4;}
+void Block::counterclockwise(){numRotations = (numRotations - 1 + 4) % 4;}
 
 vector <pair <int, int>> Block::getRotation(int i) {return rotations[i];}
 

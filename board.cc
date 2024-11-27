@@ -328,7 +328,7 @@ void Board::counterclockwise() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
 
-  int newNumRot = (curNumRot - 1) % 4;
+  int newNumRot = (curNumRot - 1 + 4) % 4;
 
   for(pair<int, int> cell : current->getRotation(newNumRot)) {
     int newX = cell.first + curX;
