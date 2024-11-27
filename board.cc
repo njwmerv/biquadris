@@ -265,12 +265,12 @@ void Board::drop() {
   }
   // adding the block in its new position on the board
 	addCurrentToBoard();
+  clearRows();
   // adding the next block to the board
 	current = next;
 	addCurrentToBoard();
   // generating the next block
   next = shared_ptr<Block>(level->generateBlock());
-	clearRows();
 }
 
 void Board::addCurrentToBoard(){
