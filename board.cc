@@ -257,7 +257,8 @@ void Board :: drop() {
     board[cell.second + curY][cell.first + curX] = current;
   }
   clearRows(); // clears full rows and then increments score accordingly
-  current.reset(next); // if you want to specify next, do it when it's generated or just above this line
+  current = next; // if you want to specify next, do it when it's generated or just above this line
+  next = level->generateBlock();
   addCurrentToBoard();
   next = level->generateBlock();
   /* things that need to be implemented
