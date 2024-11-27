@@ -34,13 +34,13 @@ Graphic::Graphic(Controller* controller) :
   window.drawString(5, 15, "Biquadris");
   window.fillRectangle(0, 20, window.getWidth(), 1, 1); // TODO draw current when initializing, by including in theBoard
 
-  int offset = 0;
+  int offset = 6;
   for(Board* board : controller->getBoards()){
     // Draw Header (score + level)
-    window.drawString(offset + 5, 35, "Level: ");
-    window.drawString(offset + 5, 45, "Score: ");
-    window.drawString(offset + 5 + 38 + 6, 35, to_string(board->getLevel()));
-    window.drawString(offset + 5 + 38 + 6, 45, to_string(board->getScore()));
+    window.drawString(offset - 1, 35, "Level: ");
+    window.drawString(offset - 1, 45, "Score: ");
+    window.drawString(offset + 5 + 38, 35, to_string(board->getLevel()));
+    window.drawString(offset + 5 + 38, 45, to_string(board->getScore()));
 
     // Drawing the board and it's starting block
     const vector<vector<shared_ptr<Block>>> theBoard = board->getTheBoard();
@@ -51,13 +51,13 @@ Graphic::Graphic(Controller* controller) :
       }
 
     // Draw board outline
-    window.fillRectangle(offset + 5, 50, BOARD_WIDTH * SCALE_FACTOR + 1, 1, 1);
-    window.fillRectangle(offset + 5, 50, 1, BOARD_HEIGHT * SCALE_FACTOR + 1, 1);
-    window.fillRectangle(offset + 5, 50 + (BOARD_HEIGHT * SCALE_FACTOR) + 1, BOARD_WIDTH * SCALE_FACTOR + 1, BORDER_WIDTH, 1);
-    window.fillRectangle(offset + 5 + (BOARD_WIDTH * SCALE_FACTOR) + 1, 50, BORDER_WIDTH, BOARD_HEIGHT * SCALE_FACTOR + 2, 1);
+    window.fillRectangle(offset - 1, 50, BOARD_WIDTH * SCALE_FACTOR + 1, 1, 1);
+    window.fillRectangle(offset - 1, 50, 1, BOARD_HEIGHT * SCALE_FACTOR + 1, 1);
+    window.fillRectangle(offset - 1, 50 + (BOARD_HEIGHT * SCALE_FACTOR) + 1, BOARD_WIDTH * SCALE_FACTOR + 1, BORDER_WIDTH, 1);
+    window.fillRectangle(offset + (BOARD_WIDTH * SCALE_FACTOR), 50, BORDER_WIDTH, BOARD_HEIGHT * SCALE_FACTOR + 2, 1);
 
     // Draw footer (next block area)
-    window.drawString(offset + 5, 65 + (BOARD_HEIGHT * SCALE_FACTOR), "Next Block:");
+    window.drawString(offset - 1, 65 + (BOARD_HEIGHT * SCALE_FACTOR), "Next Block:");
     offset += SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP);
   }
 }
