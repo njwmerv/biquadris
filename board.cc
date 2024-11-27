@@ -159,43 +159,67 @@ void Board :: right() {
     board[cell.second + curY][cell.first + curX] = nullptr;
   }
   // updating the block's x coordinate
-  current->setX(curX+1);
+  current->setX(curX + 1);
   curX = curX + 1;
   // updating the block's y coordinate if it is heavy, and falls without impediment
   if(!willDrop && current->isHeavy()) {
-    current->setY(curY-2);
-    curY = curY-2;
+    current->setY(curY - 2);
+    curY = curY - 2;
   }
   // adding the block to its new position in the board
-  for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = current;
-  }
+  addCurrentToBoard();
   // calling drop() if the block drops due to being heavy and impeded
   if(willDrop) drop();
 }
 
 void Board :: left() {
+  // accessing the properties of the current block
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
+
+  bool willDrop = false; // only used if the block is heavy
+
+  // determining if we are able to move the block to the right
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    if(cell.first + curX - 1 < 0) continue;
-    if(board[cell.first + curX - 1][cell.second + curY] != nullptr && 
-       board[cell.first + curX - 1][cell.second + curY] != current) {
+    // checking if the cell surpasses the border
+    if(cell.first + curX - 1 < 0) return;
+    // checking if the space next to the cell is empty
+    if(board[cell.second + curY][cell.first + curX - 1] != nullptr &&
+       board[cell.second + curY][cell.first + curX - 1] != current) {
       return;
-    }
+       }
+    // operations only ran if the cell is heavy
     if(!current->isHeavy()) continue;
-    if(board[cell.first + curX - 1][cell.second + curY - 1] != nullptr || board[cell.first + curX - 1][cell.second + curY - 2] != nullptr) {
-      return;
+    // checking if the cell breaks the border
+    if(cell.second + curY - 2 < 0) {
+      willDrop = true;
+      continue;
     }
+    if(board[cell.second + curY - 1][cell.first + curX - 1] != nullptr &&
+       board[cell.second + curY - 1][cell.first + curX - 1] != current &&
+       board[cell.second + curY - 2][cell.first + curX - 1] != nullptr &&
+       board[cell.second + curY - 2][cell.first + curX - 1] != current) {
+      willDrop = true;
+      continue;
+       }
   }
+  // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.first + curX][cell.second + curY] = nullptr;
+    board[cell.second + curY][cell.first + curX] = nullptr;
   }
-  current->setX(curX-1);
-  for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.first + curX][cell.second + curY] = current;
+  // updating the block's x coordinate
+  current->setX(curX - 1);
+  curX = curX - 1;
+  // updating the block's y coordinate if it is heavy, and falls without impediment
+  if(!willDrop && current->isHeavy()) {
+    current->setY(curY - 2);
+    curY = curY - 2;
   }
+  // adding the block to its new position in the board
+  addCurrentToBoard();
+  // calling drop() if the block drops due to being heavy and impeded
+  if(willDrop) drop();
 }
 
 void Board :: drop() {
