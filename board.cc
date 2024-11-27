@@ -105,9 +105,12 @@ void Board::forceLevel(const int newLevel){
 }
 
 void Board :: down () {
+  // accessing the properties of the current block
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
+
+  // determining if we are able to move the block down
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.second + curY - 1 < 0) return;
     if(board[cell.second + curY - 1][cell.first + curX] != nullptr && 
@@ -115,13 +118,16 @@ void Board :: down () {
       return;
     }
   }
+  // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.second + curY][cell.first + curX] = nullptr;
   }
+  // updating the block's y coordinate
   current->setY(curY-1);
-  for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = current;
-  }
+  curY = curY-1;
+  
+  // adding it to the board
+  addCurrentToBoard();
 }
 
 void Board :: right() {
