@@ -78,10 +78,12 @@ void Board::clearBoard(){
 
 void Board::forceBlock(const string type){
   auto cellsOfBlock = current->getRotation(current->getNumRotations());
-  for(auto& cell : cellsOfBlock){ // this should delete the current block completely
-    board[cell.first][cell.second].reset();
-    board[cell.first][cell.second] = nullptr;
+  const int curX = current->getX();
+  const int curY = current->getY();
+  for(auto cell : cellsOfBlock){ // this should delete the current block completely
+    board[cell.second + curY][cell.first + curX].reset();
   }
+  current.reset();
   if(type == "I") current = shared_ptr<Block>(new IBlock(currentLevel));
   else if(type == "J") current = shared_ptr<Block>(new JBlock(currentLevel));
   else if(type == "L") current = shared_ptr<Block>(new LBlock(currentLevel));
