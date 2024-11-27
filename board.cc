@@ -271,14 +271,6 @@ void Board::drop() {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
 
-  for (pair<int, int> cell : current->getRotation(curNumRot))v {
-    int oldX = cell.first + curX;
-    int oldY = cell.second + curY;
-    if (oldX >= 0 && oldX < boardWidth && oldY >= 0 && oldY < boardHeight) {
-      board[oldY][oldX] = nullptr;
-    }
-  }
-
   while(true) {
     bool canMove = true;
 
@@ -298,6 +290,10 @@ void Board::drop() {
     }
     if (!canMove) {
       break;
+    }
+
+    for (pair<int, int> cell : current->getRotation(curNumRot)) {
+      board[curY + cell.second][curX + cell.first] = nullptr;
     }
     curY--;
     current->setY(curY);
