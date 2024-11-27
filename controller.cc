@@ -107,8 +107,8 @@ void Controller::performCommand(const int repetitions, const Command command){
     if(command == Command::LEFT) board->left();
     else if(command == Command::RIGHT) board->right();
     else if(command == Command::DOWN) board->down();
-    //else if(command == Command::CLOCKWISE) board->clockwise();
-    //else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
+    else if(command == Command::CLOCKWISE) board->clockwise();
+    else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
     else if(command == Command::DROP) board->drop();
     else if(command == Command::LEVEL_UP) board->levelup();
     else if(command == Command::LEVEL_DOWN) board->leveldown();
