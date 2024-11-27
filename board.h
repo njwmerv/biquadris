@@ -31,6 +31,7 @@ class Board{
     // Accessors
     int getScore() const;
     int getLevel() const;
+    int getHighScore() const;
     int getLinesJustCleared() const;
     bool isBlind() const;
     Block* getNextBlock() const;
