@@ -7,14 +7,15 @@ using namespace std;
 // Constants
 const int BOARD_GAP = 9;
 const int BOARD_WIDTH = 11;
-const int BOARD_HEIGHT = 18;
+const int BOARD_HEIGHT = 15;
+const int BOARD_BUFFER = 3;
 const int BORDER_WIDTH = 1;
 const int SCALE_FACTOR = 10;
 const int NUMBER_OF_PLAYERS = 2;
 
 Graphic::Graphic(Controller* controller) :
   controller{controller},
-  window{(SCALE_FACTOR * NUMBER_OF_PLAYERS * (BOARD_GAP + BOARD_WIDTH)), (SCALE_FACTOR * (BOARD_HEIGHT + 10))}{
+  window{(SCALE_FACTOR * NUMBER_OF_PLAYERS * (BOARD_GAP + BOARD_WIDTH)), (SCALE_FACTOR * (BOARD_HEIGHT + BOARD_BUFFER + 10))}{
   // Draw the basic shape of the boards, fill them in with notify() later
   // draw static stuff here
 	controller->attachView(this);

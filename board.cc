@@ -17,12 +17,13 @@
 using namespace std;
 
 const int boardWidth = 11; // max, not reached (start at index 0)
-const int boardHeight = 18;
+const int boardBuffer = 3;
+const int boardHeight = 15;
 
 // Big 5
 Board::Board(int startingLevel, string level0File):
   score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false} {
-  for(int i = 0; i < boardHeight; i++) board.emplace_back(vector<shared_ptr<Block>>(boardWidth, nullptr));
+  for(int i = 0; i < boardHeight + boardBuffer; i++) board.emplace_back(vector<shared_ptr<Block>>(boardWidth, nullptr));
   if(startingLevel == 0) level = new Level0{level0File};
   else if(startingLevel == 1) level = new Level1;
   else if(startingLevel == 2) level = new Level2;
@@ -284,10 +285,10 @@ void Board::addCurrentToBoard(){
 
 void Board::clearRows() {
   int cleared = 0;
-  for (int row = 0; row < 18; row++) {
+  for (int row = 0; row < boardHeight + boardBuffer; row++) {
     bool fullRow = true;
 
-    for (int col = 0; col < 11; ++col) {
+    for (int col = 0; col < boardWidth; ++col) {
       if (!board[row][col]) {
         fullRow = false;
         break;
@@ -321,7 +322,7 @@ void Board::clockwise() {
     int newX = cell.first + curX;
     int newY = cell.second + curY;
 
-    if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight) {
+    if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight + boardBuffer) {
       return;
     }
     if (board[newY][newX] != nullptr && board[newY][newX] != current) {
@@ -349,7 +350,7 @@ void Board::counterclockwise() {
     int newX = cell.first + curX;
     int newY = cell.second + curY;
 
-    if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight) {
+    if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight + boardBuffer) {
       return;
     }
     if (board[newY][newX] != nullptr && board[newY][newX] != current) {
