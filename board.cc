@@ -259,8 +259,7 @@ void Board :: drop() {
   clearRows(); // clears full rows and then increments score accordingly
   current = next; // if you want to specify next, do it when it's generated or just above this line
   next = level->generateBlock();
-  addCurrentToBoard();
-  next = level->generateBlock();
+  addCurrentToBoard();]
   /* things that need to be implemented
   - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
   */
