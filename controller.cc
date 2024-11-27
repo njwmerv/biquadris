@@ -123,7 +123,9 @@ void Controller::performCommand(const Command command){
     cout << "displayed" << endl;
     const int linesJustCleared = board->getLinesJustCleared();
     board->setLinesJustCleared(0);
-    if(linesJustCleared <= 1) {nextPlayer(); return;}
+    nextPlayer();
+    board = getBoard();
+    if(linesJustCleared <= 1) return;
       // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
       // try using try-catch if sequence is a problem
     cout << "special" << endl;
