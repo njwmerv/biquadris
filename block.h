@@ -29,9 +29,9 @@ class Block {
         int level; // level of the board when the block was placed
         int numRotations = 0; // number of times the block has been rotated % 4
         int numCleared = 0; // number of cells that have been cleared
-        int x = 0; // only matters when dropping
-        int y = 14;
-        bool heavy = false;
+        int x = 0; // far left, as specified
+        int y = 14; // 1 below the 3 extra rows of space, as specified
+        bool heavy = false; // block having the "heavy" property
     public:
 
         // destructor

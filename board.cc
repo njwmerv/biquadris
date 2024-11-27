@@ -16,7 +16,7 @@
 #include "tblock.h"
 using namespace std;
 
-const int boardWidth = 11; // max, not reached (start at index 0)
+const int boardWidth = 11; // note that the actual board is in the range [0,10]
 const int boardBuffer = 3;
 const int boardHeight = 15;
 
@@ -283,8 +283,14 @@ void Board::addCurrentToBoard(){
   const int curY = current->getY();
   vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
   for(pair<int, int> cell : cellsOfBlock){
+    // checking if the game has ended
+    if(board[cell.second + curY][cell.first + curX] != nullptr) {
+      cout << 
+    }
+    // otherwise, placing the block as intended
     board[cell.second + curY][cell.first + curX] = current;
   }
+
 }
 
 void Board::clearRows() {
