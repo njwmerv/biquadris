@@ -322,3 +322,31 @@ void Board::clockwise() {
 
   addCurrentToBoard();
 }
+
+void Board::counterclockwise() {
+  int curX = current->getX();
+  int curY = current->getY();
+  int curNumRot = current->getNumRotations();
+
+  int newNumRot = (curNumRot - 1) % 4;
+
+  for(pair<int, int> cell : current->getRotation(newNumRot)) {
+    int newX = cell.first + curX;
+    int newY = cell.second + curY;
+
+    if (newX < 0 || newX >= boardWidth || newY < 0 || newY >= boardHeight) {
+      return;
+    }
+    if (board[newY][newX] != nullptr && board[newY][newX] != current) {
+      return;
+    }
+  }
+
+  for(pair<int, int> cell : current->getRotation(curNumRot)) {
+    board[curY + cell.second][curX + cell.first] = nullptr;
+  }
+
+  current->counterclockwise();
+
+  addCurrentToBoard();
+}
