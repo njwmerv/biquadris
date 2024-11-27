@@ -22,7 +22,7 @@ const int boardHeight = 15;
 
 // Big 5
 Board::Board(int startingLevel, string level0File):
-  score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false} {
+  score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false}, linesJustCleared{0} {
   for(int i = 0; i < boardHeight + boardBuffer; i++) board.emplace_back(vector<shared_ptr<Block>>(boardWidth, nullptr));
   if(startingLevel == 0) level = new Level0{level0File};
   else if(startingLevel == 1) level = new Level1;
@@ -42,12 +42,16 @@ Board::~Board(){
 // Accessors
 int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
-vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
+int Board::getLinesJustCleared() const {return linesJustCleared;}
+bool Board::isBlind() const {return blind;}
 Block* Board::getNextBlock() const {return next.get();}
 Block* Board::getCurrentBlock() const {return current.get();}
-bool Board::isBlind() const {return blind;}
+vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
+
 // Mutators
-void Board::setScore(int newScore){score = newScore;}
+void Board::setScore(int newScore) {score = newScore;}
+void Board::setLinesJustCleared(int newCount) {linesJustCleared = newCount;}
+void Board::setBlind(bool blindness) {blind = blindness;}
 
 void Board::levelup(){
   if(currentLevel == 4) return;
@@ -308,6 +312,7 @@ void Board::clearRows() {
   }
   score += (cleared + currentLevel) * (cleared + currentLevel);
   if(score > highScore) highScore = score;
+  linesJustCleared = cleared;
 }
 
 

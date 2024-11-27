@@ -15,6 +15,7 @@ class Board{
   shared_ptr<Block> next;
   string level0File;
   int currentLevel;
+  int linesJustCleared;
   bool blind;
 
   void clearRows();
@@ -29,19 +30,17 @@ class Board{
 
     // Accessors
     int getScore() const;
-
     int getLevel() const;
-
-    vector<vector<shared_ptr<Block>>> getTheBoard() const;
-
-    Block* getNextBlock() const;
-
-    Block* getCurrentBlock() const;
-
+    int getLinesJustCleared() const;
     bool isBlind() const;
+    Block* getNextBlock() const;
+    Block* getCurrentBlock() const;
+    vector<vector<shared_ptr<Block>>> getTheBoard() const;
 
     // Mutators
     void setScore(int);
+    void setLinesJustCleared(int);
+    void setBlind(bool);
 
     // Game state
     void levelup();

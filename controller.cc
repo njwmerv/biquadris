@@ -109,7 +109,28 @@ void Controller::performCommand(const int repetitions, const Command command){
     else if(command == Command::DOWN) board->down();
     else if(command == Command::CLOCKWISE) board->clockwise();
     else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
-    else if(command == Command::DROP) board->drop();
+    else if(command == Command::DROP){
+      board->drop();
+      const int linesJustCleared = board->getLinesJustCleared();
+      board->setLinesJustCleared(0);
+      if(linesJustCleared <= 1) {nextPlayer(); return;}
+        // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
+        // try using try-catch if sequence is a problem
+      string specialAction;
+      Controller::Command attack = Command::INVALID;
+      while(attack == Command::INVALID){
+        in >> specialAction;
+        Controller::Command attack = interpretInput(specialAction).second;
+        if(attack == Command::BLIND) getBoard()->setBlind(true);
+        else if(attack == Command::HEAVY) getBoard(); // idk what to do here
+        else if(attack == Command::FORCE){
+          string type;
+          in >> type;
+          getBoard()->forceBlock(type);
+        }
+      }
+      return;
+    }
     else if(command == Command::LEVEL_UP) board->levelup();
     else if(command == Command::LEVEL_DOWN) board->leveldown();
     else if(command == Command::NO_RANDOM){
@@ -148,7 +169,5 @@ void Controller::runGame(){
     in >> input;
     auto interpretedInput = interpretInput(input);
     performCommand(interpretedInput.first, interpretedInput.second);
-
-    if(turnDone){notifyObservers(); nextPlayer();} // TODO MARI: when is turnDone?
   }
 }
