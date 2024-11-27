@@ -161,6 +161,7 @@ void Board :: right() {
   // updating the block's x coordinate
   current->setX(curX+1);
   curX = curX + 1;
+  // updating the block's y coordinate if it is heavy, and falls without impediment
   if(!willDrop && current->isHeavy()) {
     current->setY(curY-2);
     curY = curY-2;
