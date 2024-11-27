@@ -153,8 +153,6 @@ void Board :: right() {
       willDrop = true;
       continue;
     }
-    // still need to implement heavy if it doesn't drop
-
   }
   // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
@@ -163,6 +161,10 @@ void Board :: right() {
   // updating the block's x coordinate
   current->setX(curX+1);
   curX = curX + 1;
+  if(!willDrop) {
+    current->setY(curY-2);
+    curY = curY-2;
+  }
   // adding the block to its new position in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.second + curY][cell.first + curX] = current;
