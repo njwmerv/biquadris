@@ -15,8 +15,8 @@ class Board{
   shared_ptr<Block> next;
   string level0File;
   int currentLevel;
-  int linesJustCleared;
   bool blind;
+  int linesJustCleared;
 
   void clearRows();
 
