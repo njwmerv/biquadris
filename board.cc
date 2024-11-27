@@ -283,9 +283,10 @@ void Board::addCurrentToBoard(){
   const int curY = current->getY();
   vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
   for(pair<int, int> cell : cellsOfBlock){
-    // checking if the game has ended
+    // checking if the game has ended 
+    // (note that when this function is called on a dropped block, the space is already verified to be cleared)
     if(board[cell.second + curY][cell.first + curX] != nullptr) {
-      cout << 
+      // do something in controller
     }
     // otherwise, placing the block as intended
     board[cell.second + curY][cell.first + curX] = current;
