@@ -266,6 +266,7 @@ void Board::drop() {
 	current = next;
 	addCurrentToBoard();
   next = shared_ptr<Block>(level->generateBlock());
+	clearRows();
 }
 
 void Board::addCurrentToBoard(){
@@ -296,7 +297,7 @@ void Board::clearRows() {
         if(cell.use_count() == 1) score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
         cell.reset();
       }
-      board.insert(board.begin(), vector<shared_ptr<Block>>(11, nullptr));
+			board.emplace_back(vector<shared_ptr<Block>>(11, nullptr));
       row--;
     }
   }
