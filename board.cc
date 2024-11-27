@@ -230,42 +230,6 @@ void Board :: left() {
   if(willDrop) drop();
 }
 
-/*void Board :: drop() {
-  int curX = current->getX();
-  int curY = current->getY();
-  int curNumRot = current->getNumRotations();
-  int smallestDistance = INT_MAX;
-  for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    int curLoopX = cell.first + curX;
-    int count = 0;
-    for(int i = cell.second+curY - 1; i >= 0; i--) {
-      if(board[i][curLoopX] != nullptr) {
-        break;
-      }
-      count++;
-    }
-    if(count < smallestDistance) {
-      smallestDistance = count;
-    }
-  }
-  for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = nullptr;
-  }
-  current->setY(curY-smallestDistance);
-  curY = curY - smallestDistance;
-  for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = current;
-  }
-  clearRows(); // clears full rows and then increments score accordingly
-  current = next;
-  addCurrentToBoard();
-  next = shared_ptr<Block>(level->generateBlock());
-  /* things that need to be implemented
-  - if level 4 -> add to placed blocks counter, if counter % 5 = 0, then place singular block in middle
-  
-  if(blind) blind = false;
-}*/
-
 void Board::drop() {
   int curX = current->getX();
   int curY = current->getY();
@@ -298,9 +262,10 @@ void Board::drop() {
     curY--;
     current->setY(curY);
   }
-  addCurrentToBoard();
-  current = next;
-  next = level->generateBlock();
+	addCurrentToBoard();
+	current = next;
+	addCurrentToBoard();
+  next = shared_ptr<Block>(level->generateBlock());
 }
 
 void Board::addCurrentToBoard(){
