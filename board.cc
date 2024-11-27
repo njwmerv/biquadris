@@ -277,6 +277,7 @@ void Board::drop() {
 	addCurrentToBoard();
   // generating the next block
   next = shared_ptr<Block>(level->generateBlock());
+  if(blind) blind = false;
 }
 
 void Board::addCurrentToBoard(){
