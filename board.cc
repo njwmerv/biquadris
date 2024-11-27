@@ -231,13 +231,14 @@ void Board :: left() {
 }
 
 void Board::drop() {
+  // accessing the properties of the current block
   int curX = current->getX();
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
 
   while(true) {
     bool canMove = true;
-
+    // checking if block can move down
     for (pair<int, int> cell : current->getRotation(curNumRot)) {
       int newX = curX + cell.first;
       int newY = curY + cell.second - 1;
@@ -255,16 +256,19 @@ void Board::drop() {
     if (!canMove) {
       break;
     }
-
+    // removing the block in its previous position
     for (pair<int, int> cell : current->getRotation(curNumRot)) {
       board[curY + cell.second][curX + cell.first] = nullptr;
     }
     curY--;
     current->setY(curY);
   }
+  // adding the block in its new position on the board
 	addCurrentToBoard();
+  // adding the next block to the board
 	current = next;
 	addCurrentToBoard();
+  // generating the next block
   next = shared_ptr<Block>(level->generateBlock());
 }
 
