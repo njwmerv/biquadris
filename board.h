@@ -17,6 +17,7 @@ class Board{
   int currentLevel;
   int linesJustCleared;
   bool blind;
+  int blocksPlaced;
 
   void clearRows();
 
@@ -55,6 +56,8 @@ class Board{
     void drop();
     void clockwise();
     void counterclockwise();
+
+    void levelFour();
 };
 
 #endif

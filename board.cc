@@ -14,6 +14,7 @@
 #include "sblock.h"
 #include "zblock.h"
 #include "tblock.h"
+#include "fourblock.h"
 using namespace std;
 
 const int boardWidth = 11; // note that the actual board is in the range [0,10]
@@ -32,6 +33,7 @@ Board::Board(int startingLevel, string level0File):
   current = shared_ptr<Block>(level->generateBlock());
   next = shared_ptr<Block>(level->generateBlock());
   addCurrentToBoard();
+  blocksPlaced = 0;
 }
 
 Board::~Board(){
@@ -270,7 +272,12 @@ void Board::drop() {
   }
   // adding the block in its new position on the board
 	addCurrentToBoard();
+  blocksPlaced++;
   clearRows();
+  // checking if blocksPlaced % 5 == 0 (note that this number resets to 0 when a line is cleared)
+  if(blocksPlaced%5 == 0 && currentLevel == 4) {
+    levelFour();
+  } 
   // adding the next block to the board
 	current = next;
 	addCurrentToBoard();
@@ -308,6 +315,7 @@ void Board::clearRows() {
 
     if (fullRow) {
       cleared++;
+      blocksPlaced = 0; // for Level 4
       board.erase(board.begin() + row);
       for(auto cell : board[row]){
         if(cell.use_count() == 1) score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
@@ -377,4 +385,13 @@ void Board::counterclockwise() {
   current->counterclockwise();
 
   addCurrentToBoard();
+}
+
+void Board :: levelFour() {
+  for(int i = 0; i < boardHeight; i++) {
+    if(board[i][boardWidth/2] == nullptr) {
+      board[i][boardWidth/2] = shared_ptr<Block>(new fourBlock(currentLevel));
+      break;
+    }
+  }
 }

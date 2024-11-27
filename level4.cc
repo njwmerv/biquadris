@@ -4,10 +4,7 @@ using namespace std;
 
 
 Block* Level4::generateBlock() {
-    blockCount++;
-    if (blockCount % 5 == 0) {
-        // place1Block(); TODO Chloe
-    }
+    // the external constructive force is implemented in board
     Level3 temp;
     return temp.generateBlock();
 

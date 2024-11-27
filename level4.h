@@ -5,8 +5,6 @@
 #include <string>
 
 class Level4 : public Level {
-    private:
-        int blockCount;
     public:
         Block *generateBlock() override;
 };
