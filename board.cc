@@ -316,7 +316,7 @@ void Board::clockwise() {
     board[curY + cell.second][curX + cell.first] = nullptr;
   } 
 
-  current->setNumRotations(newNumRot);
+  current->clockwise();
 
   addCurrentToBoard();
 }
