@@ -394,4 +394,5 @@ void Board :: levelFour() {
       break;
     }
   }
+  clearRows();
 }
