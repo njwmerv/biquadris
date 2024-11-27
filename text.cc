@@ -44,7 +44,7 @@ void Text::notify(){
   printBoardBorder(controller, out);
 
   // Print board itself
-  for(int i = 0; i < BOARD_HEIGHT; i++){
+  for(int i = BOARD_HEIGHT - 1; i >= 0; i--){
     for(Board* board : controller->getBoards()){
       auto theBoard = board->getTheBoard();
       out << "|";

@@ -74,7 +74,7 @@ void Graphic::notify(){
       int cellColour = Xwindow::White;
       if(board->isBlind() && i >= 5 && i < 15 && j >= 5 && j < 12) cellColour = Xwindow::Black; // blind
       else if(theBoard[i][j] != nullptr) cellColour = getColour(theBoard[i][j]->getType());
-      window.fillRectangle(offset + j * SCALE_FACTOR, 51 + i * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
+			window.fillRectangle(offset + j * SCALE_FACTOR, 51 + (BOARD_HEIGHT - i - 1) * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
     }
   }
 
