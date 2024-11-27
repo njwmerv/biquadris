@@ -54,6 +54,8 @@ class Board{
     void right();
     void down();
     void drop();
+    void clockwise();
+    void counterclockwise();
 };
 
 #endif
