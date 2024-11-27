@@ -12,7 +12,7 @@ class Board{
   int score;
   int highScore;
   shared_ptr<Block> current;
-  Block* next;
+  shared_ptr<Block> next;
   string level0File;
   int currentLevel;
   bool blind;
