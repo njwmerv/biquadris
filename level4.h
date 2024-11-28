@@ -9,13 +9,14 @@ class Level4 : public Level {
   string filename;
   bool isRandom = false;
 
-public:
-  Level4();
-  Level4(const string& file);
+  public:
+    Level4();
+    Level4(const string& file);
 
-  Block *generateBlock() override;
+    Block *generateBlock() override;
 
-  void setRandomness(bool);
+    void setRandomness(bool);
+    void setFileName(const string&);
 };
 
 #endif

@@ -20,7 +20,7 @@ Block* Level4::generateBlock(){
     if(isRandom){
         blockGenerated = blockTypes[rand() % 9];
     }
-    else{
+    else if(filename != ""){
         if(!(file >> blockGenerated)){
             file.close();
             file.open(filename);
@@ -42,3 +42,8 @@ Block* Level4::generateBlock(){
 }
 
 void Level4::setRandomness(bool nowRandom) {isRandom = nowRandom;}
+void Level4::setFileName(const string& path){
+  filename = path;
+  file.close();
+  file.open(filename);
+}

@@ -8,6 +8,8 @@ class Level {
         int currentLevel = 0;
         virtual Block *generateBlock() = 0;
         virtual ~Level() {};
+        virtual void setRandomness(bool);
+        virutal void setFileName(const string&);
 };
 
 #endif

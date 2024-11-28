@@ -6,7 +6,7 @@
 
 class Level3 : public Level {
   ifstream file;
-  string filename;
+  string filename = "";
   bool isRandom = false;
 
   public:
@@ -16,6 +16,7 @@ class Level3 : public Level {
     Block *generateBlock() override;
 
     void setRandomness(bool);
+    void setFileName(const string&);
 };
 
 #endif
