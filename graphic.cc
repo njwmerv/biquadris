@@ -61,7 +61,7 @@ Graphic::Graphic(Controller* controller) :
     }
 
     // Draw footer (next block area)
-    window.drawString(offset - BORDER_WIDTH, BOARD_BOT_POS + HALF_LINE, "Next Block:");
+    window.drawString(offset - BORDER_WIDTH, BOARD_BOT_POS + HALF_LINE * 3, "Next Block:");
     // Printing the next block itself
     window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 4 * SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
     const char nextType = board->getNextBlock()->getType();
@@ -118,7 +118,7 @@ void Graphic::notify(){
       int cellColour = Xwindow::White;
       if(board->isBlind() && i >= 5 && i < 15 && j >= 5 && j < 12) cellColour = Xwindow::Black; // blind
       else if(theBoard[i][j] != nullptr) cellColour = getColour(theBoard[i][j]->getType());
-			window.fillRectangle(offset + j * SCALE_FACTOR, HALF_LINE * 10 + BORDER_WIDTH + (BOARD_HEIGHT - i - 1) * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
+			window.fillRectangle(offset + j * SCALE_FACTOR, HALF_LINE * 12 + BORDER_WIDTH + (BOARD_HEIGHT - i - 1) * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR, cellColour);
     }
   }
 
