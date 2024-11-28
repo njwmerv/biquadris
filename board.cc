@@ -162,15 +162,12 @@ void Board :: right() {
       willDrop = true;
       continue;
     }
-    bool combinedWillDrop = true;
     for(int i = 1; i <= weight; i++){
-      combinedWillDrop = combinedWillDrop &&
-                         board[cell.second + curY - i][cell.first + curX + 1] != nullptr &&
-                         board[cell.second + curY - i][cell.first + curX + 1] != current;
-    }
-    if(combinedWillDrop){
-      willDrop = true;
-      continue;
+      if(board[cell.second + curY - i][cell.first + curX + 1] != nullptr &&
+         board[cell.second + curY - i][cell.first + curX + 1] != current){
+        willDrop = true;
+        continue;
+      }
     }
   }
   // erasing the block in the board
@@ -214,15 +211,12 @@ void Board :: left() {
       willDrop = true;
       continue;
     }
-    bool combinedWillDrop = true;
     for(int i = 1; i <= weight; i++){
-      combinedWillDrop = combinedWillDrop &&
-                         board[cell.second + curY - i][cell.first + curX - 1] != nullptr &&
-                         board[cell.second + curY - i][cell.first + curX - 1] != current;
-    }
-    if(combinedWillDrop){
-      willDrop = true;
-      continue;
+      if(board[cell.second + curY - i][cell.first + curX - 1] != nullptr &&
+         board[cell.second + curY - i][cell.first + curX - 1] != current){
+        willDrop = true;
+        continue;
+      }
     }
   }
   // erasing the block in the board
@@ -363,15 +357,12 @@ void Board::clockwise() {
       willDrop = true;
       continue;
     }
-    bool combinedWillDrop = true;
     for(int i = 1; i <= weight; i++){
-      combinedWillDrop = combinedWillDrop &&
-                         board[newY - i][newX] != nullptr &&
-                         board[newY - i][newX] != current;
-    }
-    if(combinedWillDrop){
-      willDrop = true;
-      continue;
+      if(board[newY - i][newX] != nullptr &&
+         board[newY - i][newX] != current){
+        willDrop = true;
+        continue;
+      }
     }
   }
 
@@ -416,15 +407,12 @@ void Board::counterclockwise() {
       willDrop = true;
       continue;
     }
-    bool combinedWillDrop = true;
     for(int i = 1; i <= weight; i++){
-      combinedWillDrop = combinedWillDrop &&
-                         board[newY - i][newX] != nullptr &&
-                         board[newY - i][newX] != current;
-    }
-    if(combinedWillDrop){
-      willDrop = true;
-      continue;
+      if(board[newY - i][newX] != nullptr &&
+         board[newY - i][newX] != current){
+        willDrop = true;
+        continue;
+      }
     }
   }
 
