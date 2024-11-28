@@ -188,6 +188,7 @@ void Controller::runGame(){
 		while(commandQueue.empty()){
   	  cin >> input;
 			pair<int, Command> interpretation = interpretInput(input);
+            if(interpretation.first == 0) cerr << "Invalid input" << endl;
       for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second);
 		}
     performCommand(commandQueue.front());
