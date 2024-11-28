@@ -388,6 +388,7 @@ void Board::clockwise() {
   current->clockwise();
 
   addCurrentToBoard();
+  if(willDrop) drop();
 }
 
 void Board::counterclockwise() {
@@ -440,6 +441,7 @@ void Board::counterclockwise() {
   current->counterclockwise();
 
   addCurrentToBoard();
+  if(willDrop) drop();
 }
 
 void Board :: levelFour() {
