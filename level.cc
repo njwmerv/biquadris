@@ -1,6 +1,8 @@
 #include "level.h"
 #include <fstream>
 
+
+// Constructor
 Level::Level(const string& path) : filename{path} {
   if(filename != "") file.open(filename);
 }

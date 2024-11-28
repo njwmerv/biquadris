@@ -8,6 +8,7 @@
 #include "tblock.h"
 using namespace std;
 
+// Constructor
 Level0::Level0(const string& path) : Level{path} {}
 
 Block *Level0::generateBlock() {

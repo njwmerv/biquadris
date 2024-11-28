@@ -9,11 +9,13 @@
 #include <cstdlib>
 #include <fstream>
 
+// Constructor
 Level4::Level4(const string& path) : Level{path} {}
 
 Block* Level4::generateBlock(){
     Block* block = nullptr;
     const int maxWeight = 9;
+    // Weighted block probabilities
     const string blockTypes[maxWeight] = {"I", "J", "L", "O", "S", "S", "Z", "Z", "T"};
     string blockGenerated;
     if(isRandom){
