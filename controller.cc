@@ -126,13 +126,13 @@ void Controller::endTurn(){
   while(attackCommand == Command::INVALID){
     cin >> specialAction;
     attackCommand = interpretInput(specialAction).second;
-    if(attackCommand == Command::BLIND) getBoard()->setBlind(true);
-    else if(attackCommand == Command::HEAVY) getBoard(); // idk what to do here
+    if(attackCommand == Command::BLIND) board->setBlind(true);
+    else if(attackCommand == Command::HEAVY) board->getCurrentBlock()->changeWeight(2);
     else if(attackCommand == Command::FORCE){
       string type;
 	  while(cin >> type){
       	if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
-		else {getBoard()->forceBlock(type); break;}
+		else {board->forceBlock(type); break;}
 	  }
     }
     else{
