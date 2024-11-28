@@ -9,7 +9,7 @@
 using namespace std;
 
 Xwindow::Xwindow(int width, int height) : width{width}, height{height} {
-
+  const int COLOUR_AMOUNT = 10;
   d = XOpenDisplay(NULL);
   if (d == NULL) {
     cerr << "Cannot open display" << endl;
@@ -31,10 +31,10 @@ Xwindow::Xwindow(int width, int height) : width{width}, height{height} {
   // Set up colours.
   XColor xcolour;
   Colormap cmap;
-  char color_vals[9][10] = {"white", "black", "cyan", "blue", "orange", "yellow", "green", "purple", "red"};
+  char color_vals[COLOUR_AMOUNT][10] = {"white", "black", "cyan", "blue", "orange", "yellow", "green", "purple", "red", "brown"};
 
   cmap=DefaultColormap(d,DefaultScreen(d));
-  for(int i=0; i < 9; ++i) {
+  for(int i=0; i < COLOUR_AMOUNT; ++i) {
       XParseColor(d,cmap,color_vals[i],&xcolour);
       XAllocColor(d,cmap,&xcolour);
       colours[i]=xcolour.pixel;

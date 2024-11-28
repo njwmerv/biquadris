@@ -15,6 +15,7 @@ const int NUMBER_OF_PLAYERS = 2;
 const int HALF_LINE = 5;
 const int BOARD_BOT_POS = HALF_LINE * 12 + BOARD_HEIGHT * SCALE_FACTOR;
 
+// Helper for converting block type (char) to the colour
 int getColour(const char c){
   if(c == ' ') return Xwindow::White;
   else if(c == 'I') return Xwindow::Cyan;
@@ -24,6 +25,7 @@ int getColour(const char c){
   else if(c == 'S') return Xwindow::Green;
   else if(c == 'T') return Xwindow::Purple;
   else if(c == 'Z') return Xwindow::Red;
+  else if(c == '*') return Xwindow::Brown;
   return Xwindow::Black;
 }
 
@@ -95,16 +97,14 @@ Graphic::Graphic(Controller* controller) :
   }
 }
 
-Graphic::~Graphic(){
-  controller->detachView(this);
-}
+Graphic::~Graphic() {controller->detachView(this);}
 
 void Graphic::notify(){
-  const Board* board = controller->getBoard();
-  auto theBoard = board->getTheBoard();
-  const int offset = controller->getCurrentPlayer() * SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP) + HALF_LINE + BORDER_WIDTH;
+  const Board* board = controller->getBoard(); // get Board of current player
+  auto theBoard = board->getTheBoard(); // get the 2d array of that Board
+  const int offset = controller->getCurrentPlayer() * SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP) + HALF_LINE + BORDER_WIDTH; // how far to right to print
 
-  // Print score
+  // Print level, score, high score
   window.fillRectangle(offset + 48, HALF_LINE * 5, 80, HALF_LINE * 2, 0);
   window.fillRectangle(offset + 48, HALF_LINE * 7, 80, HALF_LINE * 2, 0);
 	window.fillRectangle(offset + 48, HALF_LINE * 9, 80, HALF_LINE * 2, 0);

@@ -2,7 +2,6 @@
 #define GRAPHIC_H
 #include "view.h"
 #include "controller.h"
-#include <iostream>
 #include "window.h"
 
 class Graphic : public View{
