@@ -8,6 +8,7 @@ class Level0 : public Level {
     string currentBlock;
     public:
         Level0(const string& path = "");
+        ~Level0(){}
         Block* generateBlock() override;
     
 };
