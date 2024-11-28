@@ -354,7 +354,8 @@ void Board::clearRows() {
       cleared++;
       blocksPlaced = 0; // for Level 4
       for(shared_ptr<Block>& cell : board[row]){
-        if(cell.use_count() == 1 && cell->getType() != '*') score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
+        if((cell.use_count() == 1 || (cell.use_count() == 2 && cell == current))
+           && cell->getType() != '*') score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
         cell.reset();
       }
       board.erase(board.begin() + row);
