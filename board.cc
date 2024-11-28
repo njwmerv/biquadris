@@ -118,6 +118,9 @@ void Board :: down () {
   int curY = current->getY();
   int curNumRot = current->getNumRotations();
 
+  bool willDrop = false; // only used if the block is heavy
+  const int weight = current->getHeaviness();
+
   // determining if we are able to move the block down
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     if(cell.second + curY - 1 < 0) return;
@@ -125,17 +128,33 @@ void Board :: down () {
        board[cell.second + curY - 1][cell.first + curX] != current) {
       return;
     }
+    if(cell.second + curY - weight < 0) {
+      willDrop = true;
+      continue;
+    }
+    for(int i = 1; i <= weight; i++){
+      if(board[cell.second + curY - i][cell.first + curX] != nullptr &&
+         board[cell.second + curY - i][cell.first + curX] != current){
+        willDrop = true;
+        continue;
+      }
+    }
   }
   // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[cell.second + curY][cell.first + curX] = nullptr;
   }
   // updating the block's y coordinate
-  current->setY(curY-1);
-  curY = curY-1;
+  current->setY(curY - 1);
+  curY = curY - 1;
+  if(!willDrop && weight > 0) {
+    current->setY(curY - weight);
+    curY = curY - weight;
+  }
   
   // adding it to the board
   addCurrentToBoard();
+  if(willDrop) drop();
 }
 
 void Board :: right() {
