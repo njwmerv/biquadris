@@ -9,7 +9,7 @@ class Level {
     protected:
       ifstream file;
       string filename = "";
-      bool isRandom = false;
+      bool isRandom = true;
 
     public:
         //Constructor
