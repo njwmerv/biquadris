@@ -41,7 +41,7 @@ class Board{
     Block* getNextBlock() const;
     Block* getCurrentBlock() const;
     vector<vector<shared_ptr<Block>>> getTheBoard() const;
-    gameState getGameState() const;
+    GameState getGameState() const;
 
     // Mutators
     void setScore(int);
