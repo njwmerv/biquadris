@@ -58,32 +58,43 @@ void Board::setBlind(bool blindness) {blind = blindness;}
 
 void Board::levelup(){
   if(currentLevel == 4) return;
-  delete level;
   currentLevel++;
-  if(currentLevel == 1) level = new Level1;
-  else if(currentLevel == 2) level = new Level2;
-  else if(currentLevel == 3) level = new Level3;
-  else if(currentLevel == 4) level = new Level4;
-  next.reset(level->generateBlock());
+  forceLevel(currentLevel);
 }
 
 void Board::leveldown(){
   if(currentLevel == 0) return;
-  delete level;
   currentLevel--;
-  if(currentLevel == 0) level = new Level0(level0File);
-  else if(currentLevel == 1) level = new Level1;
-  else if(currentLevel == 2) level = new Level2;
-  else if(currentLevel == 3) level = new Level3;
-  next.reset(level->generateBlock());
+  forceLevel(currentLevel);
 }
 
 void Board::clearBoard(){
-  for(auto row : board){
-    for(auto cell : row){
-      cell.reset();
-    }
+  for(vector<shared_ptr<Block>> row : board){
+    for(shared_ptr<Block> cell : row) cell = nullptr;
   }
+}
+
+void Board::forceLevel(const int newLevel){
+  if(newLevel == currentLevel) return; // if same level, don't switch
+  delete level; // discard old level
+  // get new level
+  if(newLevel == 0) level = new Level0(level0File);
+  else if(newLevel == 1) level = new Level1;
+  else if(newLevel == 2) level = new Level2;
+  else if(newLevel == 3) level = new Level3;
+  else level = new Level4;
+  // generate new blocks
+  // completely erase the previous current block
+  vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
+  const int weight = current->getHeaviness();
+  const int curX = current->getX();
+  const int curY = current->getY();
+  for(auto cell : cellsOfBlock){
+    board[cell.second + curY][cell.first + curX].reset();
+  }
+  current.reset(level->generateBlock()); // generate new current block
+  next.reset(level->generateBlock()); // generate new next block
+  currentLevel = newLevel;
 }
 
 void Board::forceBlock(const string type){
@@ -104,18 +115,6 @@ void Board::forceBlock(const string type){
   else current = shared_ptr<Block>(new TBlock(currentLevel));
   current->changeWeight(weight);
   addCurrentToBoard();
-}
-
-void Board::forceLevel(const int newLevel){
-  if(newLevel == currentLevel) return;
-  delete level;
-  if(newLevel == 0) level = new Level0(level0File);
-  else if(newLevel == 1) level = new Level1;
-  else if(newLevel == 2) level = new Level2;
-  else if(newLevel == 3) level = new Level3;
-  else level = new Level4;
-  next.reset(level->generateBlock());
-  currentLevel = newLevel;
 }
 
 void Board :: down () {
@@ -341,7 +340,7 @@ void Board::clearRows() {
       cleared++;
       blocksPlaced = 0; // for Level 4
       for(auto cell : board[row]){
-        if(cell.use_count() == 1) score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
+        if(cell.use_count() == 1 && cell->getType() != '*') score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
         cell.reset();
       }
       board.erase(board.begin() + row);
