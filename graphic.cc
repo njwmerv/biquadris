@@ -86,8 +86,8 @@ Graphic::Graphic(Controller* controller) :
       window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'T'){
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 6, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'Z'){
       window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
@@ -144,8 +144,8 @@ void Graphic::notify(){
     window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'T'){
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 6, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'Z'){
     window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
