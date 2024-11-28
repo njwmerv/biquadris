@@ -86,7 +86,6 @@ void Board::forceLevel(const int newLevel){
   // generate new blocks
   // completely erase the previous current block
   vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
-  const int weight = current->getHeaviness();
   const int curX = current->getX();
   const int curY = current->getY();
   for(auto cell : cellsOfBlock){
