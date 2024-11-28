@@ -43,8 +43,6 @@ class Board{
     void setScore(int);
     void setLinesJustCleared(int);
     void setBlind(bool);
-    void setRandomness(bool);
-    void setFileName(const string& path);
 
     // Game state
     void levelup();
@@ -52,6 +50,8 @@ class Board{
     void clearBoard();
     void forceBlock(const string);
     void forceLevel(const int);
+    void noRandom(string&);
+    void random();
 
     void left();
     void right();

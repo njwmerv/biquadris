@@ -56,14 +56,6 @@ void Controller::sequence(string file){
     for(int i = 0; i < interpretation.first; i++) commandsToExecute.at(currentPlayer).push(interpretation.second);
   }
 }
-// TODO
-void Controller::noRandom(string){
-
-}
-// TODO
-void Controller::random(){
-
-}
 
 void Controller::resetGame(){
   for(Board* board : boards){
@@ -118,8 +110,6 @@ void Controller::endTurn(){
   board = getBoard();
   board->setLinesJustCleared(0);
   if(linesJustCleared <= 1) return;
-  // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
-  // try using try-catch if sequence is a problem
   cout << "You just cleared 2 or more lines! Enter your special action below:" << endl;
   string specialAction;
   Command attackCommand = Command::INVALID;
@@ -152,12 +142,13 @@ void Controller::performCommand(const Command command){
   else if(command == Command::DROP) board->drop();
   else if(command == Command::LEVEL_UP) board->levelup();
   else if(command == Command::LEVEL_DOWN) board->leveldown();
-  else if(command == Command::NO_RANDOM){
+  else if(command == Command::NO_RANDOM && board->getLevel() >= 3){
     string filePath;
     cin >> filePath;
     ifstream file{filePath};
+    board->noRandom(filePath);
   }
-  //else if(command == Command::RANDOM) board->random();
+  else if(command == Command::RANDOM && board->getLevel() >= 3) board->random();
   else if(command == Command::SEQUENCE){
     string filePath;
     cin >> filePath;
@@ -171,6 +162,7 @@ void Controller::performCommand(const Command command){
   else if(command == Command::Z) board->forceBlock("Z");
   else if(command == Command::T) board->forceBlock("T");
   else if(command == Command::RESTART){
+    cout << "Restarting game for Player " << currentPlayer << "..." << endl;
     board->clearBoard();
     board->forceLevel(startingLevel);
     board->setScore(0);

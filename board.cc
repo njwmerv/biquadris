@@ -55,8 +55,6 @@ vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 void Board::setScore(int newScore) {score = newScore;}
 void Board::setLinesJustCleared(int newCount) {linesJustCleared = newCount;}
 void Board::setBlind(bool blindness) {blind = blindness;}
-void Board::setRandomness(bool nowRandom) {level->setRandomness(nowRandom);}
-void Board::setFileName(const string& path) {level->setFileName(path);}
 
 void Board::levelup(){
   if(currentLevel == 4) return;
@@ -465,4 +463,15 @@ void Board :: levelFour() {
     }
   }
   clearRows();
+}
+
+void Board::noRandom(string& file){
+  if(currentLevel < 3) return;
+  level->setRandomness(false);
+  level->setFileName(file);
+}
+
+void Board::random(){
+  if(currentLevel < 3) return;
+  level->setRandomness(true);
 }

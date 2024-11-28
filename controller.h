@@ -65,8 +65,6 @@ class Controller{
 
     // For the game
     void sequence(string);
-    void noRandom(string); // TODO
-    void random(); // TODO
     void resetGame();
 
     // I/O-related
