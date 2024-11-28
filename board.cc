@@ -83,6 +83,7 @@ void Board::restart(int startingLevel){
   current.reset(level->generateBlock());
   addCurrentToBoard();
   next.reset(level->generateBlock());
+  score = 0;
 }
 
 void Board::forceLevel(const int newLevel){
