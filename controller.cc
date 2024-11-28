@@ -40,8 +40,8 @@ void Controller::attachView(View* viewer){
 
 void Controller::detachView(View* viewer){
   for(auto it = observers.begin(); it != observers.end();){
-    if(*it == viewer) it = observers.erase(it);
-    else it++;
+    if(*it == viewer) it = observers.erase(it); // in case there are multiple occurrences
+    else it++;                                  // of an observer in the vector
   }
 }
 
@@ -51,19 +51,18 @@ void Controller::nextPlayer(){currentPlayer = (currentPlayer + 1) % numberOfPlay
 void Controller::sequence(string file){
   ifstream ifs{file};
   string line;
-  while(ifs >> line){
+  while(ifs >> line){ // read command from file
     pair<int, Command> interpretation = interpretInput(line);
     for(int i = 0; i < interpretation.first; i++) commandsToExecute.at(currentPlayer).push(interpretation.second);
+    // add command to queue
   }
 }
 
-void Controller::resetGame(){
+void Controller::resetGame(){ // clear board and reset current + next blocks for each player
   for(Board* board : boards){
-    board->clearBoard();
-    board->forceLevel(startingLevel);
-    board->setScore(0);
+    board->restart(startingLevel);
   }
-  currentPlayer = 0;
+  currentPlayer = 0; // go back to first player
 }
 
 // I/O-related
@@ -71,14 +70,14 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
   int repetitions = 1;
   Command command = Command::INVALID;
 
-  istringstream iss{input};
-  if(!(iss >> repetitions)){
+  istringstream iss{input}; // try to read an int at the start of the input
+  if(!(iss >> repetitions)){ // if no int, just assume repetitions is 1
     repetitions = 1;
     iss.clear();
   }
-  string remainingInput;
+  string remainingInput; // get the actual input
   iss >> remainingInput;
-  //transform(remainingInput.begin(), remainingInput.end(), remainingInput.begin(), [](unsigned char c) {return tolower(c);});
+  transform(remainingInput.begin(), remainingInput.end(), remainingInput.begin(), [](unsigned char c) {return tolower(c);});
 
   // Check if this is a known command
   for(pair<string, Command> stringCommand : commands){
@@ -86,12 +85,12 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
   }
 
   // Check if enough of a string was given to distinguish it from other commands
-	if(command == Command::INVALID){
-  	for(pair<string, Command> stringCommand : commands){
+	if(command == Command::INVALID){ // if didn't find command yet
+  	  for(pair<string, Command> stringCommand : commands){ // search hashmap for autocomplete candidates
     	if(!(stringCommand.first.starts_with(remainingInput))) continue; // input isn't a prefix of command, so can't be that
     	else if(command == Command::INVALID) command = stringCommand.second; // found it as a prefix for a known command
     	else return {0, Command::INVALID};
-  	}
+  	  }
 	}
 
   // don't add these to the queue
@@ -112,30 +111,29 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
 }
 
 void Controller::endTurn(){
-  Board* board = getBoard();
-  notifyObservers();
-  const int linesJustCleared = board->getLinesJustCleared();
-  nextPlayer();
+  Board* board = getBoard(); // get board whose turn just ended
+  notifyObservers(); // update display for it (only Graphic displays should run here)
+  const int linesJustCleared = board->getLinesJustCleared(); // get how many lines cleared
+  nextPlayer(); // switch to next player's board
   board = getBoard();
-  board->startTurn();
-  board->setLinesJustCleared(0);
-  if(linesJustCleared <= 1) return;
+  board->startTurn(); // reset this player's state to as if they just started their turn
+  if(linesJustCleared <= 1) return; // if prev player cleared 2+ lines, they do special action
   cout << "You just cleared " << linesJustCleared << " lines! Enter your special action below:" << endl;
-  string specialAction;
+  string specialAction; // prompt user for what they want to do for special action
   Command attackCommand = Command::INVALID;
-  while(attackCommand == Command::INVALID){
+  while(attackCommand == Command::INVALID){ // while input is wrong, keep asking
     cin >> specialAction;
-    attackCommand = interpretInput(specialAction).second;
-    if(attackCommand == Command::BLIND) board->setBlind(true);
-    else if(attackCommand == Command::HEAVY) board->getCurrentBlock()->changeWeight(2);
+    attackCommand = interpretInput(specialAction).second; // only care about the command, no repetitions
+    if(attackCommand == Command::BLIND) board->setBlind(true); // make them blind
+    else if(attackCommand == Command::HEAVY) board->getCurrentBlock()->changeWeight(2); // make current block heavier
     else if(attackCommand == Command::FORCE){
-      string type;
-	  while(cin >> type){
+      string type; // ask for what type of block
+	  while(cin >> type){ // while type is wrong, keep asking
       	if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
 		else {board->forceBlock(type); break;}
 	  }
     }
-    else{
+    else{ // tell user their input was wrong
 	  attackCommand = Command::INVALID;
 	  cerr << "Invalid special action" << endl;
 	}
@@ -143,15 +141,26 @@ void Controller::endTurn(){
 }
 
 void Controller::performCommand(const Command command){
-  Board* board = getBoard();
+  Board* board = getBoard(); // get board to run commands on
+  // movement related
   if(command == Command::LEFT) board->left();
   else if(command == Command::RIGHT) board->right();
   else if(command == Command::DOWN) board->down();
   else if(command == Command::CLOCKWISE) board->clockwise();
   else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
   else if(command == Command::DROP) board->drop();
+  // levels related
   else if(command == Command::LEVEL_UP) board->levelup();
   else if(command == Command::LEVEL_DOWN) board->leveldown();
+  else if(command == Command::FORCE_LEVEL){
+    int newLevel = -1;
+    while(newLevel == -1){
+      cin >> newLevel;
+      if(newLevel != 0 && newLevel != 1 && newLevel != 2 && newLevel != 3 && newLevel != 4) newLevel = -1;
+      else board->forceLevel(newLevel);
+    }
+  }
+  // block generation related
   else if(command == Command::NO_RANDOM && board->getLevel() >= 3){
     string filePath;
     cin >> filePath;
@@ -164,6 +173,7 @@ void Controller::performCommand(const Command command){
     cin >> filePath;
     sequence(filePath);
   }
+  // force a block
   else if(command == Command::I) board->forceBlock("I");
   else if(command == Command::J) board->forceBlock("J");
   else if(command == Command::L) board->forceBlock("L");
@@ -171,19 +181,10 @@ void Controller::performCommand(const Command command){
   else if(command == Command::S) board->forceBlock("S");
   else if(command == Command::Z) board->forceBlock("Z");
   else if(command == Command::T) board->forceBlock("T");
+  // other commands
   else if(command == Command::RESTART){
     cout << "Restarting game for Player " << currentPlayer << "..." << endl;
-    board->clearBoard();
-    board->forceLevel(startingLevel);
-    board->setScore(0);
-  }
-  else if(command == Command::FORCE_LEVEL){
-    int newLevel = -1;
-    while(newLevel == -1){
-      cin >> newLevel;
-      if(newLevel != 0 && newLevel != 1 && newLevel != 2 && newLevel != 3 && newLevel != 4) newLevel = -1;
-      else board->forceLevel(newLevel);
-    }
+    board->restart(startingLevel);
   }
   else if(command == Command::ADD){
     string command;
@@ -203,7 +204,7 @@ void Controller::performCommand(const Command command){
   }
   else if(command == Command::RESTART_ALL) resetGame();
   else{
-    cerr << "Invalid command" << endl;
+    cerr << "Invalid command" << endl; // tell user their input is received and wrong
   }
 }
 
@@ -213,29 +214,29 @@ void Controller::runGame(){
     queue<Command>& commandQueue = commandsToExecute.at(currentPlayer);
     cout << "Current Player: " << currentPlayer << endl;
     notifyObservers(); // update graphics
-	cout << "Command: " << endl;
-	while(commandQueue.empty()){
+    cout << "Command: " << endl; // prompt user for input
+	while(commandQueue.empty()){ // only ask for input if queue of commands is empty and nothing to do
   	  cin >> input;
 	  pair<int, Command> interpretation = interpretInput(input);
       if(interpretation.first == 0) cerr << "Invalid input" << endl;
-      for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second);
+      for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second); // add command to queue
 	}
-    if(commandQueue.front() == Command::QUIT) break;
-    performCommand(commandQueue.front());
-    commandQueue.pop();
-    const Board::GameState boardState = getBoard()->getGameState();
-    if(boardState == Board::GameState::GAME_OVER){
-      cout << "Game over for Player " << currentPlayer << endl;
-      cout << "Would you like to restart? [y/n]" << endl;
+    if(commandQueue.front() == Command::QUIT) break; // if user wants to quit, end game loop
+    performCommand(commandQueue.front()); // get command and run it
+    commandQueue.pop(); // get rid of command
+    const Board::GameState boardState = getBoard()->getGameState(); // get game state
+    if(boardState == Board::GameState::GAME_OVER){ // if player lost
+      cout << "Game over for Player " << (currentPlayer + 1) << endl; // tell them
+      cout << "Would you like to restart? [y/n]" << endl; // ask if they want to keep playing
       string answer;
       while(answer != "y" && answer != "n" && answer != "Y" && answer != "N") cin >> answer;
-      if(answer == "y" || answer == "Y"){
+      if(answer == "y" || answer == "Y"){ // want to keep playing
         performCommand(Command::RESTART);
         endTurn();
       }
-      else break;
+      else break; // end game
     }
-    else if(boardState == Board::GameState::FINISHED_TURN) endTurn();
+    else if(boardState == Board::GameState::FINISHED_TURN) endTurn(); // if player ended their turn, switch
   }
 }
 
@@ -251,5 +252,5 @@ void Controller::removeCommandAlias(string& alias){
   for(auto it = commands.begin(); it != commands.end(); it++){
     if(it->second == commands.at(alias)) counter++;
   }
-  if(counter > 1) commands.erase(alias);
+  if(counter > 1) commands.erase(alias); // remove it
 }

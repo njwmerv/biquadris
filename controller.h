@@ -25,8 +25,8 @@ class Controller{
   int currentPlayer = 0;
   vector<Board*> boards;
   vector<View*> observers;
-  vector<queue<Command>> commandsToExecute;
-  const map<string, Command> defaultCommands{
+  vector<queue<Command>> commandsToExecute; // queue that stores commands to run for each player, even if turn ends
+  const map<string, Command> defaultCommands{ // these are the commands a user can run at the start
     {"left", Command::LEFT}, {"right", Command::RIGHT}, {"down", Command::DOWN}, {"clockwise", Command::CLOCKWISE},
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
     {"norandom", Command::NO_RANDOM}, {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J},
