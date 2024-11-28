@@ -181,7 +181,7 @@ void Controller::performCommand(const Command command){
   else if(command == Command::T) board->forceBlock("T");
   // other commands
   else if(command == Command::RESTART){
-    cout << "Restarting game for Player " << currentPlayer << "..." << endl;
+    cout << "Restarting game for Player " << (currentPlayer + 1) << "..." << endl;
     board->restart(startingLevel);
   }
   else if(command == Command::ADD){
@@ -210,7 +210,7 @@ void Controller::runGame(){
   string input;
   while(true){ // Game loop
     queue<Command>& commandQueue = commandsToExecute.at(currentPlayer);
-    cout << "Current Player: " << currentPlayer << endl;
+    cout << "Current Player: " << (currentPlayer + 1) << endl;
     notifyObservers(); // update graphics
     cout << "Command: " << endl; // prompt user for input
 	while(commandQueue.empty()){ // only ask for input if queue of commands is empty and nothing to do
