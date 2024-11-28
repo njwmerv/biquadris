@@ -6,11 +6,13 @@
 #include "sblock.h"
 #include "zblock.h"
 #include "tblock.h"
+#include <cstdlib>
+#include <string>
 using namespace std;
 
 Block* Level1::generateBlock(){
   const int maxWeight = 12;
-  const string blockTypes[] = {"I", "I", "J", "J", "L", "L", "O", "O", "S", "Z", "T", "T"};
+  const string blockTypes[maxWeight] = {"I", "I", "J", "J", "L", "L", "O", "O", "S", "Z", "T", "T"};
   const string blockGenerated = blockTypes[rand() % maxWeight];
 
   if(blockGenerated == "I") return new IBlock(1);

@@ -1,15 +1,23 @@
 #ifndef LEVEL_H
 #define LEVEL_H
-
+#include <string>
 #include "block.h"
+using namespace std;
 
 class Level {
+    protected:
+      ifstream file;
+      string filename = "";
+      bool isRandom = false;
+
     public:
-        int currentLevel = 0;
+        Level(const string& path = "");
+
         virtual Block *generateBlock() = 0;
-        virtual ~Level() {};
-        virtual void setRandomness(bool);
-        virutal void setFileName(const string&);
+
+        // Mutators
+        void setRandomness(bool);
+        void setFileName(const string&);
 };
 
 #endif

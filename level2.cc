@@ -11,8 +11,9 @@
 using namespace std;
 
 Block *Level2::generateBlock(){
-    const string blockTypes[] = {"I", "J", "I", "L", "O", "S", "Z", "T"};
-    const string blockGenerated = blockTypes[rand() % 7];
+    const int maxWeight = 7;
+    const string blockTypes[maxWeight] = {"I", "J", "L", "O", "S", "Z", "T"};
+    const string blockGenerated = blockTypes[rand() % maxWeight];
 
     if(blockGenerated == "I") return new IBlock(2);
     else if(blockGenerated == "J") return new JBlock(2);

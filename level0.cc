@@ -6,11 +6,7 @@
 #include "sblock.h"
 #include "zblock.h"
 #include "tblock.h"
-
 using namespace std;
-
-Level0::Level0(const string& filename) : file(filename), filename(filename) {}
-
 
 Block *Level0::generateBlock() {
     if (!(file >> currentBlock)) {

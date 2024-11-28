@@ -9,16 +9,13 @@
 #include <cstdlib>
 #include <fstream>
 
-Level3::Level3() : filename{""} {}
-
-Level3::Level3(const string& filename) : file{filename}, filename{filename} {}
-
 Block* Level3::generateBlock(){
   Block* block = nullptr;
-  const string blockTypes[] = {"I", "J", "L", "O", "S", "S", "Z", "Z", "T"};
+  const int maxWeight = 9;
+  const string blockTypes[maxWeight] = {"I", "J", "L", "O", "S", "S", "Z", "Z", "T"};
   string blockGenerated;
   if(isRandom){
-    blockGenerated = blockTypes[rand() % 9];
+    blockGenerated = blockTypes[rand() % maxWeight];
   }
   else if(filename != ""){
     if(!(file >> blockGenerated)){
@@ -39,11 +36,4 @@ Block* Level3::generateBlock(){
   else block = new TBlock(3);
   block->changeWeight(1);
   return block;
-}
-
-void Level3::setRandomness(bool nowRandom) {isRandom = nowRandom;}
-void Level3::setFileName(const string& path){
-  filename = path;
-  file.close();
-  file.open(filename);
 }
