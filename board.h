@@ -7,6 +7,8 @@
 using namespace std;
 
 class Board{
+  public: enum class GameState{GAME_OVER, PLAYER_TURN, FINISHED_TURN};
+  private:
   vector<vector<shared_ptr<Block>>> board;
   Level* level;
   int score;
@@ -18,6 +20,7 @@ class Board{
   bool blind;
   int linesJustCleared;
   int blocksPlaced;
+  GameState gameState;
 
   void clearRows();
   void addCurrentToBoard();
@@ -25,7 +28,7 @@ class Board{
 
   public:
     // Big 5
-    Board(int, string);
+    Board(int, string, GameState);
 
     ~Board();
 
@@ -38,11 +41,13 @@ class Board{
     Block* getNextBlock() const;
     Block* getCurrentBlock() const;
     vector<vector<shared_ptr<Block>>> getTheBoard() const;
+    gameState getGameState() const;
 
     // Mutators
     void setScore(int);
     void setLinesJustCleared(int);
     void setBlind(bool);
+    void startTurn();
 
     // Game state
     void levelup();

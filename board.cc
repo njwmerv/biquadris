@@ -22,8 +22,9 @@ const int boardBuffer = 3;
 const int boardHeight = 15;
 
 // Big 5
-Board::Board(int startingLevel, string level0File):
-  score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false}, linesJustCleared{0} {
+Board::Board(int startingLevel, string level0File, Board::GameState gameState) :
+  score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false}, linesJustCleared{0},
+  gameState{gameState} {
   for(int i = 0; i < boardHeight + boardBuffer; i++) board.emplace_back(vector<shared_ptr<Block>>(boardWidth, nullptr));
   if(startingLevel == 0) level = new Level0{level0File};
   else if(startingLevel == 1) level = new Level1;
@@ -38,6 +39,8 @@ Board::Board(int startingLevel, string level0File):
 
 Board::~Board(){
   clearBoard();
+  current.reset();
+  next.reset();
   delete level;
 }
 
@@ -50,11 +53,13 @@ bool Board::isBlind() const {return blind;}
 Block* Board::getNextBlock() const {return next.get();}
 Block* Board::getCurrentBlock() const {return current.get();}
 vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
+Board::GameState Board::getGameState() const {return gameState;}
 
 // Mutators
 void Board::setScore(int newScore) {score = newScore;}
 void Board::setLinesJustCleared(int newCount) {linesJustCleared = newCount;}
 void Board::setBlind(bool blindness) {blind = blindness;}
+void Board::startTurn() {gameState = GameState::PLAYER_TURN;}
 
 void Board::levelup(){
   if(currentLevel == 4) return;
@@ -69,8 +74,8 @@ void Board::leveldown(){
 }
 
 void Board::clearBoard(){
-  for(vector<shared_ptr<Block>> row : board){
-    for(shared_ptr<Block> cell : row) cell = nullptr;
+  for(vector<shared_ptr<Block>>& row : board){
+    for(shared_ptr<Block>& cell : row) cell.reset();
   }
 }
 
@@ -147,7 +152,7 @@ void Board :: down () {
   }
   // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = nullptr;
+    board[cell.second + curY][cell.first + curX].reset();
   }
   // updating the block's y coordinate
   current->setY(curY - 1);
@@ -196,7 +201,7 @@ void Board :: right() {
   }
   // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = nullptr;
+    board[cell.second + curY][cell.first + curX].reset();
   }
   // updating the block's x coordinate
   current->setX(curX + 1);
@@ -245,7 +250,7 @@ void Board :: left() {
   }
   // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[cell.second + curY][cell.first + curX] = nullptr;
+    board[cell.second + curY][cell.first + curX].reset();
   }
   // updating the block's x coordinate
   current->setX(curX - 1);
@@ -289,13 +294,13 @@ void Board::drop() {
     }
     // removing the block in its previous position
     for (pair<int, int> cell : current->getRotation(curNumRot)) {
-      board[curY + cell.second][curX + cell.first] = nullptr;
+      board[curY + cell.second][curX + cell.first].reset();
     }
     curY--;
     current->setY(curY);
   }
   // adding the block in its new position on the board
-	addCurrentToBoard();
+  addCurrentToBoard();
   blocksPlaced++;
   clearRows();
   // checking if blocksPlaced % 5 == 0 (note that this number resets to 0 when a line is cleared)
@@ -303,8 +308,9 @@ void Board::drop() {
     levelFour();
   } 
   // adding the next block to the board
-	current = next;
-	addCurrentToBoard();
+  current = next;
+  addCurrentToBoard();
+  if(gameState != GameState::GAME_OVER) gameState = GameState::FINISHED_TURN;
   // generating the next block
   next = shared_ptr<Block>(level->generateBlock());
   if(blind) blind = false;
@@ -318,7 +324,8 @@ void Board::addCurrentToBoard(){
     // checking if the game has ended 
     // (note that when this function is called on a dropped block, the space is already verified to be cleared)
     if(board[cell.second + curY][cell.first + curX] != nullptr) {
-      // do something in controller
+      gameState = GameState::GAME_OVER;
+      return;
     }
     // otherwise, placing the block as intended
     board[cell.second + curY][cell.first + curX] = current;
@@ -391,7 +398,7 @@ void Board::clockwise() {
   }
 
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[curY + cell.second][curX + cell.first] = nullptr;
+    board[curY + cell.second][curX + cell.first].reset();
   }
 
   // updating the block's y coordinate if it is heavy, and falls without impediment
@@ -441,7 +448,7 @@ void Board::counterclockwise() {
   }
 
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
-    board[curY + cell.second][curX + cell.first] = nullptr;
+    board[curY + cell.second][curX + cell.first].reset();
   }
 
   // updating the block's y coordinate if it is heavy, and falls without impediment
