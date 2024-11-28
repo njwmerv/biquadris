@@ -16,6 +16,7 @@
 #include "tblock.h"
 #include "fourblock.h"
 using namespace std;
+#include <iostream>
 
 const int boardWidth = 11; // note that the actual board is in the range [0,10]
 const int boardBuffer = 3;
@@ -329,26 +330,28 @@ void Board::addCurrentToBoard(){
 
 void Board::clearRows() {
   int cleared = 0;
-  for (int row = 0; row < boardHeight + boardBuffer; row++) {
+  for(int row = 0; row < boardHeight;){
     bool fullRow = true;
-
-    for (int col = 0; col < boardWidth; ++col) {
-      if (!board[row][col]) {
+    for(int col = 0; col < boardWidth; ++col){
+      if(!board[row][col]){
         fullRow = false;
         break;
       }
     }
-
-    if (fullRow) {
+    if(fullRow){
       cleared++;
       blocksPlaced = 0; // for Level 4
-      board.erase(board.begin() + row);
       for(auto cell : board[row]){
         if(cell.use_count() == 1) score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
+        if(cell.use_count() == 1) cout << "cleared block!" << endl;
         cell.reset();
       }
-			board.emplace_back(vector<shared_ptr<Block>>(11, nullptr));
-      row--;
+      board.erase(board.begin() + row);
+      cout << "cleared line!!!" << endl;
+	  board.emplace_back(vector<shared_ptr<Block>>(11, nullptr));
+    }
+    else{
+      row++;
     }
   }
   score += (cleared + currentLevel) * (cleared + currentLevel);
