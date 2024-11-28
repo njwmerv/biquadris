@@ -12,7 +12,10 @@ class Level {
       bool isRandom = false;
 
     public:
+        //Constructor
         Level(const string& path = "");
+
+        //Destructor
         virtual ~Level(){}
 
         virtual Block *generateBlock() = 0;

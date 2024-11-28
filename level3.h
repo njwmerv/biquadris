@@ -6,7 +6,9 @@
 
 class Level3 : public Level {
   public:
+    // Constructor
     Level3(const string& path = "");
+    // Destructor
     ~Level3(){}
     Block *generateBlock() override;
 };

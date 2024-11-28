@@ -10,10 +10,12 @@
 #include <string>
 using namespace std;
 
+// Constructor
 Level2::Level2(const string& path) : Level{path} {}
 
 Block *Level2::generateBlock(){
     const int maxWeight = 7;
+    // Equal block probability
     const string blockTypes[maxWeight] = {"I", "J", "L", "O", "S", "Z", "T"};
     const string blockGenerated = blockTypes[rand() % maxWeight];
 
