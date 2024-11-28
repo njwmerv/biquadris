@@ -22,7 +22,6 @@ class Controller{
     FORCE_LEVEL, ADD, REMOVE // bonus
   };
 
-  const int seed;
   const int startingLevel;
   const string scriptFile1;
   const string scriptFile2;
@@ -52,7 +51,7 @@ class Controller{
 
   public:
     // Big 5
-    Controller(int, int, string, string);
+    Controller(int, string, string);
     ~Controller();
 
     // Accessors

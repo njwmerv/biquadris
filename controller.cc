@@ -10,8 +10,8 @@
 using namespace std;
 
 // Big 5
-Controller::Controller(int seed, int startingLevel, string scriptFile1, string scriptFile2) :
-  seed{seed}, startingLevel{startingLevel}, scriptFile1{scriptFile1}, scriptFile2{scriptFile2} {
+Controller::Controller(int startingLevel, string scriptFile1, string scriptFile2) :
+  startingLevel{startingLevel}, scriptFile1{scriptFile1}, scriptFile2{scriptFile2} {
   boards.emplace_back(new Board(startingLevel, scriptFile1));
   boards.emplace_back(new Board(startingLevel, scriptFile2));
   for(int i = 0; i < numberOfPlayers; i++) commandsToExecute.emplace_back(queue<Command>());
