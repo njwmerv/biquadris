@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <fstream>
 
+Level4::Level4(const string& path) : Level{path} {}
+
 Block* Level4::generateBlock(){
     Block* block = nullptr;
     const int maxWeight = 9;

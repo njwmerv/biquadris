@@ -10,6 +10,8 @@
 #include <string>
 using namespace std;
 
+Level2::Level2(const string& path) : Level{path} {}
+
 Block *Level2::generateBlock(){
     const int maxWeight = 7;
     const string blockTypes[maxWeight] = {"I", "J", "L", "O", "S", "Z", "T"};

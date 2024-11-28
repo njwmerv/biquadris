@@ -5,6 +5,7 @@
 
 class Level4 : public Level {
   public:
+    Level4(const string& path = "");
     Block *generateBlock() override;
 };
 
