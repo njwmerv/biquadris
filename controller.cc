@@ -98,15 +98,15 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
   if(command == Command::INVALID ||
      command == Command::BLIND ||
      command == Command::HEAVY ||
-     command == Command::FORCE ||
-     command == Command::QUIT) repetitions = 0;
+     command == Command::FORCE) repetitions = 0;
   // these can't be repeated
   else if(command == Command::RESTART ||
           command == Command::NO_RANDOM ||
           command == Command::RANDOM ||
           command == Command::ADD ||
           command == Command::REMOVE ||
-          command == Command::RESTART_ALL) repetitions = 1;
+          command == Command::RESTART_ALL ||
+          command == Command::QUIT) repetitions = 1;
 	
   return {repetitions, command};
 }
