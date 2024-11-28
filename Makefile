@@ -1,6 +1,6 @@
 CXX = g++-14.2.0
 CXXFLAGS = -std=c++20 -fmodules-ts -Wall -g -MMD
-EXEC = main
+EXEC = biquadris
 SOURCES = $(wildcard *.cc)        # source files (*.cc)
 OBJECTS = ${SOURCES:.cc=.o}       # object files forming executable
 DEPENDS = ${OBJECTS:.o=.d}        # substitute ".o" with ".d"
