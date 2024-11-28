@@ -19,26 +19,28 @@ class Controller{
     I, J, L, O, S, Z, T, // specify next block
     RESTART, INVALID, // other
     BLIND, HEAVY, FORCE // special actions
+    FORCE_LEVEL, ADD, REMOVE // bonus
   };
 
-	const int seed;
-	const int startingLevel;
-	const string scriptFile1;
-	const string scriptFile2;
-	const int numberOfPlayers = 2;
-	int currentPlayer = 0;
-	vector<Board*> boards;
-	vector<View*> observers;
-	vector<queue<Command>> commandsToExecute;
-
-  map<string, Command> commands{
+  const int seed;
+  const int startingLevel;
+  const string scriptFile1;
+  const string scriptFile2;
+  const int numberOfPlayers = 2;
+  int currentPlayer = 0;
+  vector<Board*> boards;
+  vector<View*> observers;
+  vector<queue<Command>> commandsToExecute;
+  const map<string, Command> defaultCommands{
     {"left", Command::LEFT}, {"right", Command::RIGHT}, {"down", Command::DOWN}, {"clockwise", Command::CLOCKWISE},
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
-    {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J}, {"L", Command::L}, {"O", Command::O},
-    {"S", Command::S}, {"Z", Command::Z}, {"T", Command::T}, {"restart", Command::RESTART},
-    {"levelup", Command::LEVEL_UP}, {"leveldown", Command::LEVEL_DOWN},
-    {"blind", Command::BLIND}, {"heavy", Command::HEAVY}, {"force", Command::FORCE}
+    {"norandom", Command::NO_RANDOM}, {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J},
+    {"L", Command::L}, {"O", Command::O}, {"S", Command::S}, {"Z", Command::Z}, {"T", Command::T},
+    {"restart", Command::RESTART}, {"levelup", Command::LEVEL_UP}, {"leveldown", Command::LEVEL_DOWN},
+    {"blind", Command::BLIND}, {"heavy", Command::HEAVY}, {"force", Command::FORCE},
+    {"forcelevel", Command::FORCE_LEVEL}, {"add", Command::ADD}, {"remove", Command::REMOVE}
   };
+  map<string, Command> commands = defaultCommands;
 
   // For the game
   void nextPlayer();
@@ -69,6 +71,8 @@ class Controller{
 
     // I/O-related
     void runGame();
+    void addCommandAlias(Command, string&);
+    void removeCommandAlias(string&);
 };
 
 #endif //CONTROLLER_H

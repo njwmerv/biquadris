@@ -95,9 +95,16 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
 	}
 
   // don't add these to the queue
-  if(command == Command::INVALID || command == Command::BLIND || command == Command::HEAVY || command == Command::FORCE) repetitions = 0;
+  if(command == Command::INVALID ||
+     command == Command::BLIND ||
+     command == Command::HEAVY ||
+     command == Command::FORCE) repetitions = 0;
   // these can't be repeated
-  else if(command == Command::RESTART || command == Command::NO_RANDOM || command == Command::RANDOM) repetitions = 1;
+  else if(command == Command::RESTART ||
+          command == Command::NO_RANDOM ||
+          command == Command::RANDOM ||
+          command == Command::ADD ||
+          command == Command::REMOVE) repetitions = 1;
 	
   return {repetitions, command};
 }
@@ -167,6 +174,30 @@ void Controller::performCommand(const Command command){
     board->forceLevel(startingLevel);
     board->setScore(0);
   }
+  else if(command == Command::FORCE_LEVEL){
+    int newLevel = -1;
+    while(newLevel == -1){
+      cin >> newLevel;
+      if(newLevel != 0 && newLevel != 1 && newLevel != 2 && newLevel != 3 && newLevel != 4) newLevel = -1;
+      else board->forceLevel(newLevel);
+    }
+  }
+  else if(command == Command::ADD){
+    string command;
+    string alias;
+    Controller::Command interpretedCommand = Command::INVALID;
+    while(interpretedCommand == Command::INVALID){
+      cin >> command;
+      interpretedCommand = interpretInput(command).second;
+    }
+    cin >> alias;
+    addCommandAlias(interpretedCommand, alias);
+  }
+  else if(command == Command::REMOVE){
+    string alias;
+    cin >> alias;
+    removeCommandAlias(alias);
+  }
   else{
     cerr << "Invalid command" << endl;
   }
@@ -190,4 +221,19 @@ void Controller::runGame(){
     commandQueue.pop();
     if(current != getBoard()->getCurrentBlock()) endTurn();
   }
+}
+
+void Controller::addCommandAlias(Command command, string& alias){
+  if(command == Command::INVALID) return; // not a valid command to make an alias for
+  if(commands.count(alias) == 1) return; // already in the map of commands
+  commands[alias] = command; // add it
+}
+
+void Controller::removeCommandAlias(string& alias){
+  if(commands.count(alias) == 0) return; // check that this is even removable
+  int counter = 0;
+  for(auto it = commands.begin(); it != commands.end(); it++){
+    if(it->second == commands.at(alias)) counter++;
+  }
+  if(counter > 1) commands.erase(alias);
 }
