@@ -6,10 +6,6 @@
 #include <queue>
 #include "view.h"
 #include "board.h"
-//#include <iostream>
-//#include <memory>
-//#include <utility>
-//#include <functional>
 using namespace std;
 
 class Controller{
@@ -19,7 +15,7 @@ class Controller{
     I, J, L, O, S, Z, T, // specify next block
     RESTART, INVALID, // other
     BLIND, HEAVY, FORCE, // special actions
-    FORCE_LEVEL, ADD, REMOVE // bonus
+    FORCE_LEVEL, ADD, REMOVE, QUIT, RESTART_ALL // bonus
   };
 
   const int startingLevel;
@@ -37,17 +33,21 @@ class Controller{
     {"L", Command::L}, {"O", Command::O}, {"S", Command::S}, {"Z", Command::Z}, {"T", Command::T},
     {"restart", Command::RESTART}, {"levelup", Command::LEVEL_UP}, {"leveldown", Command::LEVEL_DOWN},
     {"blind", Command::BLIND}, {"heavy", Command::HEAVY}, {"force", Command::FORCE},
-    {"forcelevel", Command::FORCE_LEVEL}, {"add", Command::ADD}, {"remove", Command::REMOVE}
+    {"forcelevel", Command::FORCE_LEVEL}, {"add", Command::ADD}, {"remove", Command::REMOVE}, {"quit", Command::QUIT}, {"restartall", Command::RESTART_ALL},
   };
   map<string, Command> commands = defaultCommands;
 
   // For the game
   void nextPlayer();
+  void sequence(string);
+  void resetGame();
 
   // I/O-related
   void performCommand(const Command);
   pair<int, Controller::Command> interpretInput(const string) const;
   void endTurn();
+  void addCommandAlias(Command, string&);
+  void removeCommandAlias(string&);
 
   public:
     // Big 5
@@ -64,14 +64,8 @@ class Controller{
     void attachView(View*);
     void detachView(View*);
 
-    // For the game
-    void sequence(string);
-    void resetGame();
-
     // I/O-related
     void runGame();
-    void addCommandAlias(Command, string&);
-    void removeCommandAlias(string&);
 };
 
 #endif //CONTROLLER_H

@@ -12,8 +12,8 @@ using namespace std;
 // Big 5
 Controller::Controller(int startingLevel, string scriptFile1, string scriptFile2) :
   startingLevel{startingLevel}, scriptFile1{scriptFile1}, scriptFile2{scriptFile2} {
-  boards.emplace_back(new Board(startingLevel, scriptFile1));
-  boards.emplace_back(new Board(startingLevel, scriptFile2));
+  boards.emplace_back(new Board(startingLevel, scriptFile1, Board::GameState::PLAYER_TURN));
+  boards.emplace_back(new Board(startingLevel, scriptFile2, Board::GameState::FINISHED_TURN));
   for(int i = 0; i < numberOfPlayers; i++) commandsToExecute.emplace_back(queue<Command>());
 }
 
@@ -98,13 +98,15 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
   if(command == Command::INVALID ||
      command == Command::BLIND ||
      command == Command::HEAVY ||
-     command == Command::FORCE) repetitions = 0;
+     command == Command::FORCE ||
+     command == Command::QUIT) repetitions = 0;
   // these can't be repeated
   else if(command == Command::RESTART ||
           command == Command::NO_RANDOM ||
           command == Command::RANDOM ||
           command == Command::ADD ||
-          command == Command::REMOVE) repetitions = 1;
+          command == Command::REMOVE ||
+          command == Command::RESTART_ALL) repetitions = 1;
 	
   return {repetitions, command};
 }
@@ -115,9 +117,10 @@ void Controller::endTurn(){
   const int linesJustCleared = board->getLinesJustCleared();
   nextPlayer();
   board = getBoard();
+  board->startTurn();
   board->setLinesJustCleared(0);
   if(linesJustCleared <= 1) return;
-  cout << "You just cleared 2 or more lines! Enter your special action below:" << endl;
+  cout << "You just cleared " << linesJustCleared << " lines! Enter your special action below:" << endl;
   string specialAction;
   Command attackCommand = Command::INVALID;
   while(attackCommand == Command::INVALID){
@@ -198,6 +201,7 @@ void Controller::performCommand(const Command command){
     cin >> alias;
     removeCommandAlias(alias);
   }
+  else if(command == Command::RESTART_ALL) resetGame();
   else{
     cerr << "Invalid command" << endl;
   }
@@ -216,10 +220,22 @@ void Controller::runGame(){
       if(interpretation.first == 0) cerr << "Invalid input" << endl;
       for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second);
 	}
-    const Block* current = getBoard()->getCurrentBlock();
+    if(commandQueue.front() == Command::QUIT) break;
     performCommand(commandQueue.front());
     commandQueue.pop();
-    if(current != getBoard()->getCurrentBlock()) endTurn();
+    const Board::GameState boardState = getBoard()->getGameState();
+    if(boardState == Board::GameState::GAME_OVER){
+      cout << "Game over for Player " << currentPlayer << endl;
+      cout << "Would you like to restart? [y/n]" << endl;
+      string answer;
+      while(answer != "y" && answer != "n" && answer != "Y" && answer != "N") cin >> answer;
+      if(answer == "y" || answer == "Y"){
+        performCommand(Command::RESTART);
+        endTurn();
+      }
+      else break;
+    }
+    else if(boardState == Board::GameState::FINISHED_TURN) endTurn();
   }
 }
 
@@ -231,7 +247,7 @@ void Controller::addCommandAlias(Command command, string& alias){
 
 void Controller::removeCommandAlias(string& alias){
   if(commands.count(alias) == 0) return; // check that this is even removable
-  int counter = 0;
+  int counter = 0; // check that it's not the last instance of this command
   for(auto it = commands.begin(); it != commands.end(); it++){
     if(it->second == commands.at(alias)) counter++;
   }
