@@ -3,6 +3,8 @@
 
 using namespace std;
 
+// 1x1 block for level 4
+
 fourBlock :: fourBlock(int l) {
     rotations[0] = {{0,0}};
     rotations[1] = rotations[0];

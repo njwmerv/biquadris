@@ -5,26 +5,8 @@
 
 using namespace std;
 
-/*
-const int maxRotations = 4;
-const int startRotations = 0;
-const int startCleared = 0;
-const int startX = 0;
-const int startY = 0;
-const int startHeavy = false;
-*/
-
 class Block {
     protected:
-        /*
-        vector <pair <int, int>> rotations [maxRotations];
-        int level; // level of the board when the block was placed
-        int numRotations = startRotations; // number of times the block has been rotated % 4
-        int numCleared = startCleared; // number of cells that have been cleared
-        int x = startX; // only matters when dropping
-        int y = startY;
-        bool heavy = startHeavy;
-        */
         vector <pair <int, int>> rotations [4];
         int level; // level of the board when the block was placed
         int numRotations = 0; // number of times the block has been rotated % 4
