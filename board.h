@@ -11,7 +11,7 @@ class Board{
     enum class GameState{GAME_OVER, PLAYER_TURN, FINISHED_TURN};
   private:
     vector<vector<shared_ptr<Block>>> board;
-    Level* level;
+    unique_ptr<Level> level;
     int score;
     int highScore;
     shared_ptr<Block> current;

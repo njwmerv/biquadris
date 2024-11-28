@@ -26,11 +26,11 @@ Board::Board(int startingLevel, string level0File, Board::GameState gameState) :
   score{0}, highScore{0}, level0File{level0File}, currentLevel{startingLevel}, blind{false}, linesJustCleared{0},
   gameState{gameState} {
   for(int i = 0; i < boardHeight + boardBuffer; i++) board.emplace_back(vector<shared_ptr<Block>>(boardWidth, nullptr));
-  if(startingLevel == 0) level = new Level0{level0File};
-  else if(startingLevel == 1) level = new Level1;
-  else if(startingLevel == 2) level = new Level2;
-  else if(startingLevel == 3) level = new Level3;
-  else if(startingLevel == 4) level = new Level4;
+  if(startingLevel == 0) level = make_unique<Level0>(level0File);
+  else if(startingLevel == 1) level = make_unique<Level1>();
+  else if(startingLevel == 2) level = make_unique<Level2>();
+  else if(startingLevel == 3) level = make_unique<Level3>();
+  else if(startingLevel == 4) level = make_unique<Level4>();
   current = shared_ptr<Block>(level->generateBlock());
   next = shared_ptr<Block>(level->generateBlock());
   addCurrentToBoard();
@@ -39,9 +39,6 @@ Board::Board(int startingLevel, string level0File, Board::GameState gameState) :
 
 Board::~Board(){
   clearBoard();
-  current.reset();
-  next.reset();
-  delete level;
 }
 
 // Accessors
@@ -90,13 +87,12 @@ void Board::restart(int startingLevel){
 
 void Board::forceLevel(const int newLevel){
   if(newLevel == currentLevel) return; // if same level, don't switch
-  delete level; // discard old level
   // get new level
-  if(newLevel == 0) level = new Level0(level0File);
-  else if(newLevel == 1) level = new Level1;
-  else if(newLevel == 2) level = new Level2;
-  else if(newLevel == 3) level = new Level3;
-  else level = new Level4;
+  if(newLevel == 0) level = make_unique<Level0>(level0File);
+  else if(newLevel == 1) level = make_unique<Level1>();
+  else if(newLevel == 2) level = make_unique<Level2>();
+  else if(newLevel == 3) level = make_unique<Level3>();
+  else level = make_unique<Level4>();
   // generate new blocks
   // completely erase the previous current block
   vector<pair<int, int>> cellsOfBlock = current->getRotation(current->getNumRotations());
