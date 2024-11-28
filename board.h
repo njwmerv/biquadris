@@ -23,6 +23,12 @@ class Board{
     int blocksPlaced;
     GameState gameState;
 
+    // methods for managing board
+    void clearBoard();
+    void clearRows();
+    void addCurrentToBoard();
+    void levelFour();
+
   public:
     // Big 5
     Board(int, string, GameState);
@@ -41,31 +47,25 @@ class Board{
     GameState getGameState() const;
 
     // Mutators
-    void setScore(int);
-    void setLinesJustCleared(int);
     void setBlind(bool);
     void startTurn();
 
     // Game state
     void levelup();
     void leveldown();
-    void clearBoard();
+    void restart(int);
     void forceBlock(const string);
     void forceLevel(const int);
     void noRandom(string&);
     void random();
 
+    // movement
     void left();
     void right();
     void down();
     void drop();
     void clockwise();
     void counterclockwise();
-  
-  private:
-    void clearRows();
-    void addCurrentToBoard();
-    void levelFour();
 };
 
 #endif

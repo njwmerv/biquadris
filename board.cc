@@ -56,10 +56,11 @@ vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 Board::GameState Board::getGameState() const {return gameState;}
 
 // Mutators
-void Board::setScore(int newScore) {score = newScore;}
-void Board::setLinesJustCleared(int newCount) {linesJustCleared = newCount;}
 void Board::setBlind(bool blindness) {blind = blindness;}
-void Board::startTurn() {gameState = GameState::PLAYER_TURN;}
+void Board::startTurn(){
+  gameState = GameState::PLAYER_TURN;
+  linesJustCleared = 0;
+}
 
 void Board::levelup(){
   if(currentLevel == 4) return;
@@ -77,6 +78,14 @@ void Board::clearBoard(){
   for(vector<shared_ptr<Block>>& row : board){
     for(shared_ptr<Block>& cell : row) cell.reset();
   }
+}
+
+void Board::restart(int startingLevel){
+  clearBoard();
+  forceLevel(startingLevel);
+  current.reset(level->generateBlock());
+  addCurrentToBoard();
+  next.reset(level->generateBlock());
 }
 
 void Board::forceLevel(const int newLevel){
