@@ -13,7 +13,6 @@ class Level {
 
     public:
         Level(const string& path = "");
-				virtual ~Level();
 
         virtual Block *generateBlock() = 0;
 
