@@ -353,7 +353,7 @@ void Board::clearRows() {
     if(fullRow){
       cleared++;
       blocksPlaced = 0; // for Level 4
-      for(auto cell : board[row]){
+      for(shared_ptr<Block>& cell : board[row]){
         if(cell.use_count() == 1 && cell->getType() != '*') score += (cell->getLevel() + 1) * (cell->getLevel() + 1);
         cell.reset();
       }
