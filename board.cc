@@ -92,6 +92,7 @@ void Board::forceLevel(const int newLevel){
     board[cell.second + curY][cell.first + curX].reset();
   }
   current.reset(level->generateBlock()); // generate new current block
+  addCurrentToBoard();
   next.reset(level->generateBlock()); // generate new next block
   currentLevel = newLevel;
 }
