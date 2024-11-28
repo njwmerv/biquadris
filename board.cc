@@ -157,7 +157,6 @@ void Board :: right() {
       return;
     }
     // operations only ran if the cell is heavy
-    if(weight == 0) continue;
     // checking if the cell breaks the border
     if(cell.second + curY - weight < 0) {
       willDrop = true;
@@ -209,9 +208,7 @@ void Board :: left() {
     if(board[cell.second + curY][cell.first + curX - 1] != nullptr &&
        board[cell.second + curY][cell.first + curX - 1] != current) {
       return;
-       }
-    // operations only ran if the cell is heavy
-    if(weight == 0) continue;
+    }
     // checking if the cell breaks the border
     if(cell.second + curY - weight < 0) {
       willDrop = true;
@@ -347,6 +344,8 @@ void Board::clockwise() {
   int curNumRot = current->getNumRotations();
   
   int newNumRot = (curNumRot + 1) % 4;
+  bool willDrop = false;
+  const int weight = current->getHeaviness();
 
   for(pair<int, int> cell : current->getRotation(newNumRot)) {
     int newX = cell.first + curX;
@@ -357,6 +356,22 @@ void Board::clockwise() {
     }
     if (board[newY][newX] != nullptr && board[newY][newX] != current) {
       return;
+    }
+
+    // checking if the cell breaks the border
+    if(newY - weight < 0) {
+      willDrop = true;
+      continue;
+    }
+    bool combinedWillDrop = true;
+    for(int i = 1; i <= weight; i++){
+      combinedWillDrop = combinedWillDrop &&
+                         board[newY - i][newX] != nullptr &&
+                         board[newY - i][newX] != current;
+    }
+    if(combinedWillDrop){
+      willDrop = true;
+      continue;
     }
   }
 
@@ -375,6 +390,8 @@ void Board::counterclockwise() {
   int curNumRot = current->getNumRotations();
 
   int newNumRot = (curNumRot - 1 + 4) % 4;
+  bool willDrop = false;
+  const int weight = current->getHeaviness();
 
   for(pair<int, int> cell : current->getRotation(newNumRot)) {
     int newX = cell.first + curX;
@@ -385,6 +402,22 @@ void Board::counterclockwise() {
     }
     if (board[newY][newX] != nullptr && board[newY][newX] != current) {
       return;
+    }
+
+    // checking if the cell breaks the border
+    if(newY - weight < 0) {
+      willDrop = true;
+      continue;
+    }
+    bool combinedWillDrop = true;
+    for(int i = 1; i <= weight; i++){
+      combinedWillDrop = combinedWillDrop &&
+                         board[newY - i][newX] != nullptr &&
+                         board[newY - i][newX] != current;
+    }
+    if(combinedWillDrop){
+      willDrop = true;
+      continue;
     }
   }
 
