@@ -102,7 +102,10 @@ void Board::forceLevel(const int newLevel){
   for(auto cell : cellsOfBlock){
     board[cell.second + curY][cell.first + curX].reset();
   }
+  int oldWeight = current->getHeaviness(); // get old weight (if opponent made it heavy, keep that heaviness)
+  if(currentLevel >= 3) oldWeight - 1;
   current.reset(level->generateBlock()); // generate new current block
+  if(oldWeight > 0) current->changeWeight(oldWeight); // add the weight
   addCurrentToBoard();
   next.reset(level->generateBlock()); // generate new next block
   currentLevel = newLevel;
