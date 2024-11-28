@@ -7,24 +7,21 @@
 using namespace std;
 
 class Board{
-  public: enum class GameState{GAME_OVER, PLAYER_TURN, FINISHED_TURN};
+  public: 
+    enum class GameState{GAME_OVER, PLAYER_TURN, FINISHED_TURN};
   private:
-  vector<vector<shared_ptr<Block>>> board;
-  Level* level;
-  int score;
-  int highScore;
-  shared_ptr<Block> current;
-  shared_ptr<Block> next;
-  string level0File;
-  int currentLevel;
-  bool blind;
-  int linesJustCleared;
-  int blocksPlaced;
-  GameState gameState;
-
-  void clearRows();
-  void addCurrentToBoard();
-  void levelFour();
+    vector<vector<shared_ptr<Block>>> board;
+    Level* level;
+    int score;
+    int highScore;
+    shared_ptr<Block> current;
+    shared_ptr<Block> next;
+    string level0File;
+    int currentLevel;
+    bool blind;
+    int linesJustCleared;
+    int blocksPlaced;
+    GameState gameState;
 
   public:
     // Big 5
@@ -64,6 +61,11 @@ class Board{
     void drop();
     void clockwise();
     void counterclockwise();
+  
+  private:
+    void clearRows();
+    void addCurrentToBoard();
+    void levelFour();
 };
 
 #endif
