@@ -377,7 +377,13 @@ void Board::clockwise() {
 
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[curY + cell.second][curX + cell.first] = nullptr;
-  } 
+  }
+
+  // updating the block's y coordinate if it is heavy, and falls without impediment
+  if(!willDrop && weight > 0) {
+    current->setY(curY - weight);
+    curY = curY - weight;
+  }
 
   current->clockwise();
 
@@ -423,6 +429,12 @@ void Board::counterclockwise() {
 
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
     board[curY + cell.second][curX + cell.first] = nullptr;
+  }
+
+  // updating the block's y coordinate if it is heavy, and falls without impediment
+  if(!willDrop && weight > 0) {
+    current->setY(curY - weight);
+    curY = curY - weight;
   }
 
   current->counterclockwise();
