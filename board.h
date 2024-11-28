@@ -15,13 +15,13 @@ class Board{
   shared_ptr<Block> next;
   string level0File;
   int currentLevel;
-  int linesJustCleared;
   bool blind;
+  int linesJustCleared;
   int blocksPlaced;
 
   void clearRows();
-
   void addCurrentToBoard();
+  void levelFour();
 
   public:
     // Big 5
@@ -32,6 +32,7 @@ class Board{
     // Accessors
     int getScore() const;
     int getLevel() const;
+    int getHighScore() const;
     int getLinesJustCleared() const;
     bool isBlind() const;
     Block* getNextBlock() const;
@@ -56,8 +57,6 @@ class Board{
     void drop();
     void clockwise();
     void counterclockwise();
-
-    void levelFour();
 };
 
 #endif

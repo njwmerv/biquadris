@@ -44,6 +44,7 @@ Board::~Board(){
 // Accessors
 int Board::getScore() const {return score;}
 int Board::getLevel() const {return currentLevel;}
+int Board::getHighScore() const {return highScore;}
 int Board::getLinesJustCleared() const {return linesJustCleared;}
 bool Board::isBlind() const {return blind;}
 Block* Board::getNextBlock() const {return next.get();}
@@ -283,6 +284,7 @@ void Board::drop() {
 	addCurrentToBoard();
   // generating the next block
   next = shared_ptr<Block>(level->generateBlock());
+  if(blind) blind = false;
 }
 
 void Board::addCurrentToBoard(){
