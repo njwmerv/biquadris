@@ -14,7 +14,7 @@ int Block::getX() const {return x;}
 
 int Block::getY() const {return y;}
 
-bool Block::isHeavy() const {return heavy;}
+int Block::getHeaviness() const {return heaviness;}
 
 int Block::getLevel() const {return level;}
 
@@ -22,4 +22,4 @@ void Block::setX(int newX) {x = newX;}
 
 void Block::setY(int newY) {y = newY;}
 
-void Block::makeHeavy() {heavy = true;}
+void Block::changeWeight(int weight) {heaviness += weight;}

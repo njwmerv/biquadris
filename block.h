@@ -31,7 +31,7 @@ class Block {
         int numCleared = 0; // number of cells that have been cleared
         int x = 0; // far left, as specified
         int y = 14; // 1 below the 3 extra rows of space, as specified
-        bool heavy = false; // block having the "heavy" property
+        int heaviness = 0;
     public:
 
         // destructor
@@ -51,13 +51,13 @@ class Block {
         int getNumRotations() const;
         int getX() const;
         int getY() const;
-        bool isHeavy() const;
+        int getHeaviness() const;
         int getLevel() const;
 
         // mutators
         void setX(int newX);
         void setY(int newY);
-        void makeHeavy();
+        void changeWeight(int);
 
 };
 
