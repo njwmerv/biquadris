@@ -17,4 +17,4 @@ class Graphic : public View{
     void notify() override;
 };
 
-#endif //TEXT_H
+#endif //GRAPHIC_H
