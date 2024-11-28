@@ -110,6 +110,38 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
   return {repetitions, command};
 }
 
+void Controller::endTurn(){
+  Board* board = getBoard();
+  notifyObservers();
+  const int linesJustCleared = board->getLinesJustCleared();
+  nextPlayer();
+  board = getBoard();
+  board->setLinesJustCleared(0);
+  if(linesJustCleared <= 1) return;
+  // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
+  // try using try-catch if sequence is a problem
+  cout << "You just cleared 2 or more lines! Enter your special action below:" << endl;
+  string specialAction;
+  Command attackCommand = Command::INVALID;
+  while(attackCommand == Command::INVALID){
+    cin >> specialAction;
+    attackCommand = interpretInput(specialAction).second;
+    if(attackCommand == Command::BLIND) board->setBlind(true);
+    else if(attackCommand == Command::HEAVY) board->getCurrentBlock()->changeWeight(2);
+    else if(attackCommand == Command::FORCE){
+      string type;
+	  while(cin >> type){
+      	if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
+		else {board->forceBlock(type); break;}
+	  }
+    }
+    else{
+	  attackCommand = Command::INVALID;
+	  cerr << "Invalid special action" << endl;
+	}
+  }
+}
+
 void Controller::performCommand(const Command command){
   Board* board = getBoard();
   if(command == Command::LEFT) board->left();
@@ -117,37 +149,7 @@ void Controller::performCommand(const Command command){
   else if(command == Command::DOWN) board->down();
   else if(command == Command::CLOCKWISE) board->clockwise();
   else if(command == Command::COUNTER_CLOCKWISE) board->counterclockwise();
-  else if(command == Command::DROP){
-    board->drop();
-    notifyObservers();
-    const int linesJustCleared = board->getLinesJustCleared();
-    board->setLinesJustCleared(0);
-    nextPlayer();
-    board = getBoard();
-    if(linesJustCleared <= 1) return;
-      // if drop is in sequence or repeated a bunch of times, check that it still goes to next player and doesnt force their input
-      // try using try-catch if sequence is a problem
-    cout << "You just cleared 2 or more lines! Enter your special action below:" << endl;
-    string specialAction;
-    Command attackCommand = Command::INVALID;
-    while(attackCommand == Command::INVALID){
-      cin >> specialAction;
-      attackCommand = interpretInput(specialAction).second;
-      if(attackCommand == Command::BLIND) getBoard()->setBlind(true);
-      else if(attackCommand == Command::HEAVY) getBoard(); // idk what to do here
-      else if(attackCommand == Command::FORCE){
-        string type;
-				while(cin >> type){
-					if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
-					else {getBoard()->forceBlock(type); break;}
-				}
-      }
-      else{
-				attackCommand = Command::INVALID;
-				cerr << "Invalid special action" << endl;
-			}
-    }
-  }
+  else if(command == Command::DROP) board->drop();
   else if(command == Command::LEVEL_UP) board->levelup();
   else if(command == Command::LEVEL_DOWN) board->leveldown();
   else if(command == Command::NO_RANDOM){
@@ -184,14 +186,16 @@ void Controller::runGame(){
     queue<Command>& commandQueue = commandsToExecute.at(currentPlayer);
     cout << "Current Player: " << currentPlayer << endl;
     notifyObservers(); // update graphics
-		cout << "Command: " << endl;
-		while(commandQueue.empty()){
+	cout << "Command: " << endl;
+	while(commandQueue.empty()){
   	  cin >> input;
-			pair<int, Command> interpretation = interpretInput(input);
-            if(interpretation.first == 0) cerr << "Invalid input" << endl;
+	  pair<int, Command> interpretation = interpretInput(input);
+      if(interpretation.first == 0) cerr << "Invalid input" << endl;
       for(int i = 0; i < interpretation.first; i++) commandQueue.push(interpretation.second);
-		}
+	}
+    const Block* current = getBoard()->getCurrentBlock();
     performCommand(commandQueue.front());
     commandQueue.pop();
+    if(current != getBoard()->getCurrentBlock()) endTurn();
   }
 }

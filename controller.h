@@ -46,6 +46,7 @@ class Controller{
   // I/O-related
   void performCommand(const Command);
   pair<int, Controller::Command> interpretInput(const string) const;
+  void endTurn();
 
   public:
     // Big 5

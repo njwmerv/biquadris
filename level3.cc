@@ -11,12 +11,14 @@
 Block *Level3::generateBlock() {
     const string blockTypes[] = {"I", "J", "L", "O", "S", "S", "Z", "Z", "T"};
     const string blockGenerated = blockTypes[rand() % 9];
-
-    if(blockGenerated == "I") return new IBlock(3);
-    else if(blockGenerated == "J") return new JBlock(3);
-    else if(blockGenerated == "L") return new LBlock(3);
-    else if(blockGenerated == "O") return new OBlock(3);
-    else if(blockGenerated == "S") return new SBlock(3);
-    else if(blockGenerated == "Z") return new ZBlock(3);
-    else return new TBlock(3);
+    Block* block = nullptr;
+    if(blockGenerated == "I") block = new IBlock(3);
+    else if(blockGenerated == "J") block = new JBlock(3);
+    else if(blockGenerated == "L") block = new LBlock(3);
+    else if(blockGenerated == "O") block = new OBlock(3);
+    else if(blockGenerated == "S") block = new SBlock(3);
+    else if(blockGenerated == "Z") block = new ZBlock(3);
+    else block = new TBlock(3);
+    block->changeWeight(1);
+    return block;
 }
