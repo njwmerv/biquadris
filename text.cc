@@ -26,6 +26,8 @@ void printBoardBorder(Controller* controller, ostream& out){
 }
 
 void Text::notify(){
+	if(controller->getBoard()->getGameState() == Board::GameState::FINISHED_TURN) return;
+
 	// Print frame border
 	for(int i = 0; i < NUMBER_PLAYERS * (BOARD_WIDTH + BOARD_GAP); i++) out << "-";
 	out << endl;
