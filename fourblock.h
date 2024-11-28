@@ -3,6 +3,7 @@
 
 #include "block.h"
 
+// 1x1 block for level 4
 
 using namespace std;
 
