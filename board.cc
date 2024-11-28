@@ -110,6 +110,7 @@ void Board::forceLevel(const int newLevel){
   else if(newLevel == 2) level = new Level2;
   else if(newLevel == 3) level = new Level3;
   else level = new Level4;
+  next = shared_ptr<Block>(level->generateBlock());
 }
 
 void Board :: down () {
