@@ -2,7 +2,6 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <memory>
 #include "board.h"
 #include "controller.h"
 using namespace std;
@@ -29,7 +28,7 @@ Text::~Text(){
 }
 
 void printBoardBorder(Controller* controller, ostream& out){
-  for(const unique_ptr<Board>& board : controller->getBoards()){
+  for(Board* board : controller->getBoards()){
     for(int i = 0; i < BOARD_WIDTH + 2 * BORDER_WIDTH; i++) out << HORIZONTAL_BORDER;
     for(int i = 0; i < BOARD_GAP - 2 * BORDER_WIDTH; i++) out << ' ';
   }
@@ -43,7 +42,7 @@ void Text::notify(){
 	for(int i = 0; i < NUMBER_PLAYERS * (BOARD_WIDTH + BOARD_GAP); i++) out << DIVIDER;
 	out << endl;
   // Print level
-  for(const unique_ptr<Board>& board : controller->getBoards()){
+  for(Board* board : controller->getBoards()){
     out << LEVEL_TEXT << setw(BOARD_WIDTH + BOARD_GAP - LEVEL_TEXT.length()) << left << setfill(' ')
         << board->getLevel();
     out << resetiosflags(ios::showbase);
@@ -51,7 +50,7 @@ void Text::notify(){
   out << endl;
 
   // Print score
-  for(const unique_ptr<Board>& board : controller->getBoards()){
+  for(Board* board : controller->getBoards()){
     out << SCORE_TEXT << setw(BOARD_WIDTH + BOARD_GAP - SCORE_TEXT.length()) << left << setfill(' ')
         <<  board->getScore();
     out << resetiosflags(ios::showbase);
@@ -59,7 +58,7 @@ void Text::notify(){
   out << endl;
 
 	// Print high score
-	for(const unique_ptr<Board>& board : controller->getBoards()){
+	for(Board* board : controller->getBoards()){
 		out << HIGHSCORE_TEXT << setw(BOARD_WIDTH + BOARD_GAP - HIGHSCORE_TEXT.length()) << left << setfill(' ')
 				<< board->getHighScore();
 		out << resetiosflags(ios::showbase);
@@ -71,7 +70,7 @@ void Text::notify(){
 
   // Print board itself
   for(int i = BOARD_HEIGHT - 1; i >= 0; i--){
-    for(const unique_ptr<Board>& board : controller->getBoards()){
+    for(Board* board : controller->getBoards()){
       auto theBoard = board->getTheBoard();
       out << VERTICAL_BORDER;
       for(int j = 0; j < BOARD_WIDTH; j++){
@@ -89,14 +88,14 @@ void Text::notify(){
   printBoardBorder(controller, out);
 
   // Print next block for each board
-  for(const unique_ptr<Board>& board : controller->getBoards()){
+  for(Board* board : controller->getBoards()){
     out << setw(BOARD_WIDTH + BOARD_GAP) << left << setfill(' ')
         << NEXT_BLOCK_TEXT;
     out << resetiosflags(ios::showbase);
   }
   out << std::endl;
   // Printing the block itself
-  for(const unique_ptr<Board>& board : controller->getBoards()){ // print top half
+  for(Board* board : controller->getBoards()){ // print top half
     Block* currentBlock = board->getCurrentBlock();
     const char type = currentBlock->getType();
     if(type == 'I'){
@@ -130,7 +129,7 @@ void Text::notify(){
     out << resetiosflags(ios::showbase);
   }
   out << endl;
-  for(const unique_ptr<Board>& board : controller->getBoards()){ // print bottom half
+  for(Board* board : controller->getBoards()){ // print bottom half
     Block* currentBlock = board->getCurrentBlock();
     const char type = currentBlock->getType();
     if(type == 'I'){
@@ -165,4 +164,3 @@ void Text::notify(){
   }
   out << endl;
 }
-

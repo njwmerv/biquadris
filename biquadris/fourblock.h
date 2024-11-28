@@ -1,15 +1,16 @@
-#ifndef TBLOCK_H
-#define TBLOCK_H
+#ifndef fourBLOCK_H
+#define fourBLOCK_H
 
 #include "block.h"
 
+// 1x1 block for level 4
 
 using namespace std;
 
-class TBlock : public Block {
+class fourBlock : public Block {
     public: 
         // constructor
-        TBlock(int l);
+        fourBlock(int l);
 
         // getter
         char getType() const override;
@@ -17,4 +18,3 @@ class TBlock : public Block {
 };
 
 #endif
-

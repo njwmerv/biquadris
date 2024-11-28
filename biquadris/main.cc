@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
-#include <memory>
 #include "controller.h"
 #include "text.h"
 #include "graphic.h"
@@ -58,10 +57,11 @@ int main(int argc, char* argv[]){
   Controller controller{startingLevel, scriptFile1, scriptFile2};
 
   // Create displays
-  vector<unique_ptr<View>> displays;
-  displays.emplace_back(make_unique<Text>(&controller));
-  if(!textOnly) displays.emplace_back(make_unique<Graphic>(&controller));
+  vector<View*> displays;
+  displays.emplace_back(new Text(&controller));
+  if(!textOnly) displays.emplace_back(new Graphic(&controller));
 
   // Game loop
   controller.runGame();
+  for(auto view : displays) delete view;
 }

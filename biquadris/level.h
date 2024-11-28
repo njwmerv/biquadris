@@ -26,5 +26,3 @@ class Level {
 };
 
 #endif
-
-

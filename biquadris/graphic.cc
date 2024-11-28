@@ -1,5 +1,4 @@
 #include "graphic.h"
-#include <memory>
 #include "board.h"
 #include "controller.h"
 #include "window.h"
@@ -40,7 +39,7 @@ Graphic::Graphic(Controller* controller) :
   window.fillRectangle(0, HALF_LINE * 4, window.getWidth(), 1, 1);
 
   int offset = 6;
-  for(const unique_ptr<Board>& board : controller->getBoards()){
+  for(Board* board : controller->getBoards()){
     // Draw Header (score + level)
     window.drawString(offset - BORDER_WIDTH, HALF_LINE * 7, "  Level: ");
     window.drawString(offset + 50, HALF_LINE * 7, to_string(board->getLevel()));
@@ -101,7 +100,7 @@ Graphic::Graphic(Controller* controller) :
 Graphic::~Graphic() {controller->detachView(this);}
 
 void Graphic::notify(){
-  const unique_ptr<Board>& board = controller->getBoard(); // get Board of current player
+  const Board* board = controller->getBoard(); // get Board of current player
   auto theBoard = board->getTheBoard(); // get the 2d array of that Board
   const int offset = controller->getCurrentPlayer() * SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP) + HALF_LINE + BORDER_WIDTH; // how far to right to print
 
@@ -153,5 +152,3 @@ void Graphic::notify(){
     window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
 }
-
-
