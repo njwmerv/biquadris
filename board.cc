@@ -145,6 +145,7 @@ void Board :: right() {
   int curNumRot = current->getNumRotations();
 
   bool willDrop = false; // only used if the block is heavy
+  const int weight = current->getHeaviness();
 
   // determining if we are able to move the block to the right
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
@@ -156,16 +157,19 @@ void Board :: right() {
       return;
     }
     // operations only ran if the cell is heavy
-    if(!current->isHeavy()) continue;
+    if(weight == 0) continue;
     // checking if the cell breaks the border
-    if(cell.second + curY - 2 < 0) {
+    if(cell.second + curY - weight < 0) {
       willDrop = true;
       continue;
     }
-    if(board[cell.second + curY - 1][cell.first + curX + 1] != nullptr &&
-       board[cell.second + curY - 1][cell.first + curX + 1] != current &&
-       board[cell.second + curY - 2][cell.first + curX + 1] != nullptr &&
-       board[cell.second + curY - 2][cell.first + curX + 1] != current) {
+    bool combinedWillDrop = true;
+    for(int i = 1; i <= weight; i++){
+      combinedWillDrop = combinedWillDrop &&
+                         board[cell.second + curY - i][cell.first + curX + 1] != nullptr &&
+                         board[cell.second + curY - i][cell.first + curX + 1] != current;
+    }
+    if(combinedWillDrop){
       willDrop = true;
       continue;
     }
@@ -178,9 +182,9 @@ void Board :: right() {
   current->setX(curX + 1);
   curX = curX + 1;
   // updating the block's y coordinate if it is heavy, and falls without impediment
-  if(!willDrop && current->isHeavy()) {
-    current->setY(curY - 2);
-    curY = curY - 2;
+  if(!willDrop && weight > 0) {
+    current->setY(curY - weight);
+    curY = curY - weight;
   }
   // adding the block to its new position in the board
   addCurrentToBoard();
@@ -195,6 +199,7 @@ void Board :: left() {
   int curNumRot = current->getNumRotations();
 
   bool willDrop = false; // only used if the block is heavy
+  const int weight = current->getHeaviness();
 
   // determining if we are able to move the block to the right
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
@@ -206,19 +211,22 @@ void Board :: left() {
       return;
        }
     // operations only ran if the cell is heavy
-    if(!current->isHeavy()) continue;
+    if(weight == 0) continue;
     // checking if the cell breaks the border
-    if(cell.second + curY - 2 < 0) {
+    if(cell.second + curY - weight < 0) {
       willDrop = true;
       continue;
     }
-    if(board[cell.second + curY - 1][cell.first + curX - 1] != nullptr &&
-       board[cell.second + curY - 1][cell.first + curX - 1] != current &&
-       board[cell.second + curY - 2][cell.first + curX - 1] != nullptr &&
-       board[cell.second + curY - 2][cell.first + curX - 1] != current) {
+    bool combinedWillDrop = true;
+    for(int i = 1; i <= weight; i++){
+      combinedWillDrop = combinedWillDrop &&
+                         board[cell.second + curY - i][cell.first + curX - 1] != nullptr &&
+                         board[cell.second + curY - i][cell.first + curX - 1] != current;
+    }
+    if(combinedWillDrop){
       willDrop = true;
       continue;
-       }
+    }
   }
   // erasing the block in the board
   for(pair<int, int> cell : current->getRotation(curNumRot)) {
@@ -228,9 +236,9 @@ void Board :: left() {
   current->setX(curX - 1);
   curX = curX - 1;
   // updating the block's y coordinate if it is heavy, and falls without impediment
-  if(!willDrop && current->isHeavy()) {
-    current->setY(curY - 2);
-    curY = curY - 2;
+  if(!willDrop && weight > 0) {
+    current->setY(curY - weight);
+    curY = curY - weight;
   }
   // adding the block to its new position in the board
   addCurrentToBoard();
