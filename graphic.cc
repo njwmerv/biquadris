@@ -63,33 +63,33 @@ Graphic::Graphic(Controller* controller) :
     // Draw footer (next block area)
     window.drawString(offset - BORDER_WIDTH, BOARD_BOT_POS + HALF_LINE, "Next Block:");
     // Printing the next block itself
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 4 * SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
     const char nextType = board->getNextBlock()->getType();
     if(nextType == 'I'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'J'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'L'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'O'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'S'){
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'T'){
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'Z'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     offset += SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP);
   }
@@ -123,32 +123,32 @@ void Graphic::notify(){
   }
 
   // Printing the block itself
-  window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
+  window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 4 * SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
   const char nextType = board->getNextBlock()->getType();
   if(nextType == 'I'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'J'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'L'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'O'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'S'){
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'T'){
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 6, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'Z'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
 }
