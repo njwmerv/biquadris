@@ -64,6 +64,7 @@ void Board::levelup(){
   else if(currentLevel == 2) level = new Level2;
   else if(currentLevel == 3) level = new Level3;
   else if(currentLevel == 4) level = new Level4;
+  next.reset(level->generateBlock());
 }
 
 void Board::leveldown(){
@@ -74,6 +75,7 @@ void Board::leveldown(){
   else if(currentLevel == 1) level = new Level1;
   else if(currentLevel == 2) level = new Level2;
   else if(currentLevel == 3) level = new Level3;
+  next.reset(level->generateBlock());
 }
 
 void Board::clearBoard(){
