@@ -323,7 +323,8 @@ void Board::addCurrentToBoard(){
   for(pair<int, int> cell : cellsOfBlock){
     // checking if the game has ended 
     // (note that when this function is called on a dropped block, the space is already verified to be cleared)
-    if(board[cell.second + curY][cell.first + curX] != nullptr) {
+    if(board[cell.second + curY][cell.first + curX] != nullptr ||
+       board[cell.second + curY][cell.first + curX] != current) {
       gameState = GameState::GAME_OVER;
       return;
     }
