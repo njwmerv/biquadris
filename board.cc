@@ -55,6 +55,8 @@ vector<vector<shared_ptr<Block>>> Board::getTheBoard() const {return board;}
 void Board::setScore(int newScore) {score = newScore;}
 void Board::setLinesJustCleared(int newCount) {linesJustCleared = newCount;}
 void Board::setBlind(bool blindness) {blind = blindness;}
+void Board::setRandomness(bool nowRandom) {level->setRandomness(nowRandom);}
+void Board::setFileName(const string& path) {level->setFileName(path);}
 
 void Board::levelup(){
   if(currentLevel == 4) return;
@@ -113,6 +115,7 @@ void Board::forceLevel(const int newLevel){
   else if(newLevel == 3) level = new Level3;
   else level = new Level4;
   next.reset(level->generateBlock());
+  currentLevel = newLevel;
 }
 
 void Board :: down () {
