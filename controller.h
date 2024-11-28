@@ -30,8 +30,8 @@ class Controller{
   const map<string, Command> defaultCommands{ // these are the commands a user can run at the start
     {"left", Command::LEFT}, {"right", Command::RIGHT}, {"down", Command::DOWN}, {"clockwise", Command::CLOCKWISE},
     {"counter_clockwise", Command::COUNTER_CLOCKWISE}, {"drop", Command::DROP}, {"random", Command::RANDOM},
-    {"norandom", Command::NO_RANDOM}, {"sequence", Command::SEQUENCE}, {"I", Command::I}, {"J", Command::J},
-    {"L", Command::L}, {"O", Command::O}, {"S", Command::S}, {"Z", Command::Z}, {"T", Command::T},
+    {"norandom", Command::NO_RANDOM}, {"sequence", Command::SEQUENCE}, {"i", Command::I}, {"j", Command::J},
+    {"l", Command::L}, {"o", Command::O}, {"s", Command::S}, {"z", Command::Z}, {"t", Command::T},
     {"restart", Command::RESTART}, {"levelup", Command::LEVEL_UP}, {"leveldown", Command::LEVEL_DOWN},
     {"blind", Command::BLIND}, {"heavy", Command::HEAVY}, {"force", Command::FORCE},
     {"forcelevel", Command::FORCE_LEVEL}, {"add", Command::ADD}, {"remove", Command::REMOVE}, {"quit", Command::QUIT}, {"restartall", Command::RESTART_ALL},

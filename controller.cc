@@ -240,11 +240,13 @@ void Controller::runGame(){
 
 void Controller::addCommandAlias(Command command, string& alias){
   if(command == Command::INVALID) return; // not a valid command to make an alias for
+  transform(alias.begin(), alias.end(), alias.begin(), [](unsigned char c) {return tolower(c);}); // case-insensitive
   if(commands.count(alias) == 1) return; // already in the map of commands
   commands[alias] = command; // add it
 }
 
 void Controller::removeCommandAlias(string& alias){
+  transform(alias.begin(), alias.end(), alias.begin(), [](unsigned char c) {return tolower(c);}); // case-insensitive
   if(commands.count(alias) == 0) return; // check that this is even removable
   int counter = 0; // check that it's not the last instance of this command
   for(auto it = commands.begin(); it != commands.end(); it++){
