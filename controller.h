@@ -48,6 +48,7 @@ class Controller{
   void endTurn();
   void addCommandAlias(Command, string&);
   void removeCommandAlias(string&);
+  void notifyObservers() const;
 
   public:
     // Big 5
@@ -60,7 +61,6 @@ class Controller{
     int getCurrentPlayer() const;
 
     // Display-related
-    void notifyObservers() const;
     void attachView(View*);
     void detachView(View*);
 
