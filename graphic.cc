@@ -40,11 +40,11 @@ Graphic::Graphic(Controller* controller) :
   for(Board* board : controller->getBoards()){
     // Draw Header (score + level)
     window.drawString(offset - BORDER_WIDTH, HALF_LINE * 7, "  Level: ");
-    window.drawString(offset + 43, HALF_LINE * 7, to_string(board->getLevel()));
+    window.drawString(offset + 50, HALF_LINE * 7, to_string(board->getLevel()));
     window.drawString(offset - BORDER_WIDTH, HALF_LINE * 9, "  Score: ");
-    window.drawString(offset + 43, HALF_LINE * 9, to_string(board->getScore()));
+    window.drawString(offset + 50, HALF_LINE * 9, to_string(board->getScore()));
     window.drawString(offset - BORDER_WIDTH, HALF_LINE * 11, "HiScore: ");
-    window.drawString(offset + 43, HALF_LINE * 11, to_string(board->getHighScore()));
+    window.drawString(offset + 50, HALF_LINE * 11, to_string(board->getHighScore()));
 
     // Draw board outline
     window.fillRectangle(offset - BORDER_WIDTH, HALF_LINE * 12, BOARD_WIDTH * SCALE_FACTOR + BORDER_WIDTH, BORDER_WIDTH, Xwindow::Black);
@@ -63,35 +63,34 @@ Graphic::Graphic(Controller* controller) :
     // Draw footer (next block area)
     window.drawString(offset - BORDER_WIDTH, BOARD_BOT_POS + HALF_LINE, "Next Block:");
     // Printing the next block itself
-    window.fillRectangle(offset + 5, BOARD_BOT_POS + HALF_LINE * 2, 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
     const char nextType = board->getNextBlock()->getType();
     if(nextType == 'I'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'J'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'L'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'O'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'S'){
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 2, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'T'){
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 2, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
     else if(nextType == 'Z'){
-      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+      window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
     }
-
     offset += SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP);
   }
 }
@@ -106,11 +105,12 @@ void Graphic::notify(){
   const int offset = controller->getCurrentPlayer() * SCALE_FACTOR * (BOARD_WIDTH + BOARD_GAP) + HALF_LINE + BORDER_WIDTH;
 
   // Print score
-  window.fillRectangle(offset + 43, HALF_LINE * 5, 80, 10, 0);
-  window.fillRectangle(offset + 43, HALF_LINE * 7, 80, 10, 0);
-  window.drawString(offset + 45, HALF_LINE * 5, to_string(board->getLevel()));
-  window.drawString(offset + 45, HALF_LINE * 7, to_string(board->getScore()));
-  window.drawString(offset + 45, HALF_LINE * 9, to_string(board->getHighScore()));
+  window.fillRectangle(offset + 48, HALF_LINE * 5, 80, HALF_LINE * 2, 0);
+  window.fillRectangle(offset + 48, HALF_LINE * 7, 80, HALF_LINE * 2, 0);
+	window.fillRectangle(offset + 48, HALF_LINE * 9, 80, HALF_LINE * 2, 0);
+  window.drawString(offset + 50, HALF_LINE * 7, to_string(board->getLevel()));
+  window.drawString(offset + 50, HALF_LINE * 9, to_string(board->getScore()));
+  window.drawString(offset + 50, HALF_LINE * 11, to_string(board->getHighScore()));
 
   // Print board itself but only of current player (that's the only one that will change)
   for(int i = 0; i < BOARD_HEIGHT; i++){
@@ -123,32 +123,32 @@ void Graphic::notify(){
   }
 
   // Printing the block itself
-  window.fillRectangle(offset + 5, BOARD_BOT_POS + HALF_LINE * 2, 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
+  window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 & SCALE_FACTOR, 2 * SCALE_FACTOR, 0);
   const char nextType = board->getNextBlock()->getType();
   if(nextType == 'I'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 4 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'J'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'L'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'O'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, 2 * SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'S'){
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 2, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'T'){
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 2, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 4, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 3, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 5, 3 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
   else if(nextType == 'Z'){
-    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 2, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
-    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 4, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE, BOARD_BOT_POS + HALF_LINE * 3, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
+    window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 5, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
 }
