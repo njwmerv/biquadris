@@ -17,4 +17,3 @@ fourBlock :: fourBlock(int l) {
 char fourBlock :: getType() const {
     return '*';
 }
-

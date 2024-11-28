@@ -152,5 +152,3 @@ void Graphic::notify(){
     window.fillRectangle(offset + HALF_LINE + SCALE_FACTOR, BOARD_BOT_POS + HALF_LINE * 6, 2 * SCALE_FACTOR, SCALE_FACTOR, getColour(nextType));
   }
 }
-
-

@@ -14,4 +14,3 @@ void Level::setFileName(const string& path){
   file.close();
   file.open(filename);
 }
-

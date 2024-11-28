@@ -37,4 +37,3 @@ Block *Level0::generateBlock() {
     }
 }
 
-

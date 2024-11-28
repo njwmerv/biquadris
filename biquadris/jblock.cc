@@ -16,5 +16,3 @@ JBlock :: JBlock(int l) {
 char JBlock :: getType() const {
     return 'J';
 }
-
-

@@ -164,4 +164,3 @@ void Text::notify(){
   }
   out << endl;
 }
-

@@ -14,4 +14,3 @@ LBlock :: LBlock(int l) {
 char LBlock :: getType() const {
     return 'L';
 }
-

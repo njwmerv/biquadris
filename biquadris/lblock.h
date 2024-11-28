@@ -1,20 +1,18 @@
-#ifndef TBLOCK_H
-#define TBLOCK_H
+#ifndef LBLOCK_H
+#define LBLOCK_H
 
 #include "block.h"
 
 
 using namespace std;
 
-class TBlock : public Block {
+class LBlock : public Block {
     public: 
         // constructor
-        TBlock(int l);
+        LBlock(int l);
 
         // getter
         char getType() const override;
-
 };
 
 #endif
-

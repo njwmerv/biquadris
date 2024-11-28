@@ -15,4 +15,3 @@ IBlock :: IBlock(int l) {
 char IBlock :: getType() const {
     return 'I';
 }
-

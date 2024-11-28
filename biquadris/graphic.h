@@ -17,5 +17,3 @@ class Graphic : public View{
 };
 
 #endif //GRAPHIC_H
-
-
