@@ -27,6 +27,7 @@ Block* Level3::generateBlock(){
     }
     if(!(file >> blockGenerated)){
       isRandom = true; // file given is just empty
+      return generateBlock();
     }
   }
   if(blockGenerated == "I") block = new IBlock(3);
