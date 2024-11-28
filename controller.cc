@@ -12,18 +12,16 @@ using namespace std;
 // Big 5
 Controller::Controller(int startingLevel, string scriptFile1, string scriptFile2) :
   startingLevel{startingLevel}, scriptFile1{scriptFile1}, scriptFile2{scriptFile2} {
-  boards.emplace_back(new Board(startingLevel, scriptFile1, Board::GameState::PLAYER_TURN));
-  boards.emplace_back(new Board(startingLevel, scriptFile2, Board::GameState::FINISHED_TURN));
+  boards.emplace_back(make_unique<Board>(startingLevel, scriptFile1, Board::GameState::PLAYER_TURN));
+  boards.emplace_back(make_unique<Board>(startingLevel, scriptFile2, Board::GameState::FINISHED_TURN));
   for(int i = 0; i < numberOfPlayers; i++) commandsToExecute.emplace_back(queue<Command>());
 }
 
-Controller::~Controller(){
-  for(Board* board : boards) delete board;
-}
+Controller::~Controller(){}
 
 // Accessors
-const vector<Board*>& Controller::getBoards() const {return boards;}
-Board* Controller::getBoard() const {return boards.at(currentPlayer);}
+const vector<unique_ptr<Board>>& Controller::getBoards() const {return boards;}
+unique_ptr<Board>& Controller::getBoard() {return boards.at(currentPlayer);}
 int Controller::getCurrentPlayer() const {return currentPlayer;}
 
 // Display-related
@@ -59,7 +57,7 @@ void Controller::sequence(string file){
 }
 
 void Controller::resetGame(){ // clear board and reset current + next blocks for each player
-  for(Board* board : boards){
+  for(unique_ptr<Board>& board : boards){
     board->restart(startingLevel);
   }
   currentPlayer = 0; // go back to first player
@@ -111,12 +109,12 @@ pair<int, Controller::Command> Controller::interpretInput(const string input) co
 }
 
 void Controller::endTurn(){
-  Board* board = getBoard(); // get board whose turn just ended
+  unique_ptr<Board>& board = getBoard(); // get board whose turn just ended
   notifyObservers(); // update display for it (only Graphic displays should run here)
   const int linesJustCleared = board->getLinesJustCleared(); // get how many lines cleared
   nextPlayer(); // switch to next player's board
-  board = getBoard();
-  board->startTurn(); // reset this player's state to as if they just started their turn
+  unique_ptr<Board>& newBoard = getBoard();
+  newBoard->startTurn(); // reset this player's state to as if they just started their turn
   if(linesJustCleared <= 1) return; // if prev player cleared 2+ lines, they do special action
   cout << "You just cleared " << linesJustCleared << " lines! Enter your special action below:" << endl;
   string specialAction; // prompt user for what they want to do for special action
@@ -124,13 +122,13 @@ void Controller::endTurn(){
   while(attackCommand == Command::INVALID){ // while input is wrong, keep asking
     cin >> specialAction;
     attackCommand = interpretInput(specialAction).second; // only care about the command, no repetitions
-    if(attackCommand == Command::BLIND) board->setBlind(true); // make them blind
-    else if(attackCommand == Command::HEAVY) board->getCurrentBlock()->changeWeight(2); // make current block heavier
+    if(attackCommand == Command::BLIND) newBoard->setBlind(true); // make them blind
+    else if(attackCommand == Command::HEAVY) newBoard->getCurrentBlock()->changeWeight(2); // make current block heavier
     else if(attackCommand == Command::FORCE){
       string type; // ask for what type of block
 	  while(cin >> type){ // while type is wrong, keep asking
       	if(type != "I" && type != "J" && type != "L" && type != "O" && type != "S" && type != "Z" && type != "T") cerr << "Invalid block type" << endl;
-		else {board->forceBlock(type); break;}
+		else {newBoard->forceBlock(type); break;}
 	  }
     }
     else{ // tell user their input was wrong
@@ -141,7 +139,7 @@ void Controller::endTurn(){
 }
 
 void Controller::performCommand(const Command command){
-  Board* board = getBoard(); // get board to run commands on
+  unique_ptr<Board>& board = getBoard(); // get board to run commands on
   // movement related
   if(command == Command::LEFT) board->left();
   else if(command == Command::RIGHT) board->right();

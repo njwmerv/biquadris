@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <queue>
+#include <memory>
 #include "view.h"
 #include "board.h"
 using namespace std;
@@ -23,7 +24,7 @@ class Controller{
   const string scriptFile2;
   const int numberOfPlayers = 2;
   int currentPlayer = 0;
-  vector<Board*> boards;
+  vector<unique_ptr<Board>> boards;
   vector<View*> observers;
   vector<queue<Command>> commandsToExecute; // queue that stores commands to run for each player, even if turn ends
   const map<string, Command> defaultCommands{ // these are the commands a user can run at the start
@@ -56,8 +57,8 @@ class Controller{
     ~Controller();
 
     // Accessors
-    const vector<Board*>& getBoards() const;
-    Board* getBoard() const;
+    const vector<unique_ptr<Board>>& getBoards() const;
+    unique_ptr<Board>& getBoard();
     int getCurrentPlayer() const;
 
     // Display-related
