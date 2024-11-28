@@ -18,7 +18,7 @@ class Controller{
     LEVEL_UP, LEVEL_DOWN, NO_RANDOM, RANDOM, SEQUENCE, // specify block generation
     I, J, L, O, S, Z, T, // specify next block
     RESTART, INVALID, // other
-    BLIND, HEAVY, FORCE // special actions
+    BLIND, HEAVY, FORCE, // special actions
     FORCE_LEVEL, ADD, REMOVE // bonus
   };
 
